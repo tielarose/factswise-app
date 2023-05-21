@@ -72,6 +72,23 @@ class Student(db.Model):
         """Create and return a new student."""
     
         return cls(classroom_id=classroom_id, student_first_name=student_first_name, student_last_name=student_last_name, student_grade_level=student_grade_level, student_login_icon=student_login_icon, student_password=student_password, current_problem_set=current_problem_set)
+
+class ProblemSetType(db.Model):
+    """A problem set type."""
+
+    __tablename__ = "problem_set_types"
+
+    problem_set_type_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    problem_set_name = db.Column(db.VARCHAR(30), nullable=False)
+
+    def __repr__(self):
+        return f"<ProblemSetType problem_set_type_id={self.problem_set_type_id} problem_set_name={self.problem_set_name}>"
+
+    @classmethod
+    def create(cls, problem_set_name):
+        """Create and return a new problem set type"""
+    
+        return cls(problem_set_name=problem_set_name)
     
 def connect_to_db(flask_app, db_uri="postgresql:///factswise", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
