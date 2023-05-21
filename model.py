@@ -16,7 +16,7 @@ class Educator(db.Model):
     educator_email = db.Column(db.VARCHAR(50), nullable=False, unique=True)
     educator_password = db.Column(db.VARCHAR(50), nullable=False)
 
-    classes = db.relationship("Class", back_populates="educator")
+    classrooms = db.relationship("Classroom", back_populates="educator")
 
     def __repr__(self):
         return f"<Educator educator_id={self.educator_id} display_name={self.educator_display_name} educator_email={self.educator_email}>"
@@ -27,26 +27,51 @@ class Educator(db.Model):
     
         return cls(educator_first_name=educator_first_name, educator_last_name=educator_last_name, educator_display_name=educator_display_name, educator_email=educator_email, educator_password=educator_password)
 
-class Class(db.Model):
-    """A class[room of students]."""
+class Classroom(db.Model):
+    """A classroom."""
 
-    __tablename__ = "classes"
+    __tablename__ = "classrooms"
 
-    class_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    class_name = db.Column(db.VARCHAR(15), nullable=False)
-    educator_id = db.Column(db.Integer, db.ForeignKey("educators.educator_id"))
+    classroom_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    classroom_name = db.Column(db.VARCHAR(15), nullable=False)
+    educator_id = db.Column(db.Integer, db.ForeignKey("educators.educator_id"), nullable=False)
 
-    educator = db.relationship("Educator", back_populates="classes")
+    educator = db.relationship("Educator", back_populates="classrooms")
+    students = db.relationship("Student", back_populates="classroom")
 
     def __repr__(self):
-        return f"<Class class_id={self.class_id} class_name={self.class_name}>"
+        return f"<Classroom classroom_id={self.classroom_id} classroom_name={self.classroom_name}>"
     
     @classmethod
-    def create(cls, class_name, educator_id):
-        """Create and return a new class[room of students]."""
+    def create(cls, classroom_name, educator_id):
+        """Create and return a new classroom."""
 
-        return cls(class_name=class_name, educator_id=educator_id)
+        return cls(classroom_name=classroom_name, educator_id=educator_id)
 
+class Student(db.Model):
+    """A student."""
+
+    student_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    classroom_id = db.Column(db.Integer, db.ForeignKey("classrooms.classroom_id"), nullable=False)
+    student_first_name = db.Column(db.VARCHAR(50), nullable=False)
+    student_last_name = db.Column(db.VARCHAR(50), nullable=False)
+    student_grade_level = db.Column(db.Integer, nullable=False)
+    student_login_icon = db.Column(db.VARCHAR(10), nullable=False)
+    student_password = db.Column(db.VARCHAR(50), nullable=False)
+    # make this a foreign key when problem sets exists
+    current_problem_set = db.Column(db.Integer)
+
+    # create a relationship between problem_set when it exists
+    classroom = db.relationship("Classroom", back_populates="students") 
+
+    def __repr__(self):
+        return f"<Student student_id={self.student_id} name={self.student_first_name} {self.student_last_name} classroom={self.classroom_id}>"
+
+    @classmethod
+    def create(cls, classroom_id, student_first_name, student_last_name, student_grade_level, student_login_icon, student_password, current_problem_set):
+        """Create and return a new student."""
+    
+        return cls(classroom_id=classroom_id, student_first_name=student_first_name, student_last_name=student_last_name, student_grade_level=student_grade_level, student_login_icon=student_login_icon, student_password=student_password, current_problem_set=current_problem_set)
     
 def connect_to_db(flask_app, db_uri="postgresql:///factswise", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
