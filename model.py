@@ -60,11 +60,10 @@ class Student(db.Model):
     student_grade_level = db.Column(db.Integer, nullable=False)
     student_login_icon = db.Column(db.VARCHAR(10), nullable=False)
     student_password = db.Column(db.VARCHAR(50), nullable=False)
-    # make this a foreign key when problem sets exists
-    current_problem_set = db.Column(db.Integer)
+    current_problem_set = db.Column(db.Integer, db.ForeignKey("problem_sets.problem_set_id"), nullable=False)
 
-    # create a relationship between problem_set when it exists
-    classroom = db.relationship("Classroom", back_populates="students") 
+    classroom = db.relationship("Classroom", back_populates="students")
+    problem_set = db.relationship("ProblemSet", back_populates="students")
 
     def __repr__(self):
         return f"<Student student_id={self.student_id} name={self.student_first_name} {self.student_last_name} classroom={self.classroom_id}>"
@@ -83,6 +82,8 @@ class ProblemSetType(db.Model):
     problem_set_type_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     problem_set_type_name = db.Column(db.VARCHAR(50), nullable=False)
 
+    problem_sets = db.relationship("ProblemSet", back_populates="problem_set_type")
+
     def __repr__(self):
         return f"<ProblemSetType problem_set_type_id={self.problem_set_type_id} problem_set_type_name={self.problem_set_type_name}>"
 
@@ -91,6 +92,28 @@ class ProblemSetType(db.Model):
         """Create and return a new problem set type"""
     
         return cls(problem_set_type_name=problem_set_type_name)
+
+class ProblemSet(db.Model):
+    """A problem set."""
+
+    __tablename__ = "problem_sets"
+
+    problem_set_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    problem_set_type_id = db.Column(db.Integer, db.ForeignKey("problem_set_types.problem_set_type_id"), nullable=False)
+    problem_set_level = db.Column(db.Integer, nullable=False)
+    problem_set_description = db.Column(db.VARCHAR(50), nullable=False)
+
+    problem_set_type = db.relationship("ProblemSetType", back_populates="problem_sets")
+    students = db.relationship("Student", back_populates="problem_set")
+
+    def __repr__(self):
+        return f"<ProblemSet problem_set_id={self.problem_set_id} problem_set_type_id={self.problem_set_type_id} problem_set_level={self.problem_set_level} problem_set_description={self.problem_set_description}>"
+
+    @classmethod
+    def create(cls, problem_set_type_id, problem_set_level, problem_set_description):
+        """Create and return a new problem set."""
+    
+        return cls(problem_set_type_id=problem_set_type_id, problem_set_level=problem_set_level, problem_set_description=problem_set_description)
     
 def connect_to_db(flask_app, db_uri="postgresql:///factswise", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
