@@ -51,6 +51,8 @@ class Classroom(db.Model):
 class Student(db.Model):
     """A student."""
 
+    __tablename__ = "students"
+
     student_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     classroom_id = db.Column(db.Integer, db.ForeignKey("classrooms.classroom_id"), nullable=False)
     student_first_name = db.Column(db.VARCHAR(50), nullable=False)

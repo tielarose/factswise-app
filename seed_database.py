@@ -51,3 +51,31 @@ for educator in educators:
 
 model.db.session.commit()
 
+#create 15 students per classroom
+students = []
+
+for classroom in classrooms:
+    grade_level_string = classroom.classroom_name[0]
+    if grade_level_string == "K":
+        grade_level = 0;
+    else:
+        grade_level = int(grade_level_string)
+
+    # will change this to actual icons down the road
+    login_icons = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O']
+
+    for i in range(15):
+        student = model.Student.create(
+            classroom_id=classroom.classroom_id,
+            student_first_name=fake.first_name(), 
+            student_last_name=fake.last_name(), 
+            student_grade_level=grade_level, 
+            student_login_icon=login_icons[i], 
+            student_password='1234', 
+            # need to change this when problem_sets exists
+            current_problem_set=choice([1,2,3,4]))
+
+        students.append(student)
+        model.db.session.add(student)
+
+model.db.session.commit()
