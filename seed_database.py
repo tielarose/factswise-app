@@ -16,6 +16,8 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 #create 10 educators
+educators = []
+    
 for _ in range(10):
     fname = fake.first_name()
     lname = fake.last_name()
@@ -27,8 +29,25 @@ for _ in range(10):
         educator_email=f"{fname.lower()}.{lname.lower()}@realschool.org", 
         educator_password="1234")
 
-    print('line 30, educator is: ', educator)
+    educators.append(educator)
     model.db.session.add(educator)
+
+model.db.session.commit()
+
+#create 3 classrooms per educator
+classrooms = []
+
+for educator in educators:
+    years = ['20-21', '21-22', '22-23']
+    grade_level = choice(['K', '1st', '2nd', '3rd'])
+
+    for i in range(3):
+        classroom = model.Classroom.create(
+            classroom_name=f"{grade_level} {years[i]}", 
+            educator_id=educator.educator_id)
+
+        classrooms.append(classroom)
+        model.db.session.add(classroom)
 
 model.db.session.commit()
 
