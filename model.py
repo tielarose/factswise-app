@@ -81,16 +81,16 @@ class ProblemSetType(db.Model):
     __tablename__ = "problem_set_types"
 
     problem_set_type_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    problem_set_name = db.Column(db.VARCHAR(30), nullable=False)
+    problem_set_type_name = db.Column(db.VARCHAR(50), nullable=False)
 
     def __repr__(self):
-        return f"<ProblemSetType problem_set_type_id={self.problem_set_type_id} problem_set_name={self.problem_set_name}>"
+        return f"<ProblemSetType problem_set_type_id={self.problem_set_type_id} problem_set_type_name={self.problem_set_type_name}>"
 
     @classmethod
-    def create(cls, problem_set_name):
+    def create(cls, problem_set_type_name):
         """Create and return a new problem set type"""
     
-        return cls(problem_set_name=problem_set_name)
+        return cls(problem_set_type_name=problem_set_type_name)
     
 def connect_to_db(flask_app, db_uri="postgresql:///factswise", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

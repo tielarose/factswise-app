@@ -51,6 +51,19 @@ for educator in educators:
 
 model.db.session.commit()
 
+#create both problem set types (no custom problem sets yet)
+problem_set_types = []
+
+add_sub = model.ProblemSetType.create(problem_set_type_name="Addition Subtraction")
+problem_set_types.append(add_sub)
+model.db.session.add(add_sub)
+        
+mult_div = model.ProblemSetType.create(problem_set_type_name="Multiplication Division")
+problem_set_types.append(mult_div)
+model.db.session.add(mult_div)
+
+model.db.session.commit()
+
 #create 15 students per classroom
 students = []
 
