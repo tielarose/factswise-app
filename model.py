@@ -64,6 +64,7 @@ class Student(db.Model):
 
     classroom = db.relationship("Classroom", back_populates="students")
     problem_set = db.relationship("ProblemSet", back_populates="students")
+    problem_set_question_answers = db.relationship("ProblemSetQuestionAnswer", back_populates="student")
 
     def __repr__(self):
         return f"<Student student_id={self.student_id} name={self.student_first_name} {self.student_last_name} classroom={self.classroom_id}>"
@@ -73,6 +74,13 @@ class Student(db.Model):
         """Create and return a new student."""
     
         return cls(classroom_id=classroom_id, student_first_name=student_first_name, student_last_name=student_last_name, student_grade_level=student_grade_level, student_login_icon=student_login_icon, student_password=student_password, current_problem_set=current_problem_set)
+
+    @classmethod
+    def update_current_problem_set(cls, student_id, new_problem_set_id):
+        """Update a student's current problem set, given a student_id and the updated problem set id."""
+    
+        student = cls.query.get(student_id)
+        student.current_problem_set = new_problem_set_id
 
 class ProblemSetType(db.Model):
     """A problem set type."""
@@ -116,6 +124,12 @@ class ProblemSet(db.Model):
     
         return cls(problem_set_type_id=problem_set_type_id, problem_set_level=problem_set_level, problem_set_description=problem_set_description)
 
+    @classmethod
+    def get_all_problem_set_questions_by_problem_set_id(cls, problem_set_id):
+        """Return a list of all problem_set_questions, given a problem_set_id."""
+    
+        return cls.query.get(problem_set_id).problem_set_questions
+
 class ProblemSetQuestion(db.Model):
     """A problem set question."""
 
@@ -127,6 +141,7 @@ class ProblemSetQuestion(db.Model):
     answer_text = db.Column(db.VARCHAR(10), nullable=False)
 
     problem_set = db.relationship("ProblemSet", back_populates="problem_set_questions")
+    problem_set_question_answers = db.relationship("ProblemSetQuestionAnswer", back_populates="problem_set_question")
 
     def __repr__(self):
         return f"<ProblemSetQuestion problem_set_question_id={self.problem_set_question_id} problem_set_id={self.problem_set_id} question_text={self.question_text} answer_text={self.answer_text}>"
@@ -137,6 +152,33 @@ class ProblemSetQuestion(db.Model):
     
         return cls(problem_set_id=problem_set_id, question_text=question_text, answer_text=answer_text)
     
+class ProblemSetQuestionAnswer(db.Model):
+    """A student's answer to a problem set question."""
+
+    __tablename__ = "problem_set_question_answers"
+
+    problem_set_question_answer_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    student_id = db.Column(db.Integer, db.ForeignKey("students.student_id"), nullable=False)
+    problem_set_question_id = db.Column(db.Integer, db.ForeignKey("problem_set_questions.problem_set_question_id"))
+    student_answer = db.Column(db.VARCHAR(10), nullable=False)
+    time_to_answer = db.Column(db.Integer, nullable=False)
+    date_assessed = db.Column(db.DateTime, nullable=False)
+
+    student = db.relationship("Student", back_populates="problem_set_question_answers")
+    problem_set_question = db.relationship("ProblemSetQuestion", back_populates="problem_set_question_answers")
+
+    def __repr__(self):
+        return f"<ProblemSetQuestionAnswer problem_set_question_answer_id={self.problem_set_question_answer_id} student_id={self.student_id} date_assessed={self.date_assessed}>"
+    
+    @classmethod
+    def create (cls, student_id, problem_set_question_id, student_answer, time_to_answer, date_assessed):
+        """Create and return a student's answer to a problem set question."""
+
+        return cls(student_id=student_id, problem_set_question_id=problem_set_question_id, student_answer=student_answer, time_to_answer=time_to_answer, date_assessed=date_assessed)
+
+
+
+     
 def connect_to_db(flask_app, db_uri="postgresql:///factswise", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
