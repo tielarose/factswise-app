@@ -105,6 +105,7 @@ class ProblemSet(db.Model):
 
     problem_set_type = db.relationship("ProblemSetType", back_populates="problem_sets")
     students = db.relationship("Student", back_populates="problem_set")
+    problem_set_questions = db.relationship("ProblemSetQuestion", back_populates="problem_set")
 
     def __repr__(self):
         return f"<ProblemSet problem_set_id={self.problem_set_id} problem_set_type_id={self.problem_set_type_id} problem_set_level={self.problem_set_level} problem_set_description={self.problem_set_description}>"
@@ -114,6 +115,27 @@ class ProblemSet(db.Model):
         """Create and return a new problem set."""
     
         return cls(problem_set_type_id=problem_set_type_id, problem_set_level=problem_set_level, problem_set_description=problem_set_description)
+
+class ProblemSetQuestion(db.Model):
+    """A problem set question."""
+
+    __tablename__ = "problem_set_questions"
+
+    problem_set_question_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    problem_set_id = db.Column(db.Integer, db.ForeignKey("problem_sets.problem_set_id"), nullable=False)
+    question_text = db.Column(db.VARCHAR(30), nullable=False)
+    answer_text = db.Column(db.VARCHAR(10), nullable=False)
+
+    problem_set = db.relationship("ProblemSet", back_populates="problem_set_questions")
+
+    def __repr__(self):
+        return f"<ProblemSetQuestion problem_set_question_id={self.problem_set_question_id} problem_set_id={self.problem_set_id} question_text={self.question_text} answer_text={self.answer_text}>"
+
+    @classmethod
+    def create(cls, problem_set_id, question_text, answer_text):
+        """Create and return a new problem set question."""
+    
+        return cls(problem_set_id=problem_set_id, question_text=question_text, answer_text=answer_text)
     
 def connect_to_db(flask_app, db_uri="postgresql:///factswise", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

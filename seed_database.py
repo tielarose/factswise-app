@@ -4,6 +4,7 @@ import os
 
 import model
 import server
+from problem_set_questions_creator import problem_set_seed_data, create_mult_div_problem_set_questions, create_add_sub_problem_set_questions
 
 from random import choice
 from faker import Faker
@@ -63,6 +64,30 @@ problem_set_types.append(mult_div)
 model.db.session.add(mult_div)
 
 model.db.session.commit()
+
+#create add_sub problem_sets 1-3, mult_div problem_sets 1-3, and all problem_set_questions for each
+for data_set in problem_set_seed_data:
+    problem_set = model.ProblemSet.create(
+        problem_set_type_id=data_set["problem_set_type_id"], 
+        problem_set_level=data_set["problem_set_level"], 
+        problem_set_description=data_set["problem_set_description"])
+
+    model.db.session.add(problem_set)
+    model.db.session.commit()
+
+    if data_set["problem_set_type_id"] == 1:
+        problem_set_questions = create_add_sub_problem_set_questions(data_set["list_of_part_part_wholes"])
+    elif data_set["problem_set_type_id"] == 2:
+        problem_set_questions = create_mult_div_problem_set_questions(data_set["list_of_factor_factor_products"])
+
+    for question_text, answer_text in problem_set_questions:
+        problem_set_question = model.ProblemSetQuestion.create(
+            problem_set_id=problem_set.problem_set_id, 
+            question_text=question_text, 
+            answer_text=answer_text)
+
+        model.db.session.add(problem_set_question)
+        model.db.session.commit()
 
 #create 15 students per classroom
 students = []
