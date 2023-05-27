@@ -1,13 +1,22 @@
-import { useState } from "react";
 import "./App.css";
-import MainNavbar from "./MainNavbar";
+import LoggedOutNavbar from "./LoggedOutNavbar";
+import WelcomeScreen from "../WelcomeScreen";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// { isLoggedOut && <LoggedOutNavbar />}
+// { isStudent && <StudentNavbar />}
+// or
+// <Navbar /> --> determines which to render
 
 function App() {
   return (
-    <>
-      <MainNavbar />
-      <p>This is where the app will go</p>
-    </>
+    <BrowserRouter>
+      <LoggedOutNavbar />
+      <Routes>
+        {/* for each route, do what is on the line below */}
+        <Route exact path="/" element={<WelcomeScreen />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
