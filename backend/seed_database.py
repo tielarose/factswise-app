@@ -46,7 +46,7 @@ for educator in educators:
 
     for i in range(2):
         classroom = model.Classroom.create(
-            classroom_name=f"{grade_level} {years[i]}", 
+            classroom_name=f"{grade_level} {years[i]}", classroom_code=f"{educator.educator_last_name[:3]}{choice(range(100,999))}",
             educator_id=educator.educator_id)
 
         classrooms.append(classroom)

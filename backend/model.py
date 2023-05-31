@@ -34,6 +34,7 @@ class Classroom(db.Model):
 
     classroom_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     classroom_name = db.Column(db.VARCHAR(15), nullable=False)
+    classroom_code = db.Column(db.VARCHAR(6), nullable=False)
     educator_id = db.Column(db.Integer, db.ForeignKey("educators.educator_id"), nullable=False)
 
     educator = db.relationship("Educator", back_populates="classrooms")
@@ -43,10 +44,10 @@ class Classroom(db.Model):
         return f"<Classroom classroom_id={self.classroom_id} classroom_name={self.classroom_name}>"
     
     @classmethod
-    def create(cls, classroom_name, educator_id):
+    def create(cls, classroom_name, classroom_code, educator_id):
         """Create and return a new classroom."""
 
-        return cls(classroom_name=classroom_name, educator_id=educator_id)
+        return cls(classroom_name=classroom_name, classroom_code=classroom_code, educator_id=educator_id)
 
 class Student(db.Model):
     """A student."""
