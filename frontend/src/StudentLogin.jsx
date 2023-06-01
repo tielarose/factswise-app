@@ -10,7 +10,7 @@ export default function StudentLogin() {
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    console.log("form was submitted");
+    console.log(studentClassCode);
   }
 
   return (

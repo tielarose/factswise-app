@@ -64,6 +64,18 @@ class Classroom(db.Model):
         """Create and return a new classroom."""
 
         return cls(classroom_name=classroom_name, classroom_code=classroom_code, educator_id=educator_id)
+    
+    @classmethod
+    def get_by_classroom_code(cls, classroom_code):
+        return cls.query.filter(cls.classroom_code == classroom_code).first();
+
+    def to_dict(self):
+        return {"classroom_id": self.classroom_id,
+            "classroom_name": self.classroom_name,
+            "classroom_code": self.classroom_code,
+            "educator_id": self.educator_id
+        }
+
 
 class Student(db.Model):
     """A student."""
@@ -98,6 +110,9 @@ class Student(db.Model):
     
         student = cls.query.get(student_id)
         student.current_problem_set = new_problem_set_id
+
+    def to_dict(self):
+        return {"student_id": self.student_id, "classroom_id": self.classroom_id, "student_first_name": self.student_first_name, "student_last_name": self.student_last_name, "student_grade_level": self.student_grade_level, "student_login_icon": self.student_login_icon, "student_password": self.student_password, "current_problem_set": self.current_problem_set }
 
 class ProblemSetType(db.Model):
     """A problem set type."""
