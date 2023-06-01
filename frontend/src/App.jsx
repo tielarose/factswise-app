@@ -2,6 +2,7 @@ import "./App.css";
 import LoggedOutNavbar from "./LoggedOutNavbar";
 import WelcomeScreen from "./WelcomeScreen";
 import EducatorLogin from "./EducatorLogin";
+import StudentLogin from "./StudentLogin";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // { isLoggedOut && <LoggedOutNavbar />}
@@ -17,6 +18,7 @@ function App() {
         {/* for each route, do what is on the line below */}
         <Route exact path="/" element={<WelcomeScreen />}></Route>
         <Route exact path="/educator/login" element={<EducatorLogin />}></Route>
+        <Route exact path="/student/login" element={<StudentLogin />}></Route>
       </Routes>
     </BrowserRouter>
   );
