@@ -26,6 +26,22 @@ class Educator(db.Model):
         """Create and return a new educator."""
     
         return cls(educator_first_name=educator_first_name, educator_last_name=educator_last_name, educator_display_name=educator_display_name, educator_email=educator_email, educator_password=educator_password)
+    
+    @classmethod
+    def get_by_email(cls, educator_email):
+        return cls.query.filter(cls.educator_email == educator_email).first()
+    
+    @classmethod
+    def get_by_id(cls, educator_id):
+        return cls.query.get(educator_id)
+    
+    def to_dict(self):
+        return {'educator_id': self.educator_id,
+                'educator_first_name': self.educator_first_name,
+                'educator_last_name': self.educator_last_name,
+                'educator_display_name': self.educator_display_name,
+                'educator_email': self.educator_email,
+                'educator_password': self.educator_password}
 
 class Classroom(db.Model):
     """A classroom."""
@@ -189,6 +205,7 @@ def connect_to_db(flask_app, db_uri="postgresql:///factswise", echo=True):
     db.init_app(flask_app)
 
     print("Connected to db!")
+
 
 if __name__ == "__main__":
     from server import app
