@@ -1,0 +1,12 @@
+.StudentLogin {
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.StudentLogin-form {
+  display: flex;
+  flex-direction: column;
+}

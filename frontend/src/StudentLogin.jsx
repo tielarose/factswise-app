@@ -1,47 +1,40 @@
-import React, { useState, useEffect } from "react";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import React, { useState } from "react";
+import "./StudentLogin.css";
 
 export default function StudentLogin() {
-  const [studentClassCode, setStudentClassCode] = useState("");
+  const [studentClassroomCode, setStudentClassroomCode] = useState("");
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    fetch(`/api/student/login/${studentClassCode}`)
+    fetch(`/api/student/login/${studentClassroomCode}`)
       .then((response) => response.json())
-      .then((result) => console.log(result));
-
-    // useEffect.(() => {
-    //   fetch(`/api/student/login/${studentClassCode}`)
-    // .then((response) =>
-    //   response.json())
-    //     .then((result) => console.log(result))
-    // })
+      .then((data) => console.log(data));
   }
 
   return (
-    <>
-      <Form onSubmit={handleSubmit}>
-        <Row>
-          <Col md={3}>
-            <Form.Group controlId="student_class_code">
-              <Form.Label>Enter your class code</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="class code"
-                value={studentClassCode}
-                onChange={(evt) => setStudentClassCode(evt.target.value)}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </>
+    <div className="StudentLogin">
+      <h2>Student Login</h2>
+      <p>
+        Not a student? <a href="/">Go back</a>
+      </p>
+      <div>
+        <form className="StudentLogin-form" onSubmit={handleSubmit}>
+          <label htmlFor="StudentLogin-classroom-code">
+            Enter your class code:
+          </label>
+          <input
+            type="text"
+            placeholder="class code"
+            value={studentClassroomCode}
+            onChange={(evt) => setStudentClassroomCode(evt.target.value)}
+            name="StudentLogin-classroom-code"
+            id="StudentLogin-classroom-code"
+            required
+          />
+          <button>Next</button>
+        </form>
+      </div>
+    </div>
   );
 }
