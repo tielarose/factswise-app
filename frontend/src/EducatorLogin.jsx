@@ -14,7 +14,8 @@ export default function EducatorLogin() {
 
   return (
     <div className="EducatorLogin">
-      <h2>Educator Login</h2>
+      <h2>Educators:</h2>
+      <h3>Log In or Sign Up</h3>
       <p>
         Not an educator? <a href="/">Go back</a>
       </p>

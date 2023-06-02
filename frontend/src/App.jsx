@@ -2,6 +2,7 @@ import "./App.css";
 import Navbar from "./Navbar";
 import Homepage from "./Homepage";
 import EducatorLogin from "./EducatorLogin";
+import EducatorSignup from "./EducatorSignup";
 import StudentLogin from "./StudentLogin";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -18,6 +19,11 @@ function App() {
         {/* for each route, do what is on the line below */}
         <Route exact path="/" element={<Homepage />}></Route>
         <Route exact path="/educator/login" element={<EducatorLogin />}></Route>
+        <Route
+          exact
+          path="/educator/signup"
+          element={<EducatorSignup />}
+        ></Route>
         <Route exact path="/student/login" element={<StudentLogin />}></Route>
       </Routes>
     </BrowserRouter>
