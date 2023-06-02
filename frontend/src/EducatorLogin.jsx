@@ -1,42 +1,40 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import "./EducatorLogin.css";
 
-function EducatorLogin() {
+export default function EducatorLogin() {
   const [educatorEmail, setEducatorEmail] = useState("");
 
-  const handleSubmit = (evt) => {
+  function handleSubmit(evt) {
     evt.preventDefault();
 
-    console.log("line 13, before fetch");
-    fetch(`/api/educator/login/${educatorEmail}`).then((response) =>
-      console.log(response.json)
-    );
-    // .then((responseJson) => console.log(responseJson));
-  };
+    fetch(`/api/educator/login/${educatorEmail}`)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Row>
-        <Col md={3}>
-          <Form.Group controlId="educator_email">
-            <Form.Label>Enter your email to continue</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="email"
-              value={educatorEmail}
-              onChange={(evt) => setEducatorEmail(evt.target.value)}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Col>
-      </Row>
-    </Form>
+    <div className="EducatorLogin">
+      <h2>Educator Login</h2>
+      <p>
+        Not an educator? <a href="/">Go back</a>
+      </p>
+      <div>
+        <form className="EducatorLogin-form" onSubmit={handleSubmit}>
+          <label htmlFor="EducatorLogin-educator-email">
+            Enter your email address:
+          </label>
+          <input
+            type="email"
+            placeholder="email"
+            value={educatorEmail}
+            onChange={(evt) => setEducatorEmail(evt.target.value)}
+            name="EducatorLogin-educator-email"
+            id="EducatorLogin-educator-email"
+            required
+          ></input>
+          <button>Next</button>
+        </form>
+      </div>
+    </div>
   );
 }
-
-export default EducatorLogin;
