@@ -23,6 +23,8 @@ def check_if_educator_in_database(educator_email):
 def check_if_classroom_code_in_database(classroom_code):
     """Check if a classroom exists for the given code. If so, return the teacher display name and a list of all students for that classroom."""
 
+    print("*" * 20)
+    print("educator/login/email route was visited")
     classroom = Classroom.get_by_classroom_code(classroom_code);
 
     if classroom:
