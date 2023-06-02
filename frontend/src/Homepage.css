@@ -1,0 +1,23 @@
+.Homepage {
+  padding: 20px;
+  text-align: center;
+}
+
+.Homepage-login-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.Homepage-login-buttons button {
+  border-radius: 10px;
+  border: none;
+  padding: 10px 20px;
+}
+
+.Homepage-login-button-educator {
+  background-color: #99d1ff;
+}
+
+.Homepage-login-button-student {
+  background-color: #fede86;
+}
