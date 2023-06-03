@@ -1,15 +1,23 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./EducatorLogin.css";
 
 export default function EducatorLogin() {
   const [educatorEmail, setEducatorEmail] = useState("");
+  const navigate = useNavigate();
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
     fetch(`/api/educator/login/${educatorEmail}`)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (!data.educator_id) {
+          navigate("/educator/signup");
+        } else {
+          console.log("educator was found");
+        }
+      });
   }
 
   return (
