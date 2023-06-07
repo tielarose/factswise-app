@@ -154,6 +154,10 @@ class Student(db.Model):
         )
 
     @classmethod
+    def get_by_id(cls, student_id):
+        return cls.query.get(student_id)
+
+    @classmethod
     def update_current_problem_set(cls, student_id, new_problem_set_id):
         """Update a student's current problem set, given a student_id and the updated problem set id."""
 

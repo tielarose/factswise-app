@@ -1,22 +1,40 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function EducatorLoginPasswordInput(props) {
+  const navigate = useNavigate();
   const [educatorPassword, setEducatorPassword] = useState("");
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    console.log("a password was submitted");
+    fetch(`/api/educator/login/${props.educatorEmail}`, {
+      method: "POST",
+      body: JSON.stringify({
+        educator_password: educatorPassword
+      }),
+      headers: { "Content-Type": "application/json" }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.is_educator) {
+          localStorage.setItem("userId", data.user_id);
+          navigate("/educator/home");
+        } else {
+          console.log("not logged in");
+        }
+      });
   }
 
   return (
     <div className="EducatorLogin step2">
       <h2>Welcome back!</h2>
       <h4>
-        {props.educatorEmail}&nbsp;&nbsp;
+        {props.educatorEmail} (
         <a href="/educator/login" onClick={() => props.setEducatorInDB(false)}>
-          (Not you?)
+          Not you?
         </a>
+        )
       </h4>
 
       <div>

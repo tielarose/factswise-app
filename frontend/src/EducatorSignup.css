@@ -1,4 +1,4 @@
-.EducatorLogin {
+.EducatorSignup {
   height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
@@ -6,16 +6,16 @@
   padding-top: 80px;
 }
 
-.EducatorLogin-form {
+.EducatorSignup-form {
   display: flex;
   flex-direction: column;
 }
 
-.EducatorLogin input {
+.EducatorSignup input {
   min-width: 350px;
   text-align: center;
 }
 
-.EducatorLogin label {
+.EducatorSignup label {
   text-align: center;
 }

@@ -12,7 +12,10 @@ export default function EducatorLoginEmailInput(props) {
       .then((response) => response.json())
       .then((data) => {
         if (!data.educator_id) {
-          navigate("/educator/signup");
+          console.log(data);
+          navigate("/educator/signup", {
+            state: { inputEmail: data.educator_email }
+          });
         } else {
           props.setEducatorInDB(true);
         }
