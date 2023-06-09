@@ -65,6 +65,19 @@ def add_educator_to_db():
         return jsonify({"user_id": educator.educator_id})
 
 
+@app.route("/api/educator/<educator_id>/info")
+def get_educator_classrooms_and_students(educator_id):
+    """Given an educator_id, return a list of classrooms and the students for the first classroom."""
+
+    educator = Educator.get_by_id(educator_id)
+    classrooms = [classroom.classroom_name for classroom in educator.classrooms]
+    students = [student.to_dict() for student in educator.classrooms[0].students]
+
+    return jsonify(
+        {"educator": educator.to_dict(), "classrooms": classrooms, "students": students}
+    )
+
+
 @app.route("/api/student/login/<classroom_code>")
 def check_if_classroom_code_in_database(classroom_code):
     """Check if a classroom exists for the given code. If so, return the teacher display name and a list of all students for that classroom."""

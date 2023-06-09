@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { AppContext } from "./App";
@@ -12,9 +11,6 @@ export default function Navbar(props) {
   function handleLogOut() {
     localStorage.clear();
     props.setCurrentUser({});
-    setNavIsStudent(false);
-    setNavIsEducator(false);
-    setNavCurrentUser({});
     navigate("/");
   }
 
