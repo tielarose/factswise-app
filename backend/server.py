@@ -30,12 +30,7 @@ def log_in_educator(educator_email):
     if educator.educator_password == password_entered:
         print("password matched!")
         return jsonify(
-            {
-                "user_id": educator.educator_id,
-                "is_student": False,
-                "is_educator": True,
-                "name": f"{educator.educator_first_name} {educator.educator_last_name}",
-            }
+            {"is_student": False, "is_educator": True, "user_info": educator.to_dict()}
         )
 
     return jsonify({"educator_id": educator.educator_id, "logged_in": False})
@@ -83,13 +78,36 @@ def check_if_classroom_code_in_database(classroom_code):
         return jsonify({"classroom": {"classroom_code": None}})
 
 
-def isStudent(user_id):
+@app.route("/api/checkuser", methods=["POST"])
+def check_user():
+    """Given a user_id, check if they are a student or educator."""
+
+    user_id = request.json.get("userId")
+
+    if user_id:
+        if is_student(user_id):
+            user_info = Student.get_by_id(user_id).to_dict()
+        if is_educator(user_id):
+            user_info = Educator.get_by_id(user_id).to_dict()
+    else:
+        user_info = {}
+
+    return jsonify(
+        {
+            "is_student": is_student(user_id),
+            "is_educator": is_educator(user_id),
+            "user_info": user_info,
+        }
+    )
+
+
+def is_student(user_id):
     """Checks a user's id against the database; returns true if that user is a student."""
 
     return Student.get_by_id(user_id) != None
 
 
-def isEducator(user_id):
+def is_educator(user_id):
     """Checks a user's id against the database; returns true if that user is an educator."""
 
     return Educator.get_by_id(user_id) != None

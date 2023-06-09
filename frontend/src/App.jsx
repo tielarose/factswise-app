@@ -6,48 +6,81 @@ import EducatorSignup from "./EducatorSignup";
 import EducatorDashboard from "./EducatorDashboard";
 import StudentLogin from "./StudentLogin";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 
-// { isLoggedOut && <LoggedOutNavbar />}
-// { isStudent && <StudentNavbar />}
-// or
-// <Navbar /> --> determines which to render
-
-// const CurrentUserContext = createContext(null);
+export const AppContext = createContext(null);
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+  const [isEducator, setIsEducator] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
+
+  // console.log(
+  //   "App.jsx, line 18: currentUser, isEducator, isStudent: ",
+  //   currentUser,
+  //   isEducator,
+  //   isStudent
+  // );
+
+  useEffect(() => {
+    if (localStorage.getItem("userId")) {
+      fetch("/api/checkuser", {
+        method: "POST",
+        body: JSON.stringify({
+          user_id: localStorage.getItem("userId")
+        }),
+        headers: { "Content-Type": "application/json" }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setIsStudent(data.is_student);
+          setIsEducator(data.is_educator);
+          setCurrentUser(data.user_info);
+        });
+    }
+  }, []);
 
   return (
     <BrowserRouter>
-      {/* <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}> */}
-      <Navbar />
-      <Routes>
-        {/* for each route, do what is on the line below */}
-        <Route exact path="/" element={<Homepage />}></Route>
-        <Route
-          exact
-          path="/educator/login"
-          element={
-            <EducatorLogin
-              currentUser={currentUser}
-              setCurrentUser={setCurrentUser}
-            />
-          }
-        ></Route>
-        <Route
-          exact
-          path="/educator/signup"
-          element={<EducatorSignup />}
-        ></Route>
-        <Route
-          exact
-          path="/educator/home"
-          element={<EducatorDashboard currentUser={currentUser} />}
-        ></Route>
-        <Route exact path="/student/login" element={<StudentLogin />}></Route>
-      </Routes>
-      {/* </CurrentUserContext.Provider> */}
+      <AppContext.Provider
+        value={{
+          currentUser,
+          isEducator,
+          isStudent
+        }}
+      >
+        <Navbar setCurrentUser={setCurrentUser} />
+        <Routes>
+          {/* for each route, do what is on the line below */}
+          <Route exact path="/" element={<Homepage />}></Route>
+          <Route
+            exact
+            path="/educator/login"
+            element={
+              <EducatorLogin
+                setCurrentUser={setCurrentUser}
+                setIsEducator={setIsEducator}
+              />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/educator/signup"
+            element={
+              <EducatorSignup
+                setCurrentUser={setCurrentUser}
+                setIsEducator={setIsEducator}
+              />
+            }
+          ></Route>
+          <Route
+            exact
+            path="/educator/home"
+            element={<EducatorDashboard currentUser={currentUser} />}
+          ></Route>
+          <Route exact path="/student/login" element={<StudentLogin />}></Route>
+        </Routes>
+      </AppContext.Provider>
     </BrowserRouter>
   );
 }

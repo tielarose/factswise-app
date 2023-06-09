@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "./App";
 
 export default function EducatorLoginPasswordInput(props) {
   const navigate = useNavigate();
   const [educatorPassword, setEducatorPassword] = useState("");
+  const value = useContext(AppContext);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -18,7 +20,9 @@ export default function EducatorLoginPasswordInput(props) {
       .then((response) => response.json())
       .then((data) => {
         if (data.is_educator) {
-          localStorage.setItem("userId", data.user_id);
+          localStorage.setItem("userId", data.user_info.educator_id);
+          props.setCurrentUser(data.user_info);
+          props.setIsEducator(data.is_educator);
           navigate("/educator/home");
         } else {
           console.log("not logged in");
