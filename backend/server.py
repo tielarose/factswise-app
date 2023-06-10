@@ -1,8 +1,6 @@
 """Server for factswise app."""
 
 from flask import Flask, jsonify, request
-
-# from model import Educator
 from model import connect_to_db, db, Educator, Classroom, Student
 
 app = Flask(__name__)
@@ -28,6 +26,7 @@ def log_in_educator(educator_email):
     password_entered = request.json.get("educator_password")
 
     if educator.educator_password == password_entered:
+        print("*" * 40)
         print("password matched!")
         return jsonify(
             {"is_student": False, "is_educator": True, "user_info": educator.to_dict()}
@@ -65,14 +64,27 @@ def add_educator_to_db():
         return jsonify({"user_id": educator.educator_id})
 
 
-@app.route("/api/educator/<educator_id>/info")
+@app.route("/api/educator/<educator_id>/classrooms")
 def get_educator_classrooms(educator_id):
     """Given an educator_id, return a list of that educator's classrooms."""
 
     educator = Educator.get_by_id(educator_id)
     classrooms = [classroom.to_dict() for classroom in educator.classrooms]
 
-    return jsonify({"educator": educator.to_dict(), "classrooms": classrooms})
+    return jsonify({"classrooms": classrooms})
+
+
+@app.route("/api/educator/classroom_info/<classroom_id>")
+def get_classroom_info(classroom_id):
+    """Given a classroom_id, return a list of students in that classroom."""
+
+    print("&" * 40)
+    print("classroom_id is", classroom_id)
+
+    classroom = Classroom.get_by_id(classroom_id)
+    students = [student.to_dict() for student in classroom.students]
+
+    return jsonify({"students": students})
 
 
 @app.route("/api/student/login/<classroom_code>")
@@ -92,15 +104,17 @@ def check_if_classroom_code_in_database(classroom_code):
 def check_user():
     """Given a user_id, check if they are a student or educator."""
 
-    user_id = request.json.get("userId")
+    user_id = request.json.get("user_id")
+    print("$" * 40)
+    print("checkuser is running, user_id is", user_id)
 
-    if user_id:
+    if user_id != None:
         if is_student(user_id):
             user_info = Student.get_by_id(user_id).to_dict()
         if is_educator(user_id):
             user_info = Educator.get_by_id(user_id).to_dict()
     else:
-        user_info = {}
+        user_info = None
 
     return jsonify(
         {

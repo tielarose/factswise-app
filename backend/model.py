@@ -91,6 +91,10 @@ class Classroom(db.Model):
         )
 
     @classmethod
+    def get_by_id(cls, classroom_id):
+        return cls.query.get(classroom_id)
+
+    @classmethod
     def get_by_classroom_code(cls, classroom_code):
         return cls.query.filter(cls.classroom_code == classroom_code).first()
 

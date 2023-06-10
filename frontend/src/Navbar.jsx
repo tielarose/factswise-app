@@ -10,7 +10,10 @@ export default function Navbar(props) {
   const isEducator = allContext.isEducator;
   const isStudent = allContext.isStudent;
 
+  // console.log("Navbar allContext is", allContext);
+
   function handleLogOut() {
+    console.log("LOG OUT RAN!");
     localStorage.clear();
     props.setCurrentUser(null);
     props.setIsEducator(false);

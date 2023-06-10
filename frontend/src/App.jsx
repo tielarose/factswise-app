@@ -16,11 +16,13 @@ function App() {
   const [isStudent, setIsStudent] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("userId")) {
+    const user_id = localStorage.getItem("userId");
+
+    if (user_id != null) {
       fetch("/api/checkuser", {
         method: "POST",
         body: JSON.stringify({
-          user_id: localStorage.getItem("userId")
+          user_id: user_id
         }),
         headers: { "Content-Type": "application/json" }
       })
