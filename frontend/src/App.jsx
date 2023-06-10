@@ -11,16 +11,9 @@ import { useState, createContext, useEffect } from "react";
 export const AppContext = createContext(null);
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState(null);
   const [isEducator, setIsEducator] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
-
-  // console.log(
-  //   "App.jsx, line 18: currentUser, isEducator, isStudent: ",
-  //   currentUser,
-  //   isEducator,
-  //   isStudent
-  // );
 
   useEffect(() => {
     if (localStorage.getItem("userId")) {
@@ -49,7 +42,11 @@ function App() {
           isStudent
         }}
       >
-        <Navbar setCurrentUser={setCurrentUser} />
+        <Navbar
+          setCurrentUser={setCurrentUser}
+          setIsEducator={setIsEducator}
+          setIsStudent={setIsStudent}
+        />
         <Routes>
           {/* for each route, do what is on the line below */}
           <Route exact path="/" element={<Homepage />}></Route>

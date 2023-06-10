@@ -66,16 +66,13 @@ def add_educator_to_db():
 
 
 @app.route("/api/educator/<educator_id>/info")
-def get_educator_classrooms_and_students(educator_id):
-    """Given an educator_id, return a list of classrooms and the students for the first classroom."""
+def get_educator_classrooms(educator_id):
+    """Given an educator_id, return a list of that educator's classrooms."""
 
     educator = Educator.get_by_id(educator_id)
-    classrooms = [classroom.classroom_name for classroom in educator.classrooms]
-    students = [student.to_dict() for student in educator.classrooms[0].students]
+    classrooms = [classroom.to_dict() for classroom in educator.classrooms]
 
-    return jsonify(
-        {"educator": educator.to_dict(), "classrooms": classrooms, "students": students}
-    )
+    return jsonify({"educator": educator.to_dict(), "classrooms": classrooms})
 
 
 @app.route("/api/student/login/<classroom_code>")

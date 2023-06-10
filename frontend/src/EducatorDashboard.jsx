@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
-import { AppContext } from "./App";
+import { useEffect, useState, useContext } from "react";
+import App, { AppContext } from "./App";
 import "./EducatorDashboard.css";
 
 export default function EducatorDashboard() {
-  const currentUser = AppContext.currentUser;
+  const allContext = useContext(AppContext);
+  const currentUser = allContext.currentUser;
   const [currentClassroom, setCurrentClassroom] = useState(null);
-  const [students, setStudents] = useState([]);
-  const [educUser, setEducUser] = useState({});
-  const [allClassrooms, setAllClassrooms] = useState([]);
-  // const [allStudents, setAllStudents] = useState([]);
-
-  // let studentsArray = [];
-  // let classroomsArray = [];
+  const [educator, setEducator] = useState({});
+  const [classrooms, setClassrooms] = useState([]);
 
   useEffect(() => {
     const user_id = localStorage.getItem("userId");
@@ -19,13 +15,26 @@ export default function EducatorDashboard() {
     fetch(`/api/educator/${user_id}/info`)
       .then((response) => response.json())
       .then((data) => {
-        setEducUser(data.educator);
+        setEducator(data.educator);
+        setClassrooms(data.classrooms);
         setCurrentClassroom(data.classrooms[0]);
-        setStudents(data.students);
-        setAllClassrooms(data.classrooms);
       });
   }, []);
 
+  // console.log("line 27, educator is", educator);
+  // console.log("line 28, classrooms is", classrooms);
+  // console.log("line 29, currentClassroom is", currentClassroom);
+  // function handleClassroomClick(classroom_code) {
+  //   setCurrentClassroom(classroom_code);
+  // }
+
+  // const classroomLinks = classrooms.map((classroom) => (
+  //   <a href="" onClick={handleClassroomClick(classroom.classroom_code)}>
+  //     {classroom.classroom_name}
+  //   </a>
+  // ));
+
+  // need to get useContext to work for this, could replace setEducator if it works
   console.log(
     "EducatorDashboard component, line 5; currentUser is: ",
     currentUser
@@ -34,29 +43,20 @@ export default function EducatorDashboard() {
   return (
     <div className="EducatorDashboard">
       <h2>
-        Welcome, {educUser.educator_first_name} {educUser.educator_last_name}
+        Welcome, {educator.educator_first_name} {educator.educator_last_name}
       </h2>
-      <p>Current Classroom: {currentClassroom}</p>
       <p>
-        Switch Classrooms:{" "}
-        {allClassrooms.map((classroom) => (
-          <a href="">{classroom}</a>
-        ))}
+        Current Classroom:{" "}
+        {currentClassroom ? currentClassroom.classroom_name : ""}
       </p>
-      <table>
-        <tr>
-          <th>Student Name</th>
-          <th>Current Goal</th>
-        </tr>
-        {students.map((student) => (
-          <tr>
-            <td>
-              {student.student_first_name} {student.student_last_name}
-            </td>
-            <td>{student.current_problem_set}</td>
-          </tr>
-        ))}
-      </table>
+      {/* <p>Switch Classrooms: {classroomLinks}</p> */}
+
+      <p>
+        <a href="">Create a new student</a>
+      </p>
+      <p>
+        <a href="">Create a new class</a>
+      </p>
     </div>
   );
 }
