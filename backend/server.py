@@ -1,6 +1,7 @@
 """Server for factswise app."""
 
 from flask import Flask, jsonify, request
+from random import choice
 from model import connect_to_db, db, Educator, Classroom, Student
 
 app = Flask(__name__)
@@ -91,6 +92,27 @@ def create_new_student():
 
     # how do I get the student I just added? first name and last name and class code maybe?
     return jsonify({"added": "a student"})
+
+
+@app.route("/api/educator/new/classroom", methods=["POST"])
+def create_new_classroom():
+    """Create a new classroom for the given educator."""
+
+    educator_id = request.json.get("educator_id")
+    educator_last_name = request.json.get("educator_last_name")
+    classroom_name = request.json.get("classroom_name")
+    classroom_code = f"{educator_last_name[:3]}{choice(range(100,999))}"
+
+    new_classroom = Classroom.create(
+        educator_id=educator_id,
+        classroom_code=classroom_code,
+        classroom_name=classroom_name,
+    )
+
+    db.session.add(new_classroom)
+    db.session.commit()
+
+    return jsonify({"added": "a classroom"})
 
 
 @app.route("/api/educator/<educator_id>/classrooms")

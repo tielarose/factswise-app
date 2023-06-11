@@ -6,6 +6,7 @@ import EducatorSignup from "./EducatorSignup";
 import EducatorDashboard from "./EducatorDashboard";
 import StudentLogin from "./StudentLogin";
 import NewStudent from "./NewStudent";
+import NewClassroom from "./NewClassroom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, createContext, useEffect } from "react";
 
@@ -82,6 +83,11 @@ function App() {
             exact
             path="/educator/new/student"
             element={<NewStudent />}
+          ></Route>
+          <Route
+            exact
+            path="/educator/new/classroom"
+            element={<NewClassroom />}
           ></Route>
           <Route exact path="/student/login" element={<StudentLogin />}></Route>
         </Routes>

@@ -69,7 +69,7 @@ class Classroom(db.Model):
 
     classroom_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     classroom_name = db.Column(db.VARCHAR(15), nullable=False)
-    classroom_code = db.Column(db.VARCHAR(6), nullable=False)
+    classroom_code = db.Column(db.VARCHAR(6), nullable=False, unique=True)
     educator_id = db.Column(
         UUID(as_uuid=True), db.ForeignKey("educators.educator_id"), nullable=False
     )

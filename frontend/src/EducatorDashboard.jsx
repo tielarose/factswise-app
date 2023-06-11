@@ -35,6 +35,10 @@ export default function EducatorDashboard() {
     });
   }
 
+  function handleNewClassroomClick() {
+    navigate("/educator/new/classroom");
+  }
+
   const classroomLinks = classrooms.map((classroom) => (
     <button
       onClick={() => handleClassroomClick(classroom)}
@@ -66,7 +70,7 @@ export default function EducatorDashboard() {
         <button onClick={handleNewStudentClick}>Create a new student</button>{" "}
       </p>{" "}
       <p>
-        <Link to="/educator/new/classroom">Create a new class</Link>{" "}
+        <button onClick={handleNewClassroomClick}>Create a new class</button>{" "}
       </p>
     </div>
   );
