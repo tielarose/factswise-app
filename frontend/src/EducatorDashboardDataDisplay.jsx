@@ -6,11 +6,14 @@ export default function EducatorDashboardDataDisplay(props) {
   const [allStudents, setAllStudents] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/educator/classroom_info/${classroom_id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setAllStudents(data.students);
-      });
+    if (classroom_id) {
+      console.log("DataDisplay, classroom_id is", classroom_id);
+      fetch(`/api/educator/classroom_info/${classroom_id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setAllStudents(data.students);
+        });
+    }
   }, []);
 
   const studentRows = allStudents.map((student) => (

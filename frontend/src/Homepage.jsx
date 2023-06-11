@@ -30,23 +30,5 @@ export default function Homepage() {
         </Link>
       </div>
     </div>
-
-    /* <Container>
-      <h1>Some Big Welcome Text Here</h1>
-      <p>Probably a sentence explaining more here</p>
-
-      <Row>
-        <Col md={3}>
-          <Link to="/educator/login">
-            <Button size="lg">Educator Log In</Button>
-          </Link>
-        </Col>
-        <Col md={3}>
-          <Link to="/student/login">
-            <Button size="lg">Student Log In</Button>
-          </Link>
-        </Col>
-      </Row>
-    </Container> */
   );
 }

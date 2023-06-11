@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Navbar.css";
 import { AppContext } from "./App";
 import { useContext } from "react";
@@ -25,13 +25,11 @@ export default function Navbar(props) {
     // { isStudent && <NavbarStudent /> }
     // { isEducator && <NavbarEducator/> }
     <div className="Navbar">
-      <a href="/">MathFacts Home</a>
+      <Link to="/">MathFacts Home</Link>
       {currentUser != null ? (
-        <a href="" onClick={handleLogOut}>
-          Log Out
-        </a>
+        <button onClick={handleLogOut}>Log Out</button>
       ) : (
-        <a href="/">Log In</a>
+        <Link to="/">Log In</Link>
       )}
     </div>
   );

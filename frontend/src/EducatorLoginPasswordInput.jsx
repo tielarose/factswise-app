@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect } from "react-router-dom";
 import { AppContext } from "./App";
 
 export default function EducatorLoginPasswordInput(props) {
