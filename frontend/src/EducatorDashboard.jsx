@@ -47,9 +47,13 @@ export default function EducatorDashboard() {
         {currentClassroom ? currentClassroom.classroom_name : ""}
       </p>
       <p>Switch Classrooms: {classroomLinks}</p>{" "}
-      {/* <EducatorDashboardDataDisplay
-  //       classroom_id={currentClassroom?.classroom_id}
-  //     /> */}{" "}
+      {currentClassroom ? (
+        <EducatorDashboardDataDisplay
+          classroom_id={currentClassroom.classroom_id}
+        />
+      ) : (
+        ""
+      )}{" "}
       <p>
         <a href="">Create a new student</a>{" "}
       </p>{" "}

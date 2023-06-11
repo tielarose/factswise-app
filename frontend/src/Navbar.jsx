@@ -13,7 +13,6 @@ export default function Navbar(props) {
   // console.log("Navbar allContext is", allContext);
 
   function handleLogOut() {
-    console.log("LOG OUT RAN!");
     localStorage.clear();
     props.setCurrentUser(null);
     props.setIsEducator(false);

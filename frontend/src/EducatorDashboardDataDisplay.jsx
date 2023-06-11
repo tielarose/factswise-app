@@ -14,7 +14,7 @@ export default function EducatorDashboardDataDisplay(props) {
           setAllStudents(data.students);
         });
     }
-  }, []);
+  }, [classroom_id]);
 
   const studentRows = allStudents.map((student) => (
     <tr>
