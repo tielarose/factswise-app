@@ -1,0 +1,21 @@
+.NewStudent {
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+}
+
+.NewStudent-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.NewStudent input {
+  min-width: 350px;
+  text-align: center;
+}
+
+.NewStudent label {
+  text-align: center;
+}

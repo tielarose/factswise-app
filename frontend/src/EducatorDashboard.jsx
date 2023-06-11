@@ -1,10 +1,12 @@
 import { useEffect, useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "./App";
 import "./EducatorDashboard.css";
 import "./EducatorDashboardDataDisplay";
 import EducatorDashboardDataDisplay from "./EducatorDashboardDataDisplay";
 
 export default function EducatorDashboard() {
+  const navigate = useNavigate();
   const allContext = useContext(AppContext);
   const currentUser = allContext.currentUser;
   const [classrooms, setClassrooms] = useState([]);
@@ -25,6 +27,12 @@ export default function EducatorDashboard() {
 
   function handleClassroomClick(classroom) {
     setCurrentClassroom(classroom);
+  }
+
+  function handleNewStudentClick() {
+    navigate("/educator/new/student", {
+      state: { classroom: currentClassroom }
+    });
   }
 
   const classroomLinks = classrooms.map((classroom) => (
@@ -55,10 +63,10 @@ export default function EducatorDashboard() {
         ""
       )}{" "}
       <p>
-        <a href="">Create a new student</a>{" "}
+        <button onClick={handleNewStudentClick}>Create a new student</button>{" "}
       </p>{" "}
       <p>
-        <a href="">Create a new class</a>{" "}
+        <Link to="/educator/new/classroom">Create a new class</Link>{" "}
       </p>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import "./EducatorSignup.css";
 
@@ -41,10 +41,10 @@ export default function EducatorSignup() {
       <h2>Educators:</h2>
       <h4>Sign up for an account</h4>
       <p>
-        Not an educator? <a href="/">Go back</a>
+        Not an educator? <Link to="/">Go back</Link>
       </p>
       <p>
-        Already have an account? <a href="/educator/login">Sign in</a>
+        Already have an account? <Link to="/educator/login">Sign in</Link>
       </p>
       <div>
         <form className="EducatorSignup-form" onSubmit={handleSubmit}>

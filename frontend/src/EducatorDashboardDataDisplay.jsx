@@ -7,7 +7,6 @@ export default function EducatorDashboardDataDisplay(props) {
 
   useEffect(() => {
     if (classroom_id) {
-      console.log("DataDisplay, classroom_id is", classroom_id);
       fetch(`/api/educator/classroom_info/${classroom_id}`)
         .then((response) => response.json())
         .then((data) => {
@@ -17,7 +16,7 @@ export default function EducatorDashboardDataDisplay(props) {
   }, [classroom_id]);
 
   const studentRows = allStudents.map((student) => (
-    <tr>
+    <tr key={student.student_id}>
       <td>
         {student.student_first_name} {student.student_last_name}
       </td>
@@ -28,11 +27,13 @@ export default function EducatorDashboardDataDisplay(props) {
   return (
     <div className="DataDisplay">
       <table>
-        <tr>
-          <th>Student</th>
-          <th>Current Goal</th>
-        </tr>
-        {studentRows}
+        <tbody>
+          <tr>
+            <th>Student</th>
+            <th>Current Goal</th>
+          </tr>
+          {studentRows}
+        </tbody>
       </table>
     </div>
   );

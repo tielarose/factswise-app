@@ -64,6 +64,35 @@ def add_educator_to_db():
         return jsonify({"user_id": educator.educator_id})
 
 
+@app.route("/api/educator/new/student", methods=["POST"])
+def create_new_student():
+    """Create a new student in the given classroom."""
+
+    student_first_name = request.json.get("student_first_name")
+    student_last_name = request.json.get("student_last_name")
+    student_grade_level = request.json.get("student_grade_level")
+    student_password = request.json.get("student_password")
+    current_problem_set = request.json.get("current_problem_set")
+    classroom_id = request.json.get("classroom_id")
+    student_login_icon = request.json.get("student_login_icon")
+
+    new_student = Student.create(
+        student_first_name=student_first_name,
+        student_last_name=student_last_name,
+        student_grade_level=student_grade_level,
+        student_password=student_password,
+        current_problem_set=current_problem_set,
+        classroom_id=classroom_id,
+        student_login_icon=student_login_icon,
+    )
+
+    db.session.add(new_student)
+    db.session.commit()
+
+    # how do I get the student I just added? first name and last name and class code maybe?
+    return jsonify({"added": "a student"})
+
+
 @app.route("/api/educator/<educator_id>/classrooms")
 def get_educator_classrooms(educator_id):
     """Given an educator_id, return a list of that educator's classrooms."""

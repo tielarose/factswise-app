@@ -5,6 +5,7 @@ import EducatorLogin from "./EducatorLogin";
 import EducatorSignup from "./EducatorSignup";
 import EducatorDashboard from "./EducatorDashboard";
 import StudentLogin from "./StudentLogin";
+import NewStudent from "./NewStudent";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, createContext, useEffect } from "react";
 
@@ -76,6 +77,11 @@ function App() {
             exact
             path="/educator/home"
             element={<EducatorDashboard currentUser={currentUser} />}
+          ></Route>
+          <Route
+            exact
+            path="/educator/new/student"
+            element={<NewStudent />}
           ></Route>
           <Route exact path="/student/login" element={<StudentLogin />}></Route>
         </Routes>
