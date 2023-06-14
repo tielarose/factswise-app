@@ -146,9 +146,30 @@ def check_if_classroom_code_in_database(classroom_code):
 
     if classroom:
         students = [student.to_dict() for student in classroom.students]
-        return jsonify({"classroom": classroom.to_dict(), "students": students})
+        classroom_dict = classroom.to_dict()
+        classroom_dict[
+            "educator_display_name"
+        ] = classroom.educator.educator_display_name
+        return jsonify({"classroom": classroom_dict, "students": students})
     else:
         return jsonify({"classroom": {"classroom_code": None}})
+
+
+@app.route("/api/student/login/<student_id>", methods=["POST"])
+def log_in_student(student_id):
+    """Log in a student."""
+
+    student = Student.get_by_id(student_id)
+    password_entered = request.json.get("student_password")
+
+    if student.student_password == password_entered:
+        print("*" * 40)
+        print("student password matched!")
+        return jsonify(
+            {"is_student": True, "is_educator": False, "user_info": student.to_dict()}
+        )
+
+    return jsonify({"educator_id": educator.educator_id, "logged_in": False})
 
 
 @app.route("/api/checkuser", methods=["POST"])

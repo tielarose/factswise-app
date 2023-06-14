@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import "./StudentLogin.css";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function StudentLogin() {
+export default function ClassroomCodeEntry(props) {
   const [studentClassroomCode, setStudentClassroomCode] = useState("");
 
   function handleSubmit(evt) {
@@ -9,14 +9,20 @@ export default function StudentLogin() {
 
     fetch(`/api/student/login/${studentClassroomCode}`)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (data.classroom.classroom_code !== null) {
+          props.setIsValidClassroomCode(true);
+          props.setAllStudents(data.students);
+          props.setCurrentClassroom(data.classroom);
+        }
+      });
   }
 
   return (
-    <div className="StudentLogin">
+    <>
       <h2>Student Login</h2>
       <p>
-        Not a student? <a href="/">Go back</a>
+        Not a student? <Link to="/">Go back</Link>
       </p>
       <div>
         <form className="StudentLogin-form" onSubmit={handleSubmit}>
@@ -35,6 +41,6 @@ export default function StudentLogin() {
           <button>Next</button>
         </form>
       </div>
-    </div>
+    </>
   );
 }

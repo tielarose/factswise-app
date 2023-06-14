@@ -4,7 +4,7 @@ import Homepage from "./Homepage";
 import EducatorLogin from "./EducatorLogin";
 import EducatorSignup from "./EducatorSignup";
 import EducatorDashboard from "./EducatorDashboard";
-import StudentLogin from "./StudentLogin";
+import StudentLogin from "./components/student/student-login/StudentLogin";
 import NewStudent from "./NewStudent";
 import NewClassroom from "./NewClassroom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
