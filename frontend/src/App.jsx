@@ -1,7 +1,7 @@
 import "./App.css";
 import Navbar from "./Navbar";
 import Homepage from "./Homepage";
-import EducatorLogin from "./EducatorLogin";
+import EducatorLogin from "./components/educator/educator-login/EducatorLogin";
 import EducatorSignup from "./EducatorSignup";
 import EducatorDashboard from "./EducatorDashboard";
 import StudentLogin from "./components/student/student-login/StudentLogin";

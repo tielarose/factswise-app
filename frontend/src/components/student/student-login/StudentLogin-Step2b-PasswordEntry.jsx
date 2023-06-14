@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 export default function StudentPasswordEntry(props) {
   const [studentPasswordEntry, setStudentPasswordEntry] = useState("");

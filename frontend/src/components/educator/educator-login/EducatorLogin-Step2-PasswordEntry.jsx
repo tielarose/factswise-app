@@ -1,44 +1,50 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, redirect } from "react-router-dom";
-import { AppContext } from "./App";
+import { AppContext } from "../../../App";
 
-export default function EducatorLoginPasswordInput(props) {
+export default function EducatorPasswordEntry(props) {
   const navigate = useNavigate();
-  const [educatorPassword, setEducatorPassword] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState("");
   const value = useContext(AppContext);
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    fetch(`/api/educator/login/${props.educatorEmail}`, {
+    fetch("/api/educator/verify-password", {
       method: "POST",
       body: JSON.stringify({
-        educator_password: educatorPassword
+        educator_id: props.educatorId,
+        entered_password: enteredPassword
       }),
       headers: { "Content-Type": "application/json" }
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.is_educator) {
+        if (data.login_successful) {
           localStorage.setItem("userId", data.user_info.educator_id);
           props.setCurrentUser(data.user_info);
           props.setIsEducator(data.is_educator);
           navigate("/educator/home");
         } else {
-          console.log("not logged in");
+          console.log("login unsuccessful");
+          setEnteredPassword("");
         }
       });
   }
 
   return (
     <div className="EducatorLogin step2">
-      <h2>Welcome back!</h2>
+      <h2>Welcome back, {props.emailEntered}!</h2>
       <h4>
-        {props.educatorEmail} (
-        <a href="/educator/login" onClick={() => props.setEducatorInDB(false)}>
+        <button
+          onClick={() => {
+            props.setEducatorInDB(false);
+            props.setEmailEntered("");
+            navigate("/educator/login");
+          }}
+        >
           Not you?
-        </a>
-        )
+        </button>
       </h4>
 
       <div>
@@ -47,8 +53,8 @@ export default function EducatorLoginPasswordInput(props) {
           <input
             type="password"
             placeholder="password"
-            value={educatorPassword}
-            onChange={(evt) => setEducatorPassword(evt.target.value)}
+            value={enteredPassword}
+            onChange={(evt) => setEnteredPassword(evt.target.value)}
             name="EducatorLogin-educator-Password"
             id="EducatorLogin-educator-password"
             required

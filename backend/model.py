@@ -58,7 +58,6 @@ class Educator(db.Model):
             "educator_last_name": self.educator_last_name,
             "educator_display_name": self.educator_display_name,
             "educator_email": self.educator_email,
-            "educator_password": self.educator_password,
         }
 
 

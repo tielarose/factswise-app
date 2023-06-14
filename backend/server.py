@@ -7,33 +7,39 @@ from model import connect_to_db, db, Educator, Classroom, Student
 app = Flask(__name__)
 
 
-@app.route("/api/educator/login/<educator_email>")
-def check_if_educator_in_database(educator_email):
-    """Check if an educator exists for the given email. If so, return that educator."""
+@app.route("/api/educator/lookup-educator-id", methods=["POST"])
+def lookup_educator_id():
+    """Given an email address, check if there is an educator account associated with that email address. If so, return the associated educator_id."""
 
-    educator = Educator.get_by_email(educator_email)
+    email_entered = request.json.get("email_entered")
+    educator = Educator.get_by_email(email_entered)
 
     if not educator:
-        return jsonify({"educator_email": educator_email, "educator_id": None})
+        return jsonify({"educator_id": None})
     else:
-        return jsonify(educator.to_dict())
+        return jsonify({"educator_id": educator.educator_id})
 
 
-@app.route("/api/educator/login/<educator_email>", methods=["POST"])
-def log_in_educator(educator_email):
-    """Verify an educator's password and store their educator_id in local storage."""
+@app.route("/api/educator/verify-password", methods=["POST"])
+def verify_educator_password():
+    """Given an educator_id and entered password, verify the entered password matches the user's password stored in the database."""
 
-    educator = Educator.get_by_email(educator_email)
-    password_entered = request.json.get("educator_password")
+    educator_id = request.json.get("educator_id")
+    entered_password = request.json.get("entered_password")
 
-    if educator.educator_password == password_entered:
-        print("*" * 40)
-        print("password matched!")
+    educator = Educator.get_by_id(educator_id)
+
+    if educator.educator_password == entered_password:
         return jsonify(
-            {"is_student": False, "is_educator": True, "user_info": educator.to_dict()}
+            {
+                "login_successful": True,
+                "is_student": False,
+                "is_educator": True,
+                "user_info": educator.to_dict(),
+            }
         )
 
-    return jsonify({"educator_id": educator.educator_id, "logged_in": False})
+    return jsonify({"login_successful": False})
 
 
 @app.route("/api/educator/signup", methods=["POST"])
