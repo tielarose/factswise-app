@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, redirect } from "react-router-dom";
-import { AppContext } from "../../../App";
+import { AppContext } from "../../App";
 
 export default function EducatorPasswordEntry(props) {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function EducatorPasswordEntry(props) {
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    fetch("/api/educator/verify-password", {
+    fetch("/api/educator/verify-educator-password", {
       method: "POST",
       body: JSON.stringify({
         educator_id: props.educatorId,

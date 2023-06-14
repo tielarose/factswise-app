@@ -20,7 +20,7 @@ def lookup_educator_id():
         return jsonify({"educator_id": educator.educator_id})
 
 
-@app.route("/api/educator/verify-password", methods=["POST"])
+@app.route("/api/educator/verify-educator-password", methods=["POST"])
 def verify_educator_password():
     """Given an educator_id and entered password, verify the entered password matches the user's password stored in the database."""
 
@@ -66,9 +66,15 @@ def add_educator_to_db():
     educator = Educator.get_by_email(educator_email)
 
     if not educator:
-        return jsonify({"user_id": None})
+        return jsonify({"signup_successful": False})
     else:
-        return jsonify({"user_id": educator.educator_id})
+        return jsonify(
+            {
+                "signup_successful": True,
+                "user_info": educator.to_dict(),
+                "is_educator": is_educator(educator.educator_id),
+            }
+        )
 
 
 @app.route("/api/educator/new/student", methods=["POST"])

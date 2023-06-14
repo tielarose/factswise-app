@@ -1,12 +1,12 @@
 import "./App.css";
-import Navbar from "./Navbar";
-import Homepage from "./Homepage";
-import EducatorLogin from "./components/educator/educator-login/EducatorLogin";
-import EducatorSignup from "./EducatorSignup";
-import EducatorDashboard from "./EducatorDashboard";
-import StudentLogin from "./components/student/student-login/StudentLogin";
-import NewStudent from "./NewStudent";
-import NewClassroom from "./NewClassroom";
+import Navbar from "../Navbar";
+import Homepage from "../Homepage";
+import EducatorLogin from "./educator/educator-login/EducatorLogin";
+import EducatorSignup from "./educator/educator-signup/EducatorSignup";
+import EducatorDashboard from "../EducatorDashboard";
+import StudentLogin from "./student/student-login/StudentLogin";
+import NewStudent from "../NewStudent";
+import NewClassroom from "../NewClassroom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, createContext, useEffect } from "react";
 

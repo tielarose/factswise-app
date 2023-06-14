@@ -2,8 +2,9 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import "./EducatorSignup.css";
 
-export default function EducatorSignup() {
+export default function EducatorSignup(props) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [educatorFirstName, setEducatorFirstName] = useState("");
   const [educatorLastName, setEducatorLastName] = useState("");
   const [educatorDisplayName, setEducatorDisplayName] = useState("");
@@ -13,7 +14,7 @@ export default function EducatorSignup() {
     evt.preventDefault();
 
     const formInputs = {
-      educator_email: location.state.inputEmail,
+      educator_email: location.state.emailEntered,
       educator_first_name: educatorFirstName,
       educator_last_name: educatorLastName,
       educator_display_name: educatorDisplayName,
@@ -27,9 +28,11 @@ export default function EducatorSignup() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.user_id) {
+        if (data.signup_successful) {
           localStorage.setItem("userId", data.user_id);
-          navigate("/educator/home", { state: { user_id: data.user_id } });
+          props.setCurrentUser(data.user_info);
+          props.setIsEducator(data.is_educator);
+          navigate("/educator/home");
         } else {
           console.log("it didn't work :(");
         }
@@ -48,7 +51,7 @@ export default function EducatorSignup() {
       </p>
       <div>
         <form className="EducatorSignup-form" onSubmit={handleSubmit}>
-          <p> Email: {location.state.inputEmail}</p>
+          <p> Email: {location.state.emailEntered}</p>
           {/* First Name Field */}
           <label htmlFor="EducatorSignup-educator-first-name">
             First Name:

@@ -14,9 +14,9 @@ export default function EducatorEmailEntry(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (!data.educator_id) {
+        if (data.educator_id === null) {
           navigate("/educator/signup", {
-            state: { entered_email: props.emailEntered }
+            state: { emailEntered: props.emailEntered }
           });
         } else {
           props.setEducatorInDB(true);
