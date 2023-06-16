@@ -2,15 +2,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function ClassroomCodeEntry(props) {
-  const [studentClassroomCode, setStudentClassroomCode] = useState("");
+  const [enteredClassroomCode, setEnteredClassroomCode] = useState("");
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    fetch(`/api/student/login/${studentClassroomCode}`)
+    fetch("/api/student/get-classroom-by-code", {
+      method: "POST",
+      body: JSON.stringify({ entered_classroom_code: enteredClassroomCode }),
+      headers: { "Content-Type": "application/json" }
+    })
       .then((response) => response.json())
       .then((data) => {
-        if (data.classroom.classroom_code !== null) {
+        if (data.classroom_found) {
           props.setIsValidClassroomCode(true);
           props.setAllStudents(data.students);
           props.setCurrentClassroom(data.classroom);
@@ -32,8 +36,8 @@ export default function ClassroomCodeEntry(props) {
           <input
             type="text"
             placeholder="class code"
-            value={studentClassroomCode}
-            onChange={(evt) => setStudentClassroomCode(evt.target.value)}
+            value={enteredClassroomCode}
+            onChange={(evt) => setEnteredClassroomCode(evt.target.value)}
             name="StudentLogin-classroom-code"
             id="StudentLogin-classroom-code"
             required

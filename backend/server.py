@@ -150,38 +150,53 @@ def get_classroom_info(classroom_id):
     return jsonify({"students": students})
 
 
-@app.route("/api/student/login/<classroom_code>")
-def check_if_classroom_code_in_database(classroom_code):
-    """Check if a classroom exists for the given code. If so, return the teacher display name and a list of all students for that classroom."""
+@app.route("/api/student/get-classroom-by-code", methods=["POST"])
+def get_classroom_by_code():
+    """Check if a classroom exists for the entered classroom code. If so, return the teacher display name and a list all students (full names, student_ids) for the given classroom."""
 
-    classroom = Classroom.get_by_classroom_code(classroom_code)
+    entered_classroom_code = request.json.get("entered_classroom_code")
+    classroom = Classroom.get_by_classroom_code(entered_classroom_code)
 
     if classroom:
-        students = [student.to_dict() for student in classroom.students]
+        students = [
+            {
+                "student_first_name": student.student_first_name,
+                "student_last_name": student.student_last_name,
+                "student_id": student.student_id,
+            }
+            for student in classroom.students
+        ]
         classroom_dict = classroom.to_dict()
         classroom_dict[
             "educator_display_name"
         ] = classroom.educator.educator_display_name
-        return jsonify({"classroom": classroom_dict, "students": students})
+        return jsonify(
+            {"classroom_found": True, "classroom": classroom_dict, "students": students}
+        )
     else:
-        return jsonify({"classroom": {"classroom_code": None}})
+        return jsonify({"classroom_found": False})
 
 
-@app.route("/api/student/login/<student_id>", methods=["POST"])
-def log_in_student(student_id):
-    """Log in a student."""
+@app.route("/api/student/verify-student-password", methods=["POST"])
+def verify_student_password():
+    """Given a student_id and an entered password, verify the entered password matches the user's password stores in the database."""
+
+    student_id = request.json.get("student_id")
+    entered_password = request.json.get("entered_password")
 
     student = Student.get_by_id(student_id)
-    password_entered = request.json.get("student_password")
 
-    if student.student_password == password_entered:
-        print("*" * 40)
-        print("student password matched!")
+    if student.student_password == entered_password:
         return jsonify(
-            {"is_student": True, "is_educator": False, "user_info": student.to_dict()}
+            {
+                "login_successful": True,
+                "is_student": True,
+                "is_educator": False,
+                "user_info": student.to_dict(),
+            }
         )
 
-    return jsonify({"educator_id": educator.educator_id, "logged_in": False})
+    return jsonify({"login_successful": False})
 
 
 @app.route("/api/checkuser", methods=["POST"])

@@ -175,7 +175,6 @@ class Student(db.Model):
             "student_last_name": self.student_last_name,
             "student_grade_level": self.student_grade_level,
             "student_login_icon": self.student_login_icon,
-            "student_password": self.student_password,
             "current_problem_set": self.current_problem_set,
         }
 

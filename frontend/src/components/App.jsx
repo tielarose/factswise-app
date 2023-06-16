@@ -9,6 +9,7 @@ import NewStudent from "../NewStudent";
 import NewClassroom from "../NewClassroom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, createContext, useEffect } from "react";
+import StudentDashboard from "./student/student-dashboard/StudentDashboard";
 
 export const AppContext = createContext(null);
 
@@ -43,7 +44,9 @@ function App() {
         value={{
           currentUser,
           isEducator,
-          isStudent
+          isStudent,
+          setIsStudent,
+          setCurrentUser
         }}
       >
         <Navbar
@@ -90,6 +93,11 @@ function App() {
             element={<NewClassroom />}
           ></Route>
           <Route exact path="/student/login" element={<StudentLogin />}></Route>
+          <Route
+            exact
+            path="/student/home"
+            element={<StudentDashboard currentUser={currentUser} />}
+          ></Route>
         </Routes>
       </AppContext.Provider>
     </BrowserRouter>
