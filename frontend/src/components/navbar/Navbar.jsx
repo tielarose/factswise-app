@@ -1,6 +1,6 @@
 import { useNavigate, Link } from "react-router-dom";
 import "./Navbar.css";
-import { AppContext } from "./components/App";
+import { AppContext } from "../App";
 import { useContext } from "react";
 
 export default function Navbar(props) {

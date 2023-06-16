@@ -1,16 +1,25 @@
 import "./App.css";
-import Navbar from "../Navbar";
-import Homepage from "../Homepage";
+
+// Navbar & Home Components
+import Navbar from "./navbar/Navbar";
+import Homepage from "./Homepage";
+
+// Educator Components
 import EducatorLogin from "./educator/educator-login/EducatorLogin";
 import EducatorSignup from "./educator/educator-signup/EducatorSignup";
-import EducatorDashboard from "../EducatorDashboard";
+import EducatorDashboard from "./educator/educator-dashboard/EducatorDashboard";
+import NewStudent from "./educator/educator-dashboard/NewStudent";
+import NewClassroom from "./educator/educator-dashboard/NewClassroom";
+
+// Student Components
 import StudentLogin from "./student/student-login/StudentLogin";
-import NewStudent from "../NewStudent";
-import NewClassroom from "../NewClassroom";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState, createContext, useEffect } from "react";
 import StudentDashboard from "./student/student-dashboard/StudentDashboard";
 
+// React and React Router imports
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState, createContext, useEffect } from "react";
+
+// Context
 export const AppContext = createContext(null);
 
 function App() {

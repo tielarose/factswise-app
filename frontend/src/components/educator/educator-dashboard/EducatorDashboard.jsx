@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppContext } from "./components/App";
+import { AppContext } from "../../App";
 import "./EducatorDashboard.css";
 import "./EducatorDashboardDataDisplay";
 import EducatorDashboardDataDisplay from "./EducatorDashboardDataDisplay";
