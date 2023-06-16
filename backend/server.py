@@ -127,9 +127,11 @@ def create_new_classroom():
     return jsonify({"added": "a classroom"})
 
 
-@app.route("/api/educator/<educator_id>/classrooms")
-def get_educator_classrooms(educator_id):
+@app.route("/api/educator/get-all-classrooms", methods=["POST"])
+def get_educator_classrooms():
     """Given an educator_id, return a list of that educator's classrooms."""
+
+    educator_id = request.json.get("educator_id")
 
     educator = Educator.get_by_id(educator_id)
     classrooms = [classroom.to_dict() for classroom in educator.classrooms]
@@ -140,9 +142,6 @@ def get_educator_classrooms(educator_id):
 @app.route("/api/educator/classroom_info/<classroom_id>")
 def get_classroom_info(classroom_id):
     """Given a classroom_id, return a list of students in that classroom."""
-
-    print("&" * 40)
-    print("classroom_id is", classroom_id)
 
     classroom = Classroom.get_by_id(classroom_id)
     students = [student.to_dict() for student in classroom.students]

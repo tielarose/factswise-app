@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../App";
 import "./EducatorDashboard.css";
 import "./EducatorDashboardDataDisplay";
@@ -15,7 +15,11 @@ export default function EducatorDashboard() {
   useEffect(() => {
     const educator_id = localStorage.getItem("userId");
 
-    fetch(`/api/educator/${educator_id}/classrooms`)
+    fetch("/api/educator/get-all-classrooms", {
+      method: "POST",
+      body: JSON.stringify({ educator_id: currentUser.educator_id }),
+      headers: { "Content-Type": "application/json" }
+    })
       .then((response) => response.json())
       .then((data) => {
         setClassrooms(data.classrooms);
