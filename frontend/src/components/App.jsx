@@ -11,6 +11,9 @@ import EducatorDashboard from "./educator/educator-dashboard/EducatorDashboard";
 import NewStudent from "./educator/educator-dashboard/NewStudent";
 import NewClassroom from "./educator/educator-dashboard/NewClassroom";
 
+// Student Details
+import StudentDetails from "./educator/educator-dashboard/student-details/StudentDetails";
+
 // Student Components
 import StudentLogin from "./student/student-login/StudentLogin";
 import StudentDashboard from "./student/student-dashboard/StudentDashboard";
@@ -100,6 +103,11 @@ function App() {
             exact
             path="/educator/new/classroom"
             element={<NewClassroom />}
+          ></Route>
+          <Route
+            exact
+            path="/educator/studentdetails"
+            element={<StudentDetails />}
           ></Route>
           <Route exact path="/student/login" element={<StudentLogin />}></Route>
           <Route

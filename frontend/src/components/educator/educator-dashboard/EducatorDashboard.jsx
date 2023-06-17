@@ -62,6 +62,12 @@ export default function EducatorDashboard() {
         Current Classroom:{" "}
         {currentClassroom ? currentClassroom.classroom_name : ""}
       </p>
+      <p>
+        <button onClick={handleNewStudentClick}>Create a new student</button>{" "}
+      </p>{" "}
+      <p>
+        <button onClick={handleNewClassroomClick}>Create a new class</button>{" "}
+      </p>
       <p>Switch Classrooms: {classroomLinks}</p>{" "}
       {currentClassroom ? (
         <EducatorDashboardDataDisplay
@@ -70,12 +76,6 @@ export default function EducatorDashboard() {
       ) : (
         ""
       )}{" "}
-      <p>
-        <button onClick={handleNewStudentClick}>Create a new student</button>{" "}
-      </p>{" "}
-      <p>
-        <button onClick={handleNewClassroomClick}>Create a new class</button>{" "}
-      </p>
     </div>
   );
 }

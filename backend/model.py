@@ -317,6 +317,16 @@ class ProblemSetQuestionAnswer(db.Model):
             date_assessed=date_assessed,
         )
 
+    def to_dict(self):
+        return {
+            "problem_set_question_answer_id": self.problem_set_question_answer_id,
+            "student_id": self.student_id,
+            "problem_set_question_id": self.problem_set_question_id,
+            "student_answer": self.student_answer,
+            "time_to_answer": self.time_to_answer,
+            "date_assessed": self.date_assessed,
+        }
+
 
 def connect_to_db(flask_app, db_uri="postgresql:///factswise", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

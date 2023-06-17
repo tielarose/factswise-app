@@ -1,5 +1,6 @@
 """Server for factswise app."""
 
+from functools import reduce
 from flask import Flask, jsonify, request
 from random import choice
 from model import connect_to_db, db, Educator, Classroom, Student
@@ -141,12 +142,38 @@ def get_educator_classrooms():
 
 @app.route("/api/educator/classroom_info/<classroom_id>")
 def get_classroom_info(classroom_id):
-    """Given a classroom_id, return a list of students in that classroom."""
+    """Given a classroom_id, return a list of students in that classroom and their latest assessment information."""
 
     classroom = Classroom.get_by_id(classroom_id)
-    students = [student.to_dict() for student in classroom.students]
+    student_objects = classroom.students
 
-    return jsonify({"students": students})
+    # def latest_assessment(student_id):
+    #     "Given a student, get their most recent assessment data"
+
+    #     assessments = student.problem_set_question_answers
+    #     assessment_date = assessments
+
+    students_list = [
+        {
+            "student_id": student.student_id,
+            "student_first_name": student.student_first_name,
+            "student_last_name": student.student_last_name,
+            "current_problem_set": student.current_problem_set,
+            # "latest_assessment": latest_assessment(student),
+        }
+        for student in classroom.students
+    ]
+
+    return jsonify({"students": students_list})
+
+
+@app.route("/api/educator/studentinfo/<student_id>")
+def get_student_info(student_id):
+    """Given a student_id, return detailed information on that student."""
+
+    student = Student.get_by_id(student_id)
+
+    return jsonify({"student_info": student.to_dict()})
 
 
 @app.route("/api/student/get-classroom-by-code", methods=["POST"])
@@ -221,6 +248,24 @@ def check_user():
             "user_info": user_info,
         }
     )
+
+
+# @app.route("/api/testroute/<student_id>")
+# def test_route(student_id):
+#     """Given a classroom_id, return a list of students in that classroom and their latest assessment information."""
+
+#     student = Student.get_by_id(student_id)
+#     assessments = [answer.to_dict() for answer in student.problem_set_question_answers]
+#     assessment_dates = [assessment["date_assessed"] for assessment in assessments]
+#     latest_assessment_date = reduce(lambda a, b: a if a > b else b, assessment_dates)
+
+#     return jsonify({"latest_assessment": latest_assessment_date})
+
+# def latest_assessment(student_id):
+#     "Given a student, get their most recent assessment data"
+
+#     assessments = student.problem_set_question_answers
+#     assessment_date = assessments
 
 
 def is_student(user_id):
