@@ -17,7 +17,7 @@ export default function EducatorDashboard() {
 
     fetch("/api/educator/get-all-classrooms", {
       method: "POST",
-      body: JSON.stringify({ educator_id: currentUser.educator_id }),
+      body: JSON.stringify({ educator_id: educator_id }),
       headers: { "Content-Type": "application/json" }
     })
       .then((response) => response.json())

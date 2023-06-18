@@ -167,6 +167,32 @@ class Student(db.Model):
         student = cls.query.get(student_id)
         student.current_problem_set = new_problem_set_id
 
+    @classmethod
+    def update_basic_info(
+        cls,
+        student_id,
+        new_classroom_id,
+        new_student_first_name,
+        new_student_last_name,
+        new_student_grade_level,
+        new_student_login_icon,
+        new_current_problem_set,
+    ):
+        """Update a student's information."""
+
+        student = cls.query.get(student_id)
+        student.classroom_id = new_classroom_id
+        student.student_first_name = new_student_first_name
+        student.student_last_name = new_student_last_name
+        student.student_grade_level = new_student_grade_level
+        student.student_login_icon = new_student_login_icon
+        student.current_problem_set = new_current_problem_set
+
+    @classmethod
+    def update_name(cls, student_id, new_first_name):
+        student = cls.query.get(student_id)
+        student.student_first_name = new_first_name
+
     def to_dict(self):
         return {
             "student_id": self.student_id,
@@ -262,7 +288,7 @@ class ProblemSetQuestion(db.Model):
         return f"<ProblemSetQuestion problem_set_question_id={self.problem_set_question_id} problem_set_id={self.problem_set_id} question_text={self.question_text} answer_text={self.answer_text}>"
 
     @classmethod
-    def create(cls, problem_set_id, question_text, answer_text):
+    def create(cls, problem_set_id, question_text, answer_text, is_correct):
         """Create and return a new problem set question."""
 
         return cls(

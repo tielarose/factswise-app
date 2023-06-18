@@ -25,6 +25,7 @@ export default function Navbar(props) {
     // { isEducator && <NavbarEducator/> }
     <div className="Navbar">
       <Link to="/">MathFacts Home</Link>
+      {isEducator ? <Link to="/educator/home">Dashboard</Link> : ""}
       {currentUser != null ? (
         <button onClick={handleLogOut}>Log Out</button>
       ) : (

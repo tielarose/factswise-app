@@ -176,6 +176,33 @@ def get_student_info(student_id):
     return jsonify({"student_info": student.to_dict()})
 
 
+@app.route("/api/educator/updatestudent", methods=["POST"])
+def update_student_info():
+    """Given a student_id, update the database with the educator-input information about that student."""
+
+    student_id = request.json.get("student_id")
+    new_classroom_id = request.json.get("classroom_id")
+    new_login_icon = request.json.get("student_login_icon")
+    new_first_name = request.json.get("student_first_name")
+    new_last_name = request.json.get("student_last_name")
+    new_grade_level = request.json.get("student_grade_level")
+    new_problem_set = request.json.get("current_problem_set")
+
+    Student.update_basic_info(
+        student_id=student_id,
+        new_classroom_id=new_classroom_id,
+        new_student_first_name=new_first_name,
+        new_student_last_name=new_last_name,
+        new_student_grade_level=new_grade_level,
+        new_student_login_icon=new_login_icon,
+        new_current_problem_set=new_problem_set,
+    )
+
+    db.session.commit()
+
+    return jsonify({"response is": "okay"})
+
+
 @app.route("/api/student/get-classroom-by-code", methods=["POST"])
 def get_classroom_by_code():
     """Check if a classroom exists for the entered classroom code. If so, return the teacher display name and a list all students (full names, student_ids) for the given classroom."""
