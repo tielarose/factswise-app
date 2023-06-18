@@ -203,6 +203,17 @@ def update_student_info():
     return jsonify({"response is": "okay"})
 
 
+@app.route("/api/educator/deletestudent/<student_id>")
+def delete_student(student_id):
+    """Given a student_id, delete that student from the database."""
+
+    student = Student.get_by_id(student_id)
+    db.session.delete(student)
+    db.session.commit()
+
+    return jsonify({"student was": "deleted"})
+
+
 @app.route("/api/student/get-classroom-by-code", methods=["POST"])
 def get_classroom_by_code():
     """Check if a classroom exists for the entered classroom code. If so, return the teacher display name and a list all students (full names, student_ids) for the given classroom."""
