@@ -180,6 +180,7 @@ for classroom in classrooms:
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
                 student_answer=problem_set_question.answer_text,
+                is_correct=True,
                 time_to_answer=choice([1, 2, 3]),
                 date_assessed=date1,
             )
@@ -197,6 +198,7 @@ for classroom in classrooms:
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
                 student_answer=problem_set_question.answer_text,
+                is_correct=True,
                 time_to_answer=choice([1, 2, 3]),
                 date_assessed=date2,
             )
@@ -210,13 +212,20 @@ for classroom in classrooms:
         ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
             student.current_problem_set
         ):
-            correct_answer = int(problem_set_question.answer_text)
-            possible_answers = [correct_answer - 1, correct_answer, correct_answer + 1]
+            correct_answer_str = problem_set_question.answer_text
+            correct_answer_int = int(correct_answer_str)
+            possible_answers = [
+                correct_answer_int - 1,
+                correct_answer_int,
+                correct_answer_int + 1,
+            ]
+            student_answer = str(choice(possible_answers))
 
             problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
-                student_answer=str(choice(possible_answers)),
+                student_answer=student_answer,
+                is_correct=(correct_answer_str == student_answer),
                 time_to_answer=choice([1, 2, 3]),
                 date_assessed=date3,
             )
@@ -244,13 +253,20 @@ for classroom in classrooms:
         ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
             student.current_problem_set
         ):
-            correct_answer = int(problem_set_question.answer_text)
-            possible_answers = [correct_answer - 1, correct_answer, correct_answer + 1]
+            correct_answer_str = problem_set_question.answer_text
+            correct_answer_int = int(correct_answer_str)
+            possible_answers = [
+                correct_answer_int - 1,
+                correct_answer_int,
+                correct_answer_int + 1,
+            ]
+            student_answer = str(choice(possible_answers))
 
             problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
-                student_answer=str(choice(possible_answers)),
+                student_answer=student_answer,
+                is_correct=(correct_answer_str == student_answer),
                 time_to_answer=choice([1, 2, 2, 3, 3, 4]),
                 date_assessed=date,
             )

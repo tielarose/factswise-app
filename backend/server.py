@@ -2,8 +2,17 @@
 
 from functools import reduce
 from flask import Flask, jsonify, request
+from sqlalchemy import func, cast
+import sqlalchemy
 from random import choice
-from model import connect_to_db, db, Educator, Classroom, Student
+from model import (
+    connect_to_db,
+    db,
+    Educator,
+    Classroom,
+    Student,
+    ProblemSetQuestionAnswer,
+)
 
 app = Flask(__name__)
 
@@ -147,11 +156,37 @@ def get_classroom_info(classroom_id):
     classroom = Classroom.get_by_id(classroom_id)
     student_objects = classroom.students
 
-    # def latest_assessment(student_id):
-    #     "Given a student, get their most recent assessment data"
+    def latest_assessment(student_id):
+        "Given a student, get their most recent assessment data"
 
-    #     assessments = student.problem_set_question_answers
-    #     assessment_date = assessments
+        latest_assessment = db.session.execute(
+            db.select(
+                ProblemSetQuestionAnswer.date_assessed,
+                func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
+                func.count(ProblemSetQuestionAnswer.student_answer),
+            )
+            .filter_by(student_id=student_id)
+            .group_by(ProblemSetQuestionAnswer.date_assessed)
+            .order_by(ProblemSetQuestionAnswer.date_assessed.desc())
+        ).first()
+
+        if latest_assessment != None:
+            date, num_correct, total = latest_assessment
+            percent_as_int = round((num_correct / total) * 100)
+
+            return {
+                "date": date,
+                "num_correct": num_correct,
+                "total": total,
+                "percent_as_int": percent_as_int,
+            }
+        else:
+            return {
+                "date": None,
+                "num_correct": None,
+                "total": None,
+                "percent_as_int": None,
+            }
 
     students_list = [
         {
@@ -159,7 +194,7 @@ def get_classroom_info(classroom_id):
             "student_first_name": student.student_first_name,
             "student_last_name": student.student_last_name,
             "current_problem_set": student.current_problem_set,
-            # "latest_assessment": latest_assessment(student),
+            "latest_assessment": latest_assessment(student.student_id),
         }
         for student in classroom.students
     ]
@@ -288,22 +323,23 @@ def check_user():
     )
 
 
-# @app.route("/api/testroute/<student_id>")
-# def test_route(student_id):
-#     """Given a classroom_id, return a list of students in that classroom and their latest assessment information."""
+@app.route("/api/test/<student_id>")
+def test_route(student_id):
+    assessments = db.session.execute(
+        db.select(
+            ProblemSetQuestionAnswer.date_assessed,
+            func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
+            func.count(ProblemSetQuestionAnswer.student_answer),
+        )
+        .filter_by(student_id=student_id)
+        .group_by(ProblemSetQuestionAnswer.date_assessed)
+        .order_by(ProblemSetQuestionAnswer.date_assessed.desc())
+    ).first()
 
-#     student = Student.get_by_id(student_id)
-#     assessments = [answer.to_dict() for answer in student.problem_set_question_answers]
-#     assessment_dates = [assessment["date_assessed"] for assessment in assessments]
-#     latest_assessment_date = reduce(lambda a, b: a if a > b else b, assessment_dates)
+    print("^" * 40)
+    print(assessments)
 
-#     return jsonify({"latest_assessment": latest_assessment_date})
-
-# def latest_assessment(student_id):
-#     "Given a student, get their most recent assessment data"
-
-#     assessments = student.problem_set_question_answers
-#     assessment_date = assessments
+    return jsonify("test route was visited")
 
 
 def is_student(user_id):
