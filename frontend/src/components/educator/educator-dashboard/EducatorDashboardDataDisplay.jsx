@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EducatorDashboardDataDisplay.css";
+import { format } from "date-fns";
 
 export default function EducatorDashboardDataDisplay(props) {
   const navigate = useNavigate();
@@ -22,6 +23,29 @@ export default function EducatorDashboardDataDisplay(props) {
     navigate("/educator/studentdetails", { state: { student_id: student_id } });
   }
 
+  function convertDate(date_str) {
+    const months_dict = {
+      Jan: 0,
+      Feb: 1,
+      Mar: 2,
+      Apr: 3,
+      May: 4,
+      Jun: 5,
+      Jul: 6,
+      Aug: 7,
+      Sep: 8,
+      Oct: 9,
+      Nov: 10,
+      Dec: 11
+    };
+
+    const day = parseInt(date_str.slice(5, 7));
+    const month = months_dict[date_str.slice(8, 11)];
+    const year = parseInt(date_str.slice(12, 17));
+
+    return new Date(year, month, day);
+  }
+
   const studentRows = allStudents.map((student) => (
     <tr key={student.student_id}>
       <td>
@@ -31,6 +55,21 @@ export default function EducatorDashboardDataDisplay(props) {
         </button>
       </td>
       <td>{student.current_problem_set}</td>
+      <td>
+        {student.latest_assessment.date
+          ? format(convertDate(student.latest_assessment.date), "M/dd/yy")
+          : "n/a"}
+      </td>
+      <td>
+        {student.latest_assessment.num_correct
+          ? `${student.latest_assessment.num_correct} / ${student.latest_assessment.total}`
+          : "n/a"}
+      </td>
+      <td>
+        {student.latest_assessment.percent_as_int
+          ? `${student.latest_assessment.percent_as_int}%`
+          : "n/a"}
+      </td>
     </tr>
   ));
 
@@ -42,6 +81,9 @@ export default function EducatorDashboardDataDisplay(props) {
           <tr>
             <th>Student</th>
             <th>Current Goal</th>
+            <th>Last Assessed</th>
+            <th>Score</th>
+            <th>Percent</th>
           </tr>
           {studentRows}
         </tbody>
