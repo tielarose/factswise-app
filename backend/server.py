@@ -207,8 +207,33 @@ def get_student_info(student_id):
     """Given a student_id, return detailed information on that student."""
 
     student = Student.get_by_id(student_id)
+    assessments_tuples = db.session.execute(
+        db.select(
+            ProblemSetQuestionAnswer.date_assessed,
+            func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
+            func.count(ProblemSetQuestionAnswer.student_answer),
+        )
+        .filter_by(student_id=student_id)
+        .group_by(ProblemSetQuestionAnswer.date_assessed)
+        .order_by(ProblemSetQuestionAnswer.date_assessed.desc())
+    ).all()
 
-    return jsonify({"student_info": student.to_dict()})
+    def assessment_tuples_into_dict(assessment_tuple):
+        date, num_correct, total = assessment_tuple
+        percent_as_int = round((num_correct / total) * 100)
+
+        return {
+            "date": date,
+            "num_correct": num_correct,
+            "total": total,
+            "percent_as_int": percent_as_int,
+        }
+
+    assessments_list = [
+        assessment_tuples_into_dict(assessment) for assessment in assessments_tuples
+    ]
+
+    return jsonify({"student_info": student.to_dict(), "assessments": assessments_list})
 
 
 @app.route("/api/educator/updatestudent", methods=["POST"])

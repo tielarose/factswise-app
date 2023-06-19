@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import BasicInfo from "./BasicInfo";
+import AssessmentInfo from "./AssessmentInfo";
 
 export default function StudentDetails() {
   const location = useLocation();
@@ -18,6 +19,7 @@ export default function StudentDetails() {
     <>
       <h2>Student Details</h2>
       <BasicInfo student_id={student_id} />
+      <AssessmentInfo student_id={student_id} />
       <button onClick={handleDeleteButton}>delete this student</button>
     </>
   );
