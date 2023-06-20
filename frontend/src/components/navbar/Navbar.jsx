@@ -1,23 +1,23 @@
-import { useNavigate, Link } from "react-router-dom";
-import "./Navbar.css";
-import { AppContext } from "../App";
-import { useContext } from "react";
+import { useNavigate, Link } from 'react-router-dom';
+import './Navbar.css';
+import React, { useContext } from 'react';
+import { AppContext } from '../Context';
 
-export default function Navbar(props) {
+// eslint-disable-next-line react/prop-types
+export default function Navbar({ setCurrentUser, setIsEducator, setIsStudent }) {
   const navigate = useNavigate();
   const allContext = useContext(AppContext);
-  const currentUser = allContext.currentUser;
-  const isEducator = allContext.isEducator;
-  const isStudent = allContext.isStudent;
+  const { currentUser } = allContext;
+  const { isEducator } = allContext;
 
   // console.log("Navbar allContext is", allContext);
 
   function handleLogOut() {
     localStorage.clear();
-    props.setCurrentUser(null);
-    props.setIsEducator(false);
-    props.setIsStudent(false);
-    navigate("/");
+    setCurrentUser(null);
+    setIsEducator(false);
+    setIsStudent(false);
+    navigate('/');
   }
   return (
     // { isLoggedOut && <NavbarLoggedOut />}
@@ -25,9 +25,15 @@ export default function Navbar(props) {
     // { isEducator && <NavbarEducator/> }
     <div className="Navbar">
       <Link to="/">MathFacts Home</Link>
-      {isEducator ? <Link to="/educator/home">Dashboard</Link> : ""}
+      {isEducator ? <Link to="/educator/home">Dashboard</Link> : ''}
       {currentUser != null ? (
-        <button onClick={handleLogOut}>Log Out</button>
+        <button
+          type="button"
+          onClick={handleLogOut}
+        >
+          Log Out
+
+        </button>
       ) : (
         <Link to="/">Log In</Link>
       )}

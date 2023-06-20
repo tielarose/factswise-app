@@ -1,22 +1,30 @@
-import { useContext } from "react";
-import { AppContext } from "../../App";
+import React, { useContext } from 'react';
+import { AppContext } from '../../Context';
 
 export default function StudentDashboard() {
   const allContext = useContext(AppContext);
-  const currentStudent = allContext.currentUser;
+  const { currentStudent } = allContext;
 
   return (
     <>
       <h2>
-        Welcome, {currentStudent.student_first_name}{" "}
-        {currentStudent.student_last_name}!
+        Welcome,
+        {' '}
+        {currentStudent.student_first_name}
+        {' '}
+        {currentStudent.student_last_name}
+        !
       </h2>
 
-      <p>You are working on Goal {currentStudent.current_problem_set}</p>
+      <p>
+        You are working on Goal
+        {' '}
+        {currentStudent.current_problem_set}
+      </p>
 
       <p>Ready to practice?</p>
 
-      <button>Let's Begin!</button>
+      <button type="button">Let&#39s Begin!</button>
     </>
   );
 }

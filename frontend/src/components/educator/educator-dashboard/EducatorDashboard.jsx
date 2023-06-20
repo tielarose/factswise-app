@@ -1,24 +1,23 @@
-import { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../App";
-import "./EducatorDashboard.css";
-import "./EducatorDashboardDataDisplay";
-import EducatorDashboardDataDisplay from "./EducatorDashboardDataDisplay";
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../Context';
+import './EducatorDashboard.css';
+import EducatorDashboardDataDisplay from './EducatorDashboardDataDisplay';
 
 export default function EducatorDashboard() {
   const navigate = useNavigate();
   const allContext = useContext(AppContext);
-  const currentUser = allContext.currentUser;
+  const { currentUser } = allContext;
   const [classrooms, setClassrooms] = useState([]);
   const [currentClassroom, setCurrentClassroom] = useState(null);
 
   useEffect(() => {
-    const educator_id = localStorage.getItem("userId");
+    const educatorId = localStorage.getItem('userId');
 
-    fetch("/api/educator/get-all-classrooms", {
-      method: "POST",
-      body: JSON.stringify({ educator_id: educator_id }),
-      headers: { "Content-Type": "application/json" }
+    fetch('/api/educator/get-all-classrooms', {
+      method: 'POST',
+      body: JSON.stringify({ educator_id: educatorId }),
+      headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -34,17 +33,18 @@ export default function EducatorDashboard() {
   }
 
   function handleNewStudentClick() {
-    navigate("/educator/new/student", {
-      state: { classroom: currentClassroom }
+    navigate('/educator/new/student', {
+      state: { classroom: currentClassroom },
     });
   }
 
   function handleNewClassroomClick() {
-    navigate("/educator/new/classroom");
+    navigate('/educator/new/classroom');
   }
 
   const classroomLinks = classrooms.map((classroom) => (
     <button
+      type="button"
       onClick={() => handleClassroomClick(classroom)}
       key={classroom.classroom_id}
     >
@@ -55,27 +55,51 @@ export default function EducatorDashboard() {
   return (
     <div className="EducatorDashboard">
       <h2>
-        Welcome, {currentUser?.educator_first_name}{" "}
+        Welcome,
+        {' '}
+        {currentUser?.educator_first_name}
+        {' '}
         {currentUser?.educator_last_name}
-      </h2>{" "}
+      </h2>
+      {' '}
       <p>
-        Current Classroom:{" "}
-        {currentClassroom ? currentClassroom.classroom_name : ""}
+        Current Classroom:
+        {' '}
+        {currentClassroom ? currentClassroom.classroom_name : ''}
       </p>
       <p>
-        <button onClick={handleNewStudentClick}>Create a new student</button>{" "}
-      </p>{" "}
-      <p>
-        <button onClick={handleNewClassroomClick}>Create a new class</button>{" "}
+        <button
+          type="button"
+          onClick={handleNewStudentClick}
+        >
+          Create a new student
+        </button>
+        {' '}
       </p>
-      <p>Switch Classrooms: {classroomLinks}</p>{" "}
+      {' '}
+      <p>
+        <button
+          type="button"
+          onClick={handleNewClassroomClick}
+        >
+          Create a new class
+        </button>
+        {' '}
+      </p>
+      <p>
+        Switch Classrooms:
+        {' '}
+        {classroomLinks}
+      </p>
+      {' '}
       {currentClassroom ? (
         <EducatorDashboardDataDisplay
           classroom_id={currentClassroom.classroom_id}
         />
       ) : (
-        ""
-      )}{" "}
+        ''
+      )}
+      {' '}
     </div>
   );
 }
