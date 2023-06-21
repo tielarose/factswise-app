@@ -144,9 +144,12 @@ def get_educator_classrooms():
     educator_id = request.json.get("educator_id")
 
     educator = Educator.get_by_id(educator_id)
-    classrooms = [classroom.to_dict() for classroom in educator.classrooms]
 
-    return jsonify({"classrooms": classrooms})
+    if educator.classrooms:
+        classrooms = [classroom.to_dict() for classroom in educator.classrooms]
+        return jsonify({"classrooms_found": True, "classrooms": classrooms})
+    else:
+        return jsonify({"classrooms_found": False})
 
 
 @app.route("/api/educator/classroom_info/<classroom_id>")
@@ -327,9 +330,7 @@ def verify_student_password():
 def check_user():
     """Given a user_id, check if they are a student or educator."""
 
-    user_id = request.json.get("user_id")
-    print("$" * 40)
-    print("checkuser is running, user_id is", user_id)
+    user_id = request.json.get("userId")
 
     if user_id != None:
         if is_student(user_id):

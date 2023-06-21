@@ -21,9 +21,11 @@ export default function EducatorDashboard() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setClassrooms(data.classrooms);
-        if (currentClassroom === null) {
-          setCurrentClassroom(data.classrooms[0]);
+        if (data.classrooms_found) {
+          setClassrooms(data.classrooms);
+          if (currentClassroom === null) {
+            setCurrentClassroom(data.classrooms[0]);
+          }
         }
       });
   }, []);
@@ -62,20 +64,25 @@ export default function EducatorDashboard() {
         {currentUser?.educator_last_name}
       </h2>
       {' '}
-      <p>
-        Current Classroom:
-        {' '}
-        {currentClassroom ? currentClassroom.classroom_name : ''}
-      </p>
-      <p>
-        <button
-          type="button"
-          onClick={handleNewStudentClick}
-        >
-          Create a new student
-        </button>
-        {' '}
-      </p>
+      { currentClassroom != null ? (
+        <>
+          <p>
+            Current Classroom:
+            {' '}
+            {currentClassroom ? currentClassroom.classroom_name : ''}
+          </p>
+          <p>
+            <button
+              type="button"
+              onClick={handleNewStudentClick}
+            >
+              Create a new student
+            </button>
+            {' '}
+          </p>
+        </>
+      ) : ''}
+
       {' '}
       <p>
         <button
@@ -86,20 +93,25 @@ export default function EducatorDashboard() {
         </button>
         {' '}
       </p>
-      <p>
-        Switch Classrooms:
-        {' '}
-        {classroomLinks}
-      </p>
-      {' '}
-      {currentClassroom ? (
-        <EducatorDashboardDataDisplay
-          classroom_id={currentClassroom.classroom_id}
-        />
-      ) : (
-        ''
-      )}
-      {' '}
+      { currentClassroom != null ? (
+        <>
+          <p>
+            Switch Classrooms:
+            {' '}
+            {classroomLinks}
+          </p>
+          {' '}
+          {currentClassroom ? (
+            <EducatorDashboardDataDisplay
+              classroomId={currentClassroom.classroom_id}
+            />
+          ) : (
+            ''
+          )}
+          {' '}
+        </>
+      ) : ''}
+
     </div>
   );
 }

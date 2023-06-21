@@ -11,6 +11,7 @@ export default function StudentDetails() {
   function handleDeleteButton() {
     fetch(`/api/educator/deletestudent/${studentId}`)
       .then((response) => response.json())
+      // eslint-disable-next-line no-console
       .then((data) => console.log(data));
     navigate('/educator/home');
   }

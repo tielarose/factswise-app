@@ -1,30 +1,32 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./EducatorDashboardDataDisplay.css";
-import { format } from "date-fns";
+/* eslint-disable react/prop-types */
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './EducatorDashboardDataDisplay.css';
+import { format } from 'date-fns';
 
 export default function EducatorDashboardDataDisplay(props) {
   const navigate = useNavigate();
-  const classroom_id = props.classroom_id;
+  const { classroomId } = props;
   const [allStudents, setAllStudents] = useState([]);
 
   useEffect(() => {
-    if (classroom_id) {
-      fetch(`/api/educator/classroom_info/${classroom_id}`)
+    if (classroomId) {
+      fetch(`/api/educator/classroom_info/${classroomId}`)
         .then((response) => response.json())
         .then((data) => {
           setAllStudents(data.students);
         });
     }
-  }, [classroom_id]);
+  }, [classroomId]);
 
   function handleStudentNameClick(evt) {
-    const student_id = evt.target.value;
-    navigate("/educator/studentdetails", { state: { student_id: student_id } });
+    const studentId = evt.target.value;
+    navigate('/educator/studentdetails', { state: { studentId } });
   }
 
-  function convertDate(date_str) {
-    const months_dict = {
+  function convertDate(dateStr) {
+    const monthsDict = {
       Jan: 0,
       Feb: 1,
       Mar: 2,
@@ -36,12 +38,12 @@ export default function EducatorDashboardDataDisplay(props) {
       Sep: 8,
       Oct: 9,
       Nov: 10,
-      Dec: 11
+      Dec: 11,
     };
 
-    const day = parseInt(date_str.slice(5, 7));
-    const month = months_dict[date_str.slice(8, 11)];
-    const year = parseInt(date_str.slice(12, 17));
+    const day = parseInt(dateStr.slice(5, 7), 10);
+    const month = monthsDict[dateStr.slice(8, 11)];
+    const year = parseInt(dateStr.slice(12, 17), 10);
 
     return new Date(year, month, day);
   }
@@ -49,33 +51,35 @@ export default function EducatorDashboardDataDisplay(props) {
   const studentRows = allStudents.map((student) => (
     <tr key={student.student_id}>
       <td>
-        {" "}
-        <button onClick={handleStudentNameClick} value={student.student_id}>
-          {student.student_first_name} {student.student_last_name}
+        {' '}
+        <button type="button" onClick={handleStudentNameClick} value={student.student_id}>
+          {student.student_first_name}
+          {' '}
+          {student.student_last_name}
         </button>
       </td>
       <td>{student.current_problem_set}</td>
       <td>
         {student.latest_assessment.date
-          ? format(convertDate(student.latest_assessment.date), "M/dd/yy")
-          : "n/a"}
+          ? format(convertDate(student.latest_assessment.date), 'M/dd/yy')
+          : 'n/a'}
       </td>
       <td>
         {student.latest_assessment.num_correct
           ? `${student.latest_assessment.num_correct} / ${student.latest_assessment.total}`
-          : "n/a"}
+          : 'n/a'}
       </td>
       <td>
         {student.latest_assessment.percent_as_int
           ? `${student.latest_assessment.percent_as_int}%`
-          : "n/a"}
+          : 'n/a'}
       </td>
     </tr>
   ));
 
   return (
     <div className="DataDisplay">
-      <p>Click on a student's name to view more details</p>
+      <p>Click on a student&#39;s name to view more details</p>
       <table>
         <tbody>
           <tr>

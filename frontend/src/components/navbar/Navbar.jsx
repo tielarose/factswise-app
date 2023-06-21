@@ -4,13 +4,10 @@ import React, { useContext } from 'react';
 import { AppContext } from '../Context';
 
 // eslint-disable-next-line react/prop-types
-export default function Navbar({ setCurrentUser, setIsEducator, setIsStudent }) {
+export default function Navbar() {
   const navigate = useNavigate();
   const allContext = useContext(AppContext);
-  const { currentUser } = allContext;
-  const { isEducator } = allContext;
-
-  // console.log("Navbar allContext is", allContext);
+  const { currentUser, isEducator, setCurrentUser, setIsEducator,setIsStudent } = allContext;
 
   function handleLogOut() {
     localStorage.clear();

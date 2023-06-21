@@ -1,26 +1,29 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function EducatorEmailEntry(props) {
+export default function EducatorEmailEntry({
+  emailEntered, setEmailEntered, setEducatorId, setEducatorInDB,
+}) {
   const navigate = useNavigate();
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    fetch("/api/educator/lookup-educator-id", {
-      method: "POST",
-      body: JSON.stringify({ email_entered: props.emailEntered }),
-      headers: { "Content-Type": "application/json" }
+    fetch('/api/educator/lookup-educator-id', {
+      method: 'POST',
+      body: JSON.stringify({ email_entered: emailEntered }),
+      headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.educator_id === null) {
-          navigate("/educator/signup", {
-            state: { emailEntered: props.emailEntered }
+          navigate('/educator/signup', {
+            state: { emailEntered },
           });
         } else {
-          props.setEducatorInDB(true);
-          props.setEducatorId(data.educator_id);
+          setEducatorInDB(true);
+          setEducatorId(data.educator_id);
         }
       });
   }
@@ -30,23 +33,27 @@ export default function EducatorEmailEntry(props) {
       <h2>Educators:</h2>
       <h4>Log In or Sign Up</h4>
       <p>
-        Not an educator? <Link to="/">Go back</Link>
+        Not an educator?
+        {' '}
+        <Link to="/">Go back</Link>
       </p>
       <div>
         <form className="EducatorLogin-form" onSubmit={handleSubmit}>
           <label htmlFor="EducatorLogin-educator-email">
             Enter your email address:
+            {' '}
+            <input
+              type="email"
+              placeholder="email"
+              value={emailEntered}
+              onChange={(evt) => setEmailEntered(evt.target.value)}
+              name="EducatorLogin-educator-email"
+              id="EducatorLogin-educator-email"
+              required
+            />
           </label>
-          <input
-            type="email"
-            placeholder="email"
-            value={props.emailEntered}
-            onChange={(evt) => props.setEmailEntered(evt.target.value)}
-            name="EducatorLogin-educator-email"
-            id="EducatorLogin-educator-email"
-            required
-          ></input>
-          <button>Next</button>
+
+          <button type="submit">Next</button>
         </form>
       </div>
     </div>

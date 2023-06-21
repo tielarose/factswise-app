@@ -1,7 +1,7 @@
 import './App.css';
-import React, { useContext } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ContextProvider, { AppContext } from './Context';
+import ContextProvider from './Context';
 
 // Navbar & Home Components
 import Navbar from './navbar/Navbar';
@@ -22,19 +22,10 @@ import StudentLogin from './student/student-login/StudentLogin';
 import StudentDashboard from './student/student-dashboard/StudentDashboard';
 
 function App() {
-  const allContext = useContext(AppContext);
-  const {
-    currentUser, setCurrentUser, setIsEducator, setIsStudent,
-  } = allContext;
-
   return (
     <BrowserRouter>
       <ContextProvider>
-        <Navbar
-          setCurrentUser={setCurrentUser}
-          setIsEducator={setIsEducator}
-          setIsStudent={setIsStudent}
-        />
+        <Navbar />
         <Routes>
           {/* for each route, do what is on the line below */}
           <Route exact path="/" element={<Homepage />} />
@@ -42,26 +33,20 @@ function App() {
             exact
             path="/educator/login"
             element={(
-              <EducatorLogin
-                setCurrentUser={setCurrentUser}
-                setIsEducator={setIsEducator}
-              />
+              <EducatorLogin />
             )}
           />
           <Route
             exact
             path="/educator/signup"
             element={(
-              <EducatorSignup
-                setCurrentUser={setCurrentUser}
-                setIsEducator={setIsEducator}
-              />
+              <EducatorSignup />
             )}
           />
           <Route
             exact
             path="/educator/home"
-            element={<EducatorDashboard currentUser={currentUser} />}
+            element={<EducatorDashboard />}
           />
           <Route exact path="/educator/new/student" element={<NewStudent />} />
           <Route
@@ -78,7 +63,7 @@ function App() {
           <Route
             exact
             path="/student/home"
-            element={<StudentDashboard currentUser={currentUser} />}
+            element={<StudentDashboard />}
           />
         </Routes>
       </ContextProvider>
