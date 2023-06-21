@@ -277,7 +277,7 @@ class ProblemSetQuestion(db.Model):
         db.Integer, db.ForeignKey("problem_sets.problem_set_id"), nullable=False
     )
     question_text = db.Column(db.VARCHAR(30), nullable=False)
-    answer_text = db.Column(db.VARCHAR(10), nullable=False)
+    answer_as_int = db.Column(db.Integer, nullable=False)
 
     problem_set = db.relationship("ProblemSet", back_populates="problem_set_questions")
     problem_set_question_answers = db.relationship(
@@ -285,16 +285,16 @@ class ProblemSetQuestion(db.Model):
     )
 
     def __repr__(self):
-        return f"<ProblemSetQuestion problem_set_question_id={self.problem_set_question_id} problem_set_id={self.problem_set_id} question_text={self.question_text} answer_text={self.answer_text}>"
+        return f"<ProblemSetQuestion problem_set_question_id={self.problem_set_question_id} problem_set_id={self.problem_set_id} question_text={self.question_text} answer_as_int={self.answer_as_int}>"
 
     @classmethod
-    def create(cls, problem_set_id, question_text, answer_text):
+    def create(cls, problem_set_id, question_text, answer_as_int):
         """Create and return a new problem set question."""
 
         return cls(
             problem_set_id=problem_set_id,
             question_text=question_text,
-            answer_text=answer_text,
+            answer_as_int=answer_as_int,
         )
 
 

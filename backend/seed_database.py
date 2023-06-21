@@ -95,11 +95,11 @@ for data_set in problem_set_seed_data:
             data_set["list_of_factor_factor_products"]
         )
 
-    for question_text, answer_text in problem_set_questions:
+    for question_text, answer_as_int in problem_set_questions:
         problem_set_question = model.ProblemSetQuestion.create(
             problem_set_id=problem_set.problem_set_id,
             question_text=question_text,
-            answer_text=answer_text,
+            answer_as_int=answer_as_int,
         )
 
         model.db.session.add(problem_set_question)
@@ -179,7 +179,7 @@ for classroom in classrooms:
             problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
-                student_answer=problem_set_question.answer_text,
+                student_answer=problem_set_question.answer_as_int,
                 is_correct=True,
                 time_to_answer=choice([1, 2, 3]),
                 date_assessed=date1,
@@ -197,7 +197,7 @@ for classroom in classrooms:
             problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
-                student_answer=problem_set_question.answer_text,
+                student_answer=problem_set_question.answer_as_int,
                 is_correct=True,
                 time_to_answer=choice([1, 2, 3]),
                 date_assessed=date2,
@@ -212,12 +212,11 @@ for classroom in classrooms:
         ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
             student.current_problem_set
         ):
-            correct_answer_str = problem_set_question.answer_text
-            correct_answer_int = int(correct_answer_str)
+            correct_answer = problem_set_question.answer_as_int
             possible_answers = [
-                correct_answer_int - 1,
-                correct_answer_int,
-                correct_answer_int + 1,
+                correct_answer - 1,
+                correct_answer,
+                correct_answer + 1,
             ]
             student_answer = str(choice(possible_answers))
 
@@ -225,7 +224,7 @@ for classroom in classrooms:
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
                 student_answer=student_answer,
-                is_correct=(correct_answer_str == student_answer),
+                is_correct=(correct_answer == student_answer),
                 time_to_answer=choice([1, 2, 3]),
                 date_assessed=date3,
             )
@@ -253,12 +252,11 @@ for classroom in classrooms:
         ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
             student.current_problem_set
         ):
-            correct_answer_str = problem_set_question.answer_text
-            correct_answer_int = int(correct_answer_str)
+            correct_answer = problem_set_question.answer_as_int
             possible_answers = [
-                correct_answer_int - 1,
-                correct_answer_int,
-                correct_answer_int + 1,
+                correct_answer - 1,
+                correct_answer,
+                correct_answer + 1,
             ]
             student_answer = str(choice(possible_answers))
 
@@ -266,7 +264,7 @@ for classroom in classrooms:
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
                 student_answer=student_answer,
-                is_correct=(correct_answer_str == student_answer),
+                is_correct=(correct_answer == student_answer),
                 time_to_answer=choice([1, 2, 2, 3, 3, 4]),
                 date_assessed=date,
             )
