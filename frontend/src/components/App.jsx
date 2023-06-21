@@ -20,6 +20,7 @@ import StudentDetails from './educator/educator-dashboard/student-details/Studen
 // Student Components
 import StudentLogin from './student/student-login/StudentLogin';
 import StudentDashboard from './student/student-dashboard/StudentDashboard';
+import Assessment from './student/student-assessment/Assessment';
 
 function App() {
   return (
@@ -64,6 +65,11 @@ function App() {
             exact
             path="/student/home"
             element={<StudentDashboard />}
+          />
+          <Route
+            exact
+            path="/student/assessment"
+            element={<Assessment />}
           />
         </Routes>
       </ContextProvider>

@@ -1,9 +1,15 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../Context';
 
 export default function StudentDashboard() {
+  const navigate = useNavigate();
   const allContext = useContext(AppContext);
   const { currentUser } = allContext;
+
+  function handleLetsBeginClick() {
+    navigate('/student/assessment');
+  }
 
   return (
     <>
@@ -24,7 +30,7 @@ export default function StudentDashboard() {
 
       <p>Ready to practice?</p>
 
-      <button type="button">Let&#39;s Begin!</button>
+      <button type="button" onClick={handleLetsBeginClick}>Let&#39;s Begin!</button>
     </>
   );
 }
