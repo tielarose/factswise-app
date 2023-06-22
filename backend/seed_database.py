@@ -218,7 +218,7 @@ for classroom in classrooms:
                 correct_answer,
                 correct_answer + 1,
             ]
-            student_answer = str(choice(possible_answers))
+            student_answer = choice(possible_answers)
 
             problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
                 student_id=student.student_id,
@@ -258,7 +258,7 @@ for classroom in classrooms:
                 correct_answer,
                 correct_answer + 1,
             ]
-            student_answer = str(choice(possible_answers))
+            student_answer = choice(possible_answers)
 
             problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
                 student_id=student.student_id,
