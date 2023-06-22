@@ -5,6 +5,7 @@ from flask import Flask, jsonify, request
 from sqlalchemy import func, cast
 import sqlalchemy
 from random import choice, shuffle
+from datetime import datetime
 from model import (
     connect_to_db,
     db,
@@ -334,7 +335,9 @@ def get_all_problem_set_questions(problem_set_id):
     # query the database for all problem set questions in the given problem set
     problem_set_questions = db.session.execute(
         db.select(
-            ProblemSetQuestion.question_text, ProblemSetQuestion.answer_as_int
+            ProblemSetQuestion.problem_set_question_id,
+            ProblemSetQuestion.question_text,
+            ProblemSetQuestion.answer_as_int,
         ).filter_by(problem_set_id=problem_set_id)
     ).all()
 
@@ -343,9 +346,13 @@ def get_all_problem_set_questions(problem_set_id):
 
     # create a function to return a json serializable dictionary for each problem set question
     def problem_set_tuple_to_dict(problem_set_tuple):
-        question_text, answer_as_int = problem_set_tuple
+        problem_set_question_id, question_text, answer_as_int = problem_set_tuple
 
-        return {"question_text": question_text, "answer_as_int": answer_as_int}
+        return {
+            "question_id": problem_set_question_id,
+            "question_text": question_text,
+            "answer_as_int": answer_as_int,
+        }
 
     problem_set_questions_as_dicts = [
         problem_set_tuple_to_dict(problem_set_question)
@@ -353,6 +360,32 @@ def get_all_problem_set_questions(problem_set_id):
     ]
 
     return jsonify({"problem_set_questions": problem_set_questions_as_dicts})
+
+
+@app.route("/api/student/submitanswers", methods=["POST"])
+def submit_student_answers():
+    """Given an array of student answer inputs, create ProblemSetQuestionAnswer entries for each."""
+
+    student_id = request.json.get("student_id")
+    date_assessed = datetime.now()
+    all_answers = request.json.get("all_answers")
+
+    # print(all_answers)
+
+    for answer in all_answers:
+        new_answer = ProblemSetQuestionAnswer.create(
+            student_id=student_id,
+            problem_set_question_id=answer["problem_set_question_id"],
+            student_answer=answer["student_answer"],
+            is_correct=answer["is_correct"],
+            time_to_answer=answer["time_to_answer"],
+            date_assessed=date_assessed,
+        )
+
+        db.session.add(new_answer)
+        db.session.commit()
+
+    return jsonify({"it was all": "submitted!"})
 
 
 @app.route("/api/checkuser", methods=["POST"])

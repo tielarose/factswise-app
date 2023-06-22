@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useRef } from 'react';
+import React, { useState, useContext } from 'react';
+import { AppContext } from '../../Context';
 
 const allStudentResponses = [];
 
 export default function AssessmentQuestions({ problemSetQuestions, setHasAnsweredAllQuestions }) {
+  const allContext = useContext(AppContext);
+  const { currentUser } = allContext;
   const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
   const [inputAnswer, setInputAnswer] = useState('');
 
@@ -24,7 +27,18 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
 
     // if the student reaches the last question, stop and send the data to the server
     if (currentQuestionNum === (problemSetQuestions.length - 1)) {
-      // send the data to the server
+      const formInputs = { student_id: currentUser.student_id, all_answers: allStudentResponses };
+
+      fetch('/api/student/submitanswers', {
+        method: 'POST',
+        body: JSON.stringify(formInputs),
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+      setHasAnsweredAllQuestions(true);
     } else {
       setInputAnswer('');
       setCurrentQuestionNum(() => (currentQuestionNum + 1));

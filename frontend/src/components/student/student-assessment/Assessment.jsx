@@ -9,10 +9,6 @@ export default function Assessment() {
   const [problemSetQuestions, setProblemSetQuestions] = useState([]);
   const [hasAnsweredAllQuestions, setHasAnsweredAllQuestions] = useState(false);
 
-  console.log('Assessments component was rendered');
-  console.log(currentUser)
-  console.log(problemSetQuestions[4], problemSetQuestions[5])
-
   useEffect(() => {
     fetch(`/api/problem-set-questions/${currentUser.current_problem_set}`)
       .then((response) => response.json())
@@ -28,7 +24,7 @@ export default function Assessment() {
         : (
           <AssessmentQuestions
             problemSetQuestions={problemSetQuestions}
-            setHasAnsweredAllQuestions={ setHasAnsweredAllQuestions}
+            setHasAnsweredAllQuestions={setHasAnsweredAllQuestions}
           />
         )}
     </div>
