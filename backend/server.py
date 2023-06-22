@@ -4,13 +4,14 @@ from functools import reduce
 from flask import Flask, jsonify, request
 from sqlalchemy import func, cast
 import sqlalchemy
-from random import choice
+from random import choice, shuffle
 from model import (
     connect_to_db,
     db,
     Educator,
     Classroom,
     Student,
+    ProblemSetQuestion,
     ProblemSetQuestionAnswer,
 )
 
@@ -324,6 +325,34 @@ def verify_student_password():
         )
 
     return jsonify({"login_successful": False})
+
+
+@app.route("/api/problem-set-questions/<problem_set_id>")
+def get_all_problem_set_questions(problem_set_id):
+    """Given a problem_set_id, return a list of all questions (with answers) in that problem set."""
+
+    # query the database for all problem set questions in the given problem set
+    problem_set_questions = db.session.execute(
+        db.select(
+            ProblemSetQuestion.question_text, ProblemSetQuestion.answer_as_int
+        ).filter_by(problem_set_id=problem_set_id)
+    ).all()
+
+    # randomize the order of the problem set questions
+    shuffle(problem_set_questions)
+
+    # create a function to return a json serializable dictionary for each problem set question
+    def problem_set_tuple_to_dict(problem_set_tuple):
+        question_text, answer_as_int = problem_set_tuple
+
+        return {"question_text": question_text, "answer_as_int": answer_as_int}
+
+    problem_set_questions_as_dicts = [
+        problem_set_tuple_to_dict(problem_set_question)
+        for problem_set_question in problem_set_questions
+    ]
+
+    return jsonify({"problem_set_questions": problem_set_questions_as_dicts})
 
 
 @app.route("/api/checkuser", methods=["POST"])
