@@ -12,6 +12,8 @@ from model import (
     Educator,
     Classroom,
     Student,
+    ProblemSet,
+    ProblemSetType,
     ProblemSetQuestion,
     ProblemSetQuestionAnswer,
 )
@@ -154,7 +156,7 @@ def get_educator_classrooms():
         return jsonify({"classrooms_found": False})
 
 
-@app.route("/api/educator/classroom_info/<classroom_id>")
+@app.route("/api/educator/classroom-info/<classroom_id>")
 def get_classroom_info(classroom_id):
     """Given a classroom_id, return a list of students in that classroom and their latest assessment information."""
 
@@ -326,6 +328,31 @@ def verify_student_password():
         )
 
     return jsonify({"login_successful": False})
+
+
+@app.route("/api/problem-set-info/<problem_set_id>")
+def get_problem_set_info(problem_set_id):
+    """Given a problem_set_id, return the ____ on that problem set."""
+
+    problem_set_info = db.session.execute(
+        db.select(
+            ProblemSet.problem_set_description,
+            ProblemSet.problem_set_level,
+            ProblemSetType.problem_set_type_name,
+        )
+        .filter_by(problem_set_id=problem_set_id)
+        .join(ProblemSetType)
+    ).first()
+
+    problem_set_name, problem_set_level, problem_set_type = problem_set_info
+
+    return jsonify(
+        {
+            "problem_set_name": problem_set_name,
+            "problem_set_level": problem_set_level,
+            "problem_set_type": problem_set_type,
+        }
+    )
 
 
 @app.route("/api/problem-set-questions/<problem_set_id>")
