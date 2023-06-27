@@ -10,8 +10,13 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
   const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
   const [inputAnswer, setInputAnswer] = useState('');
 
+  const startTime = Date.now();
+
   function handleSubmit(evt) {
     evt.preventDefault();
+
+    const endTime = Date.now();
+    const totalTime = endTime - startTime;
 
     const question = problemSetQuestions[currentQuestionNum];
     const isCorrect = parseInt(inputAnswer, 10) === question.answer_as_int;
@@ -20,7 +25,7 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
       problem_set_question_id: question.question_id,
       student_answer: parseInt(inputAnswer, 10),
       is_correct: isCorrect,
-      time_to_answer: 2,
+      time_to_answer: Math.round(totalTime / 100),
     };
 
     allStudentResponses.push(problemSetQuestionAnswer);
@@ -60,6 +65,7 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
           type="text"
           value={inputAnswer}
           onChange={(evt) => setInputAnswer(evt.target.value)}
+          required
         />
       </label>
       <button type="submit">Next</button>
