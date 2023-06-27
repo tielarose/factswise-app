@@ -12,13 +12,18 @@ export default function EducatorDashboardDataDisplay(props) {
 
   useEffect(() => {
     if (classroomId) {
-      fetch(`/api/educator/classroom_info/${classroomId}`)
+      fetch(`/api/educator/classroom-info/${classroomId}`)
         .then((response) => response.json())
         .then((data) => {
           setAllStudents(data.students);
         });
     }
   }, [classroomId]);
+
+  const problemSetTypeToSymbol = {
+    'Addition Subtraction': '+ -',
+    'Multiplication Division': 'x &divide;',
+  };
 
   function handleStudentNameClick(evt) {
     const studentId = evt.target.value;
@@ -60,13 +65,13 @@ export default function EducatorDashboardDataDisplay(props) {
       </td>
       <td>{student.current_problem_set}</td>
       <td>
-        {student.latest_assessment.date
-          ? format(convertDate(student.latest_assessment.date), 'M/dd/yy')
-          : 'n/a'}
+        {problemSetTypeToSymbol[student.latest_assessment.problem_set_type] }
+        {' '}
+        {student.latest_assessment.level ? student.latest_assessment.level : 'n/a'}
       </td>
       <td>
-        {student.latest_assessment.num_correct
-          ? `${student.latest_assessment.num_correct} / ${student.latest_assessment.total}`
+        {student.latest_assessment.date
+          ? format(convertDate(student.latest_assessment.date), 'M/dd/yy')
           : 'n/a'}
       </td>
       <td>
@@ -74,6 +79,7 @@ export default function EducatorDashboardDataDisplay(props) {
           ? `${student.latest_assessment.percent_as_int}%`
           : 'n/a'}
       </td>
+      <td>{ student.latest_assessment.avg_time ? student.latest_assessment.avg_time : 'n/a'}</td>
     </tr>
   ));
 
@@ -81,13 +87,20 @@ export default function EducatorDashboardDataDisplay(props) {
     <div className="DataDisplay">
       <p>Click on a student&#39;s name to view more details</p>
       <table>
+        <colgroup span="2" />
+        <colgroup span="4" />
         <tbody>
           <tr>
-            <th>Student</th>
+            <th colSpan="2" scope="colgroup">Student Info</th>
+            <th colSpan="4" scope="colgroup">Last Assessment</th>
+          </tr>
+          <tr>
+            <th>Name</th>
             <th>Current Goal</th>
-            <th>Last Assessed</th>
-            <th>Score</th>
+            <th>Goal</th>
+            <th>Date</th>
             <th>Percent</th>
+            <th>Avg Time/Question</th>
           </tr>
           {studentRows}
         </tbody>

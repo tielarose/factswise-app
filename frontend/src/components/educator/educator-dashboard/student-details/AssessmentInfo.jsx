@@ -38,17 +38,26 @@ export default function AssessmentInfo({ studentId }) {
     return new Date(year, month, day);
   }
 
+  const problemSetTypeToSymbol = {
+    'Addition Subtraction': '+ -',
+    'Multiplication Division': 'x &divide;',
+  };
+
   let assessmentRows = [];
 
   if (assessments.length > 0) {
     assessmentRows = assessments.map((assessment) => (
-      <tr>
+      <tr key={assessment.date}>
         <td>
           {assessment.date
             ? format(convertDate(assessment.date), 'M/dd/yy')
             : 'n/a'}
         </td>
-        <td>goal</td>
+        <td>
+          { problemSetTypeToSymbol[assessment.problem_set_type]}
+          {' '}
+          { assessment.level}
+        </td>
         <td>
           {assessment.num_correct
             ? `${assessment.num_correct} / ${assessment.total}`
@@ -56,6 +65,9 @@ export default function AssessmentInfo({ studentId }) {
         </td>
         <td>
           {assessment.percent_as_int ? `${assessment.percent_as_int}%` : 'n/a'}
+        </td>
+        <td>
+          { assessment.avg_time}
         </td>
       </tr>
     ));
@@ -69,6 +81,7 @@ export default function AssessmentInfo({ studentId }) {
           <th>Goal #</th>
           <th>Score</th>
           <th>Percent</th>
+          <th>Avg Time/Question</th>
         </tr>
       </thead>
       <tbody>{assessmentRows}</tbody>

@@ -169,29 +169,45 @@ def get_classroom_info(classroom_id):
         latest_assessment = db.session.execute(
             db.select(
                 ProblemSetQuestionAnswer.date_assessed,
+                ProblemSetType.problem_set_type_name,
+                ProblemSet.problem_set_level,
                 func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
                 func.count(ProblemSetQuestionAnswer.student_answer),
+                func.avg(ProblemSetQuestionAnswer.time_to_answer),
             )
-            .filter_by(student_id=student_id)
+            .select_from(ProblemSetQuestionAnswer)
+            .join(ProblemSetQuestion)
+            .join(ProblemSet)
+            .join(ProblemSetType)
+            .filter(ProblemSetQuestionAnswer.student_id == student_id)
             .group_by(ProblemSetQuestionAnswer.date_assessed)
+            .group_by(ProblemSetType.problem_set_type_name)
+            .group_by(ProblemSet.problem_set_level)
+            # .group_by(ProblemSetQuestion.problem_set_id)
             .order_by(ProblemSetQuestionAnswer.date_assessed.desc())
         ).first()
 
         if latest_assessment != None:
-            date, num_correct, total = latest_assessment
+            date, problem_set_type, level, num_correct, total, time = latest_assessment
             percent_as_int = round((num_correct / total) * 100)
 
             return {
                 "date": date,
+                "problem_set_type": problem_set_type,
+                "level": level,
                 "num_correct": num_correct,
                 "total": total,
+                "avg_time": round(time),
                 "percent_as_int": percent_as_int,
             }
         else:
             return {
                 "date": None,
+                "problem_set_type": None,
+                "level": None,
                 "num_correct": None,
                 "total": None,
+                "avg_time": None,
                 "percent_as_int": None,
             }
 
@@ -214,30 +230,53 @@ def get_student_info(student_id):
     """Given a student_id, return detailed information on that student."""
 
     student = Student.get_by_id(student_id)
-    assessments_tuples = db.session.execute(
+    # assessments_tuples = db.session.execute(
+    #     db.select(
+    #         ProblemSetQuestionAnswer.date_assessed,
+    #         func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
+    #         func.count(ProblemSetQuestionAnswer.student_answer),
+    #     )
+    #     .filter_by(student_id=student_id)
+    #     .group_by(ProblemSetQuestionAnswer.date_assessed)
+    #     .order_by(ProblemSetQuestionAnswer.date_assessed.desc())
+    # ).all()
+
+    all_assessments_tuples = db.session.execute(
         db.select(
             ProblemSetQuestionAnswer.date_assessed,
+            ProblemSetType.problem_set_type_name,
+            ProblemSet.problem_set_level,
             func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
             func.count(ProblemSetQuestionAnswer.student_answer),
+            func.avg(ProblemSetQuestionAnswer.time_to_answer),
         )
-        .filter_by(student_id=student_id)
+        .select_from(ProblemSetQuestionAnswer)
+        .join(ProblemSetQuestion)
+        .join(ProblemSet)
+        .join(ProblemSetType)
+        .filter(ProblemSetQuestionAnswer.student_id == student_id)
         .group_by(ProblemSetQuestionAnswer.date_assessed)
+        .group_by(ProblemSetType.problem_set_type_name)
+        .group_by(ProblemSet.problem_set_level)
         .order_by(ProblemSetQuestionAnswer.date_assessed.desc())
     ).all()
 
     def assessment_tuples_into_dict(assessment_tuple):
-        date, num_correct, total = assessment_tuple
+        date, problem_set_type, level, num_correct, total, time = assessment_tuple
         percent_as_int = round((num_correct / total) * 100)
 
         return {
             "date": date,
+            "problem_set_type": problem_set_type,
+            "level": level,
             "num_correct": num_correct,
             "total": total,
+            "avg_time": round(time),
             "percent_as_int": percent_as_int,
         }
 
     assessments_list = [
-        assessment_tuples_into_dict(assessment) for assessment in assessments_tuples
+        assessment_tuples_into_dict(assessment) for assessment in all_assessments_tuples
     ]
 
     return jsonify({"student_info": student.to_dict(), "assessments": assessments_list})
