@@ -40,7 +40,7 @@ export default function EducatorEmailEntry({
       <div>
         <form className="EducatorLogin-form" onSubmit={handleSubmit}>
           <label htmlFor="EducatorLogin-educator-email">
-            Enter your email address:
+            enter your email address:
             {' '}
           </label>
           <input
@@ -53,7 +53,7 @@ export default function EducatorEmailEntry({
             required
           />
 
-          <button type="submit">Next</button>
+          <button className="appear-as-button" type="submit">Next</button>
         </form>
       </div>
     </div>

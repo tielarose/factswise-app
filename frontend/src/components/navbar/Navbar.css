@@ -27,9 +27,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border: none;
 }
 
-.Navbar-button a, button {
+.white-text a, button.white-text {
   color: white;
 }
 

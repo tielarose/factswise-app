@@ -36,14 +36,16 @@ export default function EducatorPasswordEntry({
 
   return (
     <div className="EducatorLogin step2">
-      <h2>
+      <h4>
         Welcome back,
-        {' '}
+      </h4>
+      <h2 className="educator-dark bold">
         {emailEntered}
         !
       </h2>
-      <h4>
+      <div>
         <button
+          className="appear-as-link"
           type="button"
           onClick={() => {
             setEducatorInDB(false);
@@ -53,25 +55,24 @@ export default function EducatorPasswordEntry({
         >
           Not you?
         </button>
-      </h4>
+      </div>
 
       <div>
         <form className="EducatorLogin-form" onSubmit={handleSubmit}>
           <label htmlFor="EducatorLogin-educator-password">
-            Password:
-            <input
-              type="password"
-              placeholder="password"
-              value={enteredPassword}
-              onChange={(evt) => setEnteredPassword(evt.target.value)}
-              name="EducatorLogin-educator-Password"
-              id="EducatorLogin-educator-password"
-              required
-            />
-
+            enter your password:
           </label>
+          <input
+            type="password"
+            placeholder="password"
+            value={enteredPassword}
+            onChange={(evt) => setEnteredPassword(evt.target.value)}
+            name="EducatorLogin-educator-Password"
+            id="EducatorLogin-educator-password"
+            required
+          />
 
-          <button type="submit">Next</button>
+          <button className="appear-as-button" type="submit">Next</button>
         </form>
       </div>
     </div>

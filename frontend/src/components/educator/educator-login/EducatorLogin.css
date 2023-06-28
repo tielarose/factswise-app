@@ -25,7 +25,7 @@
   text-align: center;
 }
 
-.EducatorLogin button {
+.EducatorLogin .appear-as-button {
   background-color: var(--educator-primary);
   width: 150px; 
   height: 40px;
@@ -36,7 +36,7 @@
   color: var(--gray-5);
 }
 
-.EducatorLogin button:hover {
+.EducatorLogin .appear-as-button:hover {
   background-color: var(--blue-60);
   color: white;
 }
