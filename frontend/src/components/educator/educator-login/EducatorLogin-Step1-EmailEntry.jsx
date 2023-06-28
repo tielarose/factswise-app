@@ -30,28 +30,28 @@ export default function EducatorEmailEntry({
 
   return (
     <div className="EducatorLogin">
-      <h2>Educators:</h2>
+      <h2 className="educator-dark bold">Educators</h2>
       <h4>Log In or Sign Up</h4>
       <p>
         Not an educator?
         {' '}
-        <Link to="/">Go back</Link>
+        <Link to="/">&larr; go back</Link>
       </p>
       <div>
         <form className="EducatorLogin-form" onSubmit={handleSubmit}>
           <label htmlFor="EducatorLogin-educator-email">
             Enter your email address:
             {' '}
-            <input
-              type="email"
-              placeholder="email"
-              value={emailEntered}
-              onChange={(evt) => setEmailEntered(evt.target.value)}
-              name="EducatorLogin-educator-email"
-              id="EducatorLogin-educator-email"
-              required
-            />
           </label>
+          <input
+            type="email"
+            placeholder="email"
+            value={emailEntered}
+            onChange={(evt) => setEmailEntered(evt.target.value)}
+            name="EducatorLogin-educator-email"
+            id="EducatorLogin-educator-email"
+            required
+          />
 
           <button type="submit">Next</button>
         </form>

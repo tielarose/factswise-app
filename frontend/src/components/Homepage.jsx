@@ -3,12 +3,6 @@ import { Link, Navigate } from 'react-router-dom';
 import { AppContext } from './Context';
 import './Homepage.css';
 
-// if you need a link that is an HTML element (text or button)
-// wrap the element in a < Link > component from ReactRouter
-// if you want to go to a URL outside of clicking an HTML element, then use
-// const navigate = useNavigate()
-// navigate('/welcome)
-// or redirect("/login");
 export default function Homepage() {
   const allContext = useContext(AppContext);
   const { isEducator } = allContext;

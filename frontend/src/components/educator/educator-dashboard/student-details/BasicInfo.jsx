@@ -46,6 +46,10 @@ export default function BasicInfo({ studentId }) {
     setIsBeingEdited(false);
   }
 
+  function handleResetPasswordButton() {
+    console.log('clicked');
+  }
+
   const displayInfo = (
     <table>
       <tbody>
@@ -80,6 +84,7 @@ export default function BasicInfo({ studentId }) {
         <tr>
           <td>
             <button type="button" onClick={handleEditButton}>edit</button>
+            <button type="button" onClick={handleResetPasswordButton}>change password</button>
           </td>
         </tr>
       </tbody>

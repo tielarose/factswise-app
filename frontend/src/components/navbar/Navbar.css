@@ -3,7 +3,36 @@
   height: 60px;
   padding: 0 20px;
   display: flex;
-  background-color: #e9e4e4;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0px 5px 10px var(--gray-2);
+}
+
+.Navbar a {
+  text-decoration: none;
+  color: var(--gray-5);
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.Navbar-logo {
+  height: 30px;
+}
+
+.Navbar-button {
+  background-color: var(--blue-70);
+  width: 6em;
+  height: 2.5em;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Navbar-button a, button {
+  color: white;
+}
+
+.Navbar-home-link a {
+  color: var(--blue-70);
 }

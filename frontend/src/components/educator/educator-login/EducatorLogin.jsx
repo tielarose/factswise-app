@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import "./EducatorLogin.css";
-import EducatorEmailEntry from "./EducatorLogin-Step1-EmailEntry";
-import EducatorPasswordEntry from "./EducatorLogin-Step2-PasswordEntry";
+import React, { useState, useContext } from 'react';
+import './EducatorLogin.css';
+import EducatorEmailEntry from './EducatorLogin-Step1-EmailEntry';
+import EducatorPasswordEntry from './EducatorLogin-Step2-PasswordEntry';
+import { AppContext } from '../../Context';
 
-export default function EducatorLogin(props) {
-  const [emailEntered, setEmailEntered] = useState("");
+export default function EducatorLogin() {
+  const [emailEntered, setEmailEntered] = useState('');
   const [educatorInDB, setEducatorInDB] = useState(false);
-  const [educatorId, setEducatorId] = useState("");
+  const [educatorId, setEducatorId] = useState('');
+  const allContext = useContext(AppContext);
+  const { setCurrentUser, setIsEducator } = allContext;
 
   return (
-    <>
+    <div className="educator-login">
       {!educatorInDB ? (
         <EducatorEmailEntry
           setEducatorInDB={setEducatorInDB}
@@ -23,10 +26,10 @@ export default function EducatorLogin(props) {
           setEmailEntered={setEmailEntered}
           educatorId={educatorId}
           setEducatorInDB={setEducatorInDB}
-          setCurrentUser={props.setCurrentUser}
-          setIsEducator={props.setIsEducator}
+          setCurrentUser={setCurrentUser}
+          setIsEducator={setIsEducator}
         />
       )}
-    </>
+    </div>
   );
 }

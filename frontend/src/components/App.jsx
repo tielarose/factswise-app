@@ -27,51 +27,53 @@ function App() {
     <BrowserRouter>
       <ContextProvider>
         <Navbar />
-        <Routes>
-          {/* for each route, do what is on the line below */}
-          <Route exact path="/" element={<Homepage />} />
-          <Route
-            exact
-            path="/educator/login"
-            element={(
-              <EducatorLogin />
+        <div className="main-content">
+          <Routes>
+            {/* for each route, do what is on the line below */}
+            <Route exact path="/" element={<Homepage />} />
+            <Route
+              exact
+              path="/educator/login"
+              element={(
+                <EducatorLogin />
             )}
-          />
-          <Route
-            exact
-            path="/educator/signup"
-            element={(
-              <EducatorSignup />
+            />
+            <Route
+              exact
+              path="/educator/signup"
+              element={(
+                <EducatorSignup />
             )}
-          />
-          <Route
-            exact
-            path="/educator/home"
-            element={<EducatorDashboard />}
-          />
-          <Route exact path="/educator/new/student" element={<NewStudent />} />
-          <Route
-            exact
-            path="/educator/new/classroom"
-            element={<NewClassroom />}
-          />
-          <Route
-            exact
-            path="/educator/studentdetails"
-            element={<StudentDetails />}
-          />
-          <Route exact path="/student/login" element={<StudentLogin />} />
-          <Route
-            exact
-            path="/student/home"
-            element={<StudentDashboard />}
-          />
-          <Route
-            exact
-            path="/student/assessment"
-            element={<Assessment />}
-          />
-        </Routes>
+            />
+            <Route
+              exact
+              path="/educator/home"
+              element={<EducatorDashboard />}
+            />
+            <Route exact path="/educator/new/student" element={<NewStudent />} />
+            <Route
+              exact
+              path="/educator/new/classroom"
+              element={<NewClassroom />}
+            />
+            <Route
+              exact
+              path="/educator/studentdetails"
+              element={<StudentDetails />}
+            />
+            <Route exact path="/student/login" element={<StudentLogin />} />
+            <Route
+              exact
+              path="/student/home"
+              element={<StudentDashboard />}
+            />
+            <Route
+              exact
+              path="/student/assessment"
+              element={<Assessment />}
+            />
+          </Routes>
+        </div>
       </ContextProvider>
     </BrowserRouter>
   );

@@ -1,5 +1,5 @@
 .Homepage {
-  padding: 20px;
+  padding: 40px;
   text-align: center;
 }
 
@@ -15,9 +15,9 @@
 }
 
 .Homepage-login-button-educator {
-  background-color: #99d1ff;
+  background-color: var(--educator-primary);
 }
 
 .Homepage-login-button-student {
-  background-color: #fede86;
+  background-color: var(--student-primary);
 }
