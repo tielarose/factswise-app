@@ -37,9 +37,8 @@ export default function StudentPasswordEntry({ currentStudent, setCurrentStudent
 
   return (
     <>
+      <h4>Welcome back,</h4>
       <h2 className="bold">
-        Welcome,
-        {' '}
         {currentStudent.student_first_name}
         {' '}
         {currentStudent.student_last_name}

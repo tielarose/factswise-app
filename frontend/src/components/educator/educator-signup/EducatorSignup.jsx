@@ -42,13 +42,8 @@ export default function EducatorSignup() {
 
   return (
     <div className="form-container">
-      <h2 className="educator-dark bold">Educators</h2>
-      <h4>Sign up for an account</h4>
-      <p>
-        Not an educator?
-        {' '}
-        <Link className="link-blue" to="/">Go back</Link>
-      </p>
+      <h4>Create an educator account for</h4>
+      <h2 className="educator-dark bold">{location.state.emailEntered}</h2>
       <p>
         Already have an account?
         {' '}
@@ -56,12 +51,6 @@ export default function EducatorSignup() {
       </p>
       <div>
         <form onSubmit={handleSubmit}>
-          <p className="bold">
-            {' '}
-            Email:
-            {' '}
-            {location.state.emailEntered}
-          </p>
           {/* First Name Field */}
           <label htmlFor="EducatorSignup-educator-first-name">
             First Name:
