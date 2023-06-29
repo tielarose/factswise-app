@@ -51,17 +51,17 @@ export default function StudentPasswordEntry({ currentStudent, setCurrentStudent
       <div>
         <form onSubmit={handleSubmit}>
           <label htmlFor="StudentLogin-student-password">
-            Enter your password: 
+            Enter your password:
           </label>
           <input
-              type="password"
-              placeholder="password"
-              value={studentPasswordEntry}
-              onChange={(evt) => setStudentPasswordEntry(evt.target.value)}
-              name="StudentLogin-student-password"
-              id="StudentLogin-student-password"
-              required
-            />
+            type="password"
+            placeholder="password"
+            value={studentPasswordEntry}
+            onChange={(evt) => setStudentPasswordEntry(evt.target.value)}
+            name="StudentLogin-student-password"
+            id="StudentLogin-student-password"
+            required
+          />
 
           <button className="button-yellow" type="submit">Enter</button>
         </form>

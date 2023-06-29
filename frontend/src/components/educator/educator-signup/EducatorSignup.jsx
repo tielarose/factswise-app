@@ -22,8 +22,6 @@ export default function EducatorSignup() {
       educator_password: educatorPassword,
     };
 
-    console.log(formInputs);
-
     fetch('/api/educator/signup', {
       method: 'POST',
       body: JSON.stringify(formInputs),
@@ -56,56 +54,56 @@ export default function EducatorSignup() {
             First Name:
           </label>
           <input
-              type="text"
-              placeholder="first name"
-              value={educatorFirstName}
-              onChange={(evt) => setEducatorFirstName(evt.target.value)}
-              name="EducatorSignup-educator-first-name"
-              id="EducatorSignup-educator-first-name"
-              required
-            />
+            type="text"
+            placeholder="first name"
+            value={educatorFirstName}
+            onChange={(evt) => setEducatorFirstName(evt.target.value)}
+            name="EducatorSignup-educator-first-name"
+            id="EducatorSignup-educator-first-name"
+            required
+          />
 
           {/* Last Name Field */}
           <label htmlFor="EducatorSignup-educator-last-name">
             Last Name:
           </label>
           <input
-              type="text"
-              placeholder="last name"
-              value={educatorLastName}
-              onChange={(evt) => setEducatorLastName(evt.target.value)}
-              name="EducatorSignup-educator-last-name"
-              id="EducatorSignup-educator-last-name"
-              required
-            />
+            type="text"
+            placeholder="last name"
+            value={educatorLastName}
+            onChange={(evt) => setEducatorLastName(evt.target.value)}
+            name="EducatorSignup-educator-last-name"
+            id="EducatorSignup-educator-last-name"
+            required
+          />
 
           {/* Display Name Field */}
           <label htmlFor="EducatorSignup-educator-display-name">
             How would you like your name to appear to your students?
           </label>
           <input
-              type="text"
-              placeholder="display name"
-              value={educatorDisplayName}
-              onChange={(evt) => setEducatorDisplayName(evt.target.value)}
-              name="EducatorSignup-educator-display-name"
-              id="EducatorSignup-educator-display-name"
-              required
-            />
+            type="text"
+            placeholder="display name"
+            value={educatorDisplayName}
+            onChange={(evt) => setEducatorDisplayName(evt.target.value)}
+            name="EducatorSignup-educator-display-name"
+            id="EducatorSignup-educator-display-name"
+            required
+          />
 
           {/* Password Field */}
           <label htmlFor="EducatorSignup-educator-password">
             Password:
           </label>
           <input
-              type="password"
-              placeholder="password"
-              value={educatorPassword}
-              onChange={(evt) => setEducatorPassword(evt.target.value)}
-              name="EducatorSignup-educator-password"
-              id="EducatorSignup-educator-password"
-              required
-            />
+            type="password"
+            placeholder="password"
+            value={educatorPassword}
+            onChange={(evt) => setEducatorPassword(evt.target.value)}
+            name="EducatorSignup-educator-password"
+            id="EducatorSignup-educator-password"
+            required
+          />
 
           <button className="button-blue" type="submit">Sign Up</button>
         </form>

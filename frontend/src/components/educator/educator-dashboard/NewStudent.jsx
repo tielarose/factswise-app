@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import "./NewStudent.css";
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import './NewStudent.css';
 
 export default function NewStudent() {
   const location = useLocation();
   const navigate = useNavigate();
-  const classroom = location.state.classroom;
+  const { classroom } = location.state;
 
-  const [studentFirstName, setStudentFirstName] = useState("");
-  const [studentLastName, setStudentLastName] = useState("");
+  const [studentFirstName, setStudentFirstName] = useState('');
+  const [studentLastName, setStudentLastName] = useState('');
   const [studentGradeLevel, setStudentGradeLevel] = useState(0);
-  const [studentPassword, setStudentPassword] = useState("");
+  const [studentPassword, setStudentPassword] = useState('');
   const [currentProblemSet, setCurrentProblemSet] = useState(1);
 
   function handleSubmit(evt) {
@@ -23,30 +23,30 @@ export default function NewStudent() {
       student_password: studentPassword,
       current_problem_set: currentProblemSet,
       classroom_id: classroom.classroom_id,
-      student_login_icon: "Z"
+      student_login_icon: 'Z',
     };
 
-    fetch("/api/educator/new/student", {
-      method: "POST",
+    fetch('/api/educator/new/student', {
+      method: 'POST',
       body: JSON.stringify(formInputs),
-      headers: { "Content-Type": "application/json" }
+      headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => response.json())
       .then((data) => {
         if (data) {
-          console.log("it worked!");
-          navigate("/educator/home");
-        } else {
-          console.log("it did not work");
+          navigate('/educator/home');
         }
       });
   }
 
   return (
-    <div className="NewStudent">
-      <h2>Add a student to {classroom.classroom_name}</h2>
+    <div className="form-container">
+      <h4>Add a student to</h4>
+      <h2 className="educator-dark bold">
+        {classroom.classroom_name}
+      </h2>
       <div>
-        <form className="NewStudent-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           {/* First Name Field */}
           <label htmlFor="NewStudent-first-name">First Name:</label>
           <input
@@ -57,7 +57,7 @@ export default function NewStudent() {
             name="NewStudent-first-name"
             id="NewStudent-first-name"
             required
-          ></input>
+          />
           {/* Last Name Field */}
           <label htmlFor="NewStudent-last-name">Last Name:</label>
           <input
@@ -68,7 +68,7 @@ export default function NewStudent() {
             name="NewStudent-last-name"
             id="NewStudent-last-name"
             required
-          ></input>
+          />
           {/* Grade Level Field */}
           <label htmlFor="NewStudent-grade-level">Grade Level:</label>
           <input
@@ -81,7 +81,7 @@ export default function NewStudent() {
             name="NewStudent-grade-level"
             id="NewStudent-grade-level"
             required
-          ></input>
+          />
           {/* Student Password Field */}
           <label htmlFor="NewStudent-password">Last Name:</label>
           <input
@@ -92,7 +92,7 @@ export default function NewStudent() {
             name="NewStudent-password"
             id="NewStudent-password"
             required
-          ></input>
+          />
           {/* Current Problem Set Field */}
           <label htmlFor="NewStudent-grade-level">Current Problem Set: </label>
           <input
@@ -105,8 +105,8 @@ export default function NewStudent() {
             name="NewStudent-problem-set"
             id="NewStudent-problem-set"
             required
-          ></input>
-          <button>Add Student</button>
+          />
+          <button className="button-blue" type="submit">Add Student</button>
         </form>
       </div>
     </div>

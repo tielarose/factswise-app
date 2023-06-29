@@ -32,33 +32,25 @@ export default function NewClassroom() {
   }
 
   return (
-    <div className="NewClassroom">
-      <h2>Create a New Classroom</h2>
+    <div className="form-container">
+      <h2 className="educator-dark bold">Create a New Classroom</h2>
       <div>
-        <form className="NewClassroom-form" onSubmit={handleSubmit}>
-          <p>
-            Your Name:
-            {' '}
-            {currentUser ? currentUser.educator_first_name : ''}
-            {' '}
-            {currentUser ? currentUser.educator_last_name : ''}
-          </p>
+        <form onSubmit={handleSubmit}>
           {/* Classroom Name Field */}
           <label htmlFor="NewStudent-classroom-name">
             Classroom Name:
-            <input
-              type="text"
-              placeholder="classroom name"
-              value={classroomName}
-              onChange={(evt) => setClassroomName(evt.target.value)}
-              name="NewStudent-classroom-name"
-              id="NewStudent-classroom-name"
-              required
-            />
-
           </label>
+          <input
+            type="text"
+            placeholder="classroom name"
+            value={classroomName}
+            onChange={(evt) => setClassroomName(evt.target.value)}
+            name="NewStudent-classroom-name"
+            id="NewStudent-classroom-name"
+            required
+          />
 
-          <button type="button">Add Classroom</button>
+          <button className="button-blue" type="button">Add Classroom</button>
         </form>
       </div>
     </div>

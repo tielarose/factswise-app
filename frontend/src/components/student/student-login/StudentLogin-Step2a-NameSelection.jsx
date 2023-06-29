@@ -1,15 +1,20 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
-export default function StudentNameSelection(props) {
+export default function StudentNameSelection(
+  {
+    setIsValidClassroomCode, setCurrentStudent, allStudents, currentClassroom,
+  },
+) {
   function handleGoBackClick() {
-    props.setIsValidClassroomCode(false);
+    setIsValidClassroomCode(false);
   }
 
   function handleStudentClick(student) {
-    props.setCurrentStudent(student);
+    setCurrentStudent(student);
   }
 
-  const studentNameLinks = props.allStudents.map((student) => (
+  const studentNameLinks = allStudents.map((student) => (
     <button
       key={student.student_id}
       type="button"
@@ -25,8 +30,8 @@ export default function StudentNameSelection(props) {
       <h2>
         Welcome to
         {' '}
-        {props.currentClassroom.educator_display_name}
-        's Class!
+        {currentClassroom.educator_display_name}
+        &#39;s Class!
       </h2>
       <p>
         Not your teacher?

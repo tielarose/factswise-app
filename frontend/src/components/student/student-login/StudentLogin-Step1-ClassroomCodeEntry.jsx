@@ -1,7 +1,10 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function ClassroomCodeEntry(props) {
+export default function ClassroomCodeEntry(
+  { setIsValidClassroomCode, setAllStudents, setCurrentClassroom },
+) {
   const [enteredClassroomCode, setEnteredClassroomCode] = useState('');
 
   function handleSubmit(evt) {
@@ -15,9 +18,9 @@ export default function ClassroomCodeEntry(props) {
       .then((response) => response.json())
       .then((data) => {
         if (data.classroom_found) {
-          props.setIsValidClassroomCode(true);
-          props.setAllStudents(data.students);
-          props.setCurrentClassroom(data.classroom);
+          setIsValidClassroomCode(true);
+          setAllStudents(data.students);
+          setCurrentClassroom(data.classroom);
         }
       });
   }
