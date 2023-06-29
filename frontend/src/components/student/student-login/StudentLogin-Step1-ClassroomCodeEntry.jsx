@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function ClassroomCodeEntry(props) {
-  const [enteredClassroomCode, setEnteredClassroomCode] = useState("");
+  const [enteredClassroomCode, setEnteredClassroomCode] = useState('');
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    fetch("/api/student/get-classroom-by-code", {
-      method: "POST",
+    fetch('/api/student/get-classroom-by-code', {
+      method: 'POST',
       body: JSON.stringify({ entered_classroom_code: enteredClassroomCode }),
-      headers: { "Content-Type": "application/json" }
+      headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -24,15 +24,14 @@ export default function ClassroomCodeEntry(props) {
 
   return (
     <>
-      <h2>Student Login</h2>
+      <h2 className="bold">Enter your class code</h2>
       <p>
-        Not a student? <Link to="/">Go back</Link>
+        Not a student?
+        {' '}
+        <Link className="link-blue" to="/">Go back</Link>
       </p>
       <div>
-        <form className="StudentLogin-form" onSubmit={handleSubmit}>
-          <label htmlFor="StudentLogin-classroom-code">
-            Enter your class code:
-          </label>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="class code"
@@ -42,7 +41,7 @@ export default function ClassroomCodeEntry(props) {
             id="StudentLogin-classroom-code"
             required
           />
-          <button>Next</button>
+          <button className="button-yellow" type="submit">Next</button>
         </form>
       </div>
     </>

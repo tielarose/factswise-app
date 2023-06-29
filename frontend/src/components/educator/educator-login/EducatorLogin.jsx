@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import './EducatorLogin.css';
 import EducatorEmailEntry from './EducatorLogin-Step1-EmailEntry';
 import EducatorPasswordEntry from './EducatorLogin-Step2-PasswordEntry';
 import { AppContext } from '../../Context';
@@ -12,7 +11,7 @@ export default function EducatorLogin() {
   const { setCurrentUser, setIsEducator } = allContext;
 
   return (
-    <div className="educator-login">
+    <div className="form-container">
       {!educatorInDB ? (
         <EducatorEmailEntry
           setEducatorInDB={setEducatorInDB}

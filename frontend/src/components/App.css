@@ -1,5 +1,4 @@
 .main-content {
-  height: calc(100vh - 60px);
   max-width: 1000px;
   margin: auto;
   display: flex;

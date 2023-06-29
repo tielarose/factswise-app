@@ -1,6 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./StudentLogin-Step1-ClassroomCodeEntry";
-import "./StudentLogin.css";
 import ClassroomCodeEntry from "./StudentLogin-Step1-ClassroomCodeEntry";
 import StudentNameAndPassword from "./StudentLogin-Step2-NameAndPassword";
 
@@ -10,7 +9,7 @@ export default function StudentLogin() {
   const [currentClassroom, setCurrentClassroom] = useState({});
 
   return (
-    <div className="StudentLogin">
+    <div className="form-container">
       {!isValidClassroomCode ? (
         <ClassroomCodeEntry
           setIsValidClassroomCode={setIsValidClassroomCode}

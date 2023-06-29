@@ -37,7 +37,7 @@ export default function StudentPasswordEntry({ currentStudent, setCurrentStudent
 
   return (
     <>
-      <h2>
+      <h2 className="bold">
         Welcome,
         {' '}
         {currentStudent.student_first_name}
@@ -47,15 +47,14 @@ export default function StudentPasswordEntry({ currentStudent, setCurrentStudent
       </h2>
       <p>
         Not you?
-        {' '}
-        <button type="button" onClick={handleGoBackClick}>Go back</button>
+        <button className="link-blue" type="button" onClick={handleGoBackClick}>Go back</button>
       </p>
       <div>
-        <form className="StudentLogin-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="StudentLogin-student-password">
-            Enter your password
-            {' '}
-            <input
+            Enter your password: 
+          </label>
+          <input
               type="password"
               placeholder="password"
               value={studentPasswordEntry}
@@ -64,9 +63,8 @@ export default function StudentPasswordEntry({ currentStudent, setCurrentStudent
               id="StudentLogin-student-password"
               required
             />
-          </label>
 
-          <button type="submit">Enter</button>
+          <button className="button-yellow" type="submit">Enter</button>
         </form>
       </div>
     </>

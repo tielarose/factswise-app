@@ -29,18 +29,18 @@ export default function EducatorEmailEntry({
   }
 
   return (
-    <div className="EducatorLogin">
+    <>
       <h2 className="educator-dark bold">Educators</h2>
       <h4>Log In or Sign Up</h4>
       <p>
         Not an educator?
         {' '}
-        <Link to="/">&larr; go back</Link>
+        <Link className="link-blue" to="/"> Go back</Link>
       </p>
       <div>
-        <form className="EducatorLogin-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="EducatorLogin-educator-email">
-            enter your email address:
+            Enter your email address:
             {' '}
           </label>
           <input
@@ -53,9 +53,9 @@ export default function EducatorEmailEntry({
             required
           />
 
-          <button className="appear-as-button" type="submit">Next</button>
+          <button className="button-blue" type="submit">Next</button>
         </form>
       </div>
-    </div>
+    </>
   );
 }

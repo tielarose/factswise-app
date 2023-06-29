@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
 
 :root {
   /* colors used */
@@ -13,50 +13,42 @@
     --yellow-60: #fdd35d;
     --yellow-70: #FDC835;
     --student-primary: var(--yellow-50);
+    --student-dark: var(--yellow-70);
     --blue-50: #8ecdf2;
     --blue-60: #68bced;
     --blue-70: #42abe9;
     --educator-primary: var(--blue-50);
     --educator-dark: var(--blue-70);
 
+    /* font settings */
+    --font-body: "Open Sans", sans-serif;
+    --font-size-body: 1rem;
+    --font-size-body-emphasized: 1.05rem;
+    --font-weight-body: 400;
+    --font-weight-bold: 600;
+    --line-height-body: 1.5;
 
-    /* colors not yet used */
-    /* --font-color: #242527;
-    --font-secondary-color: #b0b8c3;
-    --divider-color: #f0f2f5;
-    --white: #fff;
-    --black: #333;
-    --black-6: #e5e7ed;
-    --black-16: #c5c7d4;
-    --silver: var(--black-6);
-    --gray-light: var(--black-16);
-    --gray-disabled: #d7dde4;
-    --gray-text: #777b8b;
-    --blue-90: #1477b0;
-    --blue-80: #1786c7;
-    --blue-70: #1a95de;
-    --blue-60: #2ba1e6;
-    --blue-50: #42abe9;
-    --blue-20: #87c9f1;
-    --blue-10: #cce8f9;
-    --blue-5: #e3f2fc;
-    --blue-1: #f6fbff;
-    --blue-0: #f4fcff;
-    --primary: var(--blue-50);
-    --primary-dark: var(--blue-70);
-    --primary-dark-deep: var(--blue-80);
-    --primary-light: var(--blue-5);
-    --primary-light-deep: var(--blue-10);
+    /* box shadow */
+    --box-shadow-main: 0px 0px 10px var(--gray-3);
+    --box-shadow-button-dark: 5px 0px 10px var(--gray-4);
+    --box-shadow-button-light: 3px 0px 7px var(--gray-3);
+}
 
-    --secondary-dark: var(--yellow-70);
-    --secondary-dark-deep: var(--yellow-80); */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   background-color: var(--background-color);
-  /* background-color: white; */
   color: var(--text-color);
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  text-align: center;
 }
 
 .educator-primary {
@@ -67,29 +59,89 @@ body {
   color: var(--educator-dark);
 }
 
-.bold {
-  font-weight: 600;
+.student-primary {
+  color: var(--student-primary);
 }
 
-a {
+.student-dark {
+  color: var(--student-dark);
+}
+.bold {
+  font-weight: var(--font-weight-bold);
+}
+
+/* form containers: affects educator sign in/sign up, student sign-in */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 80px;
+  padding: 50px;
+  max-width: 800px;
+  min-width: 450px;
+  box-shadow: var(--box-shadow-main);
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+}
+
+.form-container form input {
+  min-width: 350px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.form-container form label {
+  text-align: center;
+}
+
+.form-container .link-blue {
   color: var(--blue-70);
   text-decoration: none;
-}
-
-a:hover {
-  font-weight: 600;
-}
-
-.EducatorLogin .appear-as-link {
   background-color: var(--background-color);
   border: none;
-  box-shadow: none;
+  transition: font-size 0.1s ease-in;
+  transition: font-weight 0.1s ease-in;
 }
 
-.EducatorLogin .appear-as-link:hover {
-  background-color: var(--background-color);
-  border: none;
-  box-shadow: none;
-  color: var(--educator-dark);
-  font-weight: 600;
+.form-container .link-blue:hover {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-body-emphasized);
 }
+
+.form-container .button-blue {
+  background-color: var(--educator-primary);
+  border: none;
+  border-radius: 10px;
+  height: 40px;
+  min-width: 150px;
+  box-shadow: var(--box-shadow-button-dark);
+  transition: all 0.1s;
+}
+
+.form-container .button-blue:hover {
+  background-color: var(--educator-dark);
+  color: white;
+  font-weight: var(--font-weight-bold);
+}
+
+.form-container .button-yellow {
+  background-color: var(--student-primary);
+  border: none;
+  border-radius: 10px;
+  height: 40px;
+  min-width: 150px;
+  box-shadow: var(--box-shadow-button-light);
+  transition: all 0.1s;
+}
+
+.form-container .button-yellow:hover {
+  background-color: var(--student-dark);
+  font-weight: var(--font-weight-bold);
+}
+

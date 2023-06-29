@@ -1,7 +1,6 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../../Context';
-import './EducatorSignup.css';
 
 export default function EducatorSignup() {
   const location = useLocation();
@@ -42,22 +41,22 @@ export default function EducatorSignup() {
   }
 
   return (
-    <div className="EducatorSignup">
-      <h2>Educators:</h2>
+    <div className="form-container">
+      <h2 className="educator-dark bold">Educators</h2>
       <h4>Sign up for an account</h4>
       <p>
         Not an educator?
         {' '}
-        <Link to="/">Go back</Link>
+        <Link className="link-blue" to="/">Go back</Link>
       </p>
       <p>
         Already have an account?
         {' '}
-        <Link to="/educator/login">Sign in</Link>
+        <Link className="link-blue" to="/educator/login">Sign in</Link>
       </p>
       <div>
-        <form className="EducatorSignup-form" onSubmit={handleSubmit}>
-          <p>
+        <form onSubmit={handleSubmit}>
+          <p className="bold">
             {' '}
             Email:
             {' '}
@@ -66,8 +65,8 @@ export default function EducatorSignup() {
           {/* First Name Field */}
           <label htmlFor="EducatorSignup-educator-first-name">
             First Name:
-            {' '}
-            <input
+          </label>
+          <input
               type="text"
               placeholder="first name"
               value={educatorFirstName}
@@ -76,13 +75,12 @@ export default function EducatorSignup() {
               id="EducatorSignup-educator-first-name"
               required
             />
-          </label>
 
           {/* Last Name Field */}
           <label htmlFor="EducatorSignup-educator-last-name">
             Last Name:
-            {' '}
-            <input
+          </label>
+          <input
               type="text"
               placeholder="last name"
               value={educatorLastName}
@@ -92,13 +90,11 @@ export default function EducatorSignup() {
               required
             />
 
-          </label>
-
           {/* Display Name Field */}
           <label htmlFor="EducatorSignup-educator-display-name">
             How would you like your name to appear to your students?
-            {' '}
-            <input
+          </label>
+          <input
               type="text"
               placeholder="display name"
               value={educatorDisplayName}
@@ -107,13 +103,12 @@ export default function EducatorSignup() {
               id="EducatorSignup-educator-display-name"
               required
             />
-          </label>
 
           {/* Password Field */}
           <label htmlFor="EducatorSignup-educator-password">
             Password:
-            {' '}
-            <input
+          </label>
+          <input
               type="password"
               placeholder="password"
               value={educatorPassword}
@@ -123,9 +118,7 @@ export default function EducatorSignup() {
               required
             />
 
-          </label>
-
-          <button type="submit">Sign Up</button>
+          <button className="button-blue" type="submit">Sign Up</button>
         </form>
       </div>
     </div>
