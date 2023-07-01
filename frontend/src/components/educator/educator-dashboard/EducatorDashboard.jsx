@@ -72,6 +72,11 @@ export default function EducatorDashboard() {
             {currentClassroom ? currentClassroom.classroom_name : ''}
           </p>
           <p>
+            Classroom Code:
+            {' '}
+            {currentClassroom ? currentClassroom.classroom_code : ''}
+          </p>
+          <p>
             <button
               type="button"
               onClick={handleNewStudentClick}

@@ -9,11 +9,13 @@
     --gray-5: #333333;
     --background-color: var(--gray-1);
     --text-color: var(--gray-5);
+    --yellow-10: #fffaeb;
     --yellow-50: #fede86;
     --yellow-60: #fdd35d;
     --yellow-70: #FDC835;
     --student-primary: var(--yellow-50);
     --student-dark: var(--yellow-70);
+    --blue-10: #ecf7fd;
     --blue-50: #8ecdf2;
     --blue-60: #68bced;
     --blue-70: #42abe9;

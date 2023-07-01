@@ -20,12 +20,9 @@ export default function Navbar() {
     navigate('/');
   }
   return (
-    // { isLoggedOut && <NavbarLoggedOut />}
-    // { isStudent && <NavbarStudent /> }
-    // { isEducator && <NavbarEducator/> }
-    <div className="Navbar">
-      <div className="Navbar-home-link">
-        <Link to="/">
+    <div className={`Navbar ${isEducator ? 'educator' : ''} ${isStudent ? 'student' : ''}`}>
+      <div>
+        <Link className="educator-dark bold" to="/">
           <img src={LogoBlue} className="Navbar-logo" alt="MathFacts logo" />
           {' '}
           {' '}
@@ -33,41 +30,46 @@ export default function Navbar() {
         </Link>
       </div>
 
-      {isEducator ? <Link to="/educator/home">Dashboard</Link> : ''}
-      {isStudent ? <Link to="/student/home">Dashboard</Link> : ''}
+      {isEducator ? <div><Link className="educator-dark bold" to="/educator/home">Dashboard</Link></div> : ''}
+      {isStudent ? <div><Link to="/student/home">Dashboard</Link></div> : ''}
       {isEducator ? (
-        <p>
+        <div className="educator-dark">
           Logged in as
           {' '}
           {currentUser.educator_first_name}
           {' '}
           { currentUser.educator_last_name}
-        </p>
+        </div>
       ) : ''}
       {isStudent ? (
-        <p>
+        <div>
           Logged in as
           {' '}
           {currentUser.student_first_name}
           {' '}
           { currentUser.student_last_name}
-        </p>
+        </div>
       ) : ''}
       {currentUser != null ? (
         <div>
           <button
             type="button"
             onClick={handleLogOut}
-            className="Navbar-button white-text"
+            className={`${isStudent ? 'button-yellow' : 'button-blue'}`}
           >
             Log Out
 
           </button>
         </div>
       ) : (
-        <div className="Navbar-button white-text">
-          <Link to="/">Log In</Link>
-        </div>
+        <button
+          type="button"
+          onClick={() => navigate('/')}
+          className="button-blue"
+        >
+          Log In
+
+        </button>
       )}
     </div>
   );

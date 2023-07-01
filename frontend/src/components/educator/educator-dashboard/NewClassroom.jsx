@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../../Context';
-import './NewClassroom.css';
 
 export default function NewClassroom() {
   const navigate = useNavigate();

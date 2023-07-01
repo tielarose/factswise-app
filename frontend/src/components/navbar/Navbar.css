@@ -8,32 +8,51 @@
   box-shadow: 0px 5px 10px var(--gray-2);
 }
 
-.Navbar a {
-  text-decoration: none;
-  color: var(--gray-5);
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
 .Navbar-logo {
   height: 30px;
 }
 
-.Navbar-button {
-  background-color: var(--blue-70);
-  width: 6em;
-  height: 2.5em;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.Navbar .button-blue {
+  background-color: var(--educator-primary);
   border: none;
+  border-radius: 10px;
+  height: 40px;
+  min-width: 100px;
+  box-shadow: var(--box-shadow-button-dark);
+  transition: all 0.1s;
+  font-weight: var(--font-weight-bold);
 }
 
-.white-text a, button.white-text {
+.Navbar .button-blue:hover {
+  background-color: var(--educator-dark);
   color: white;
+  font-weight: var(--font-weight-bold);
 }
 
-.Navbar-home-link a {
-  color: var(--blue-70);
+.Navbar .button-yellow {
+  background-color: var(--student-primary);
+  border: none;
+  border-radius: 10px;
+  height: 40px;
+  min-width: 100px;
+  box-shadow: var(--box-shadow-button-light);
+  transition: all 0.1s;
+}
+
+.Navbar .button-yellow:hover {
+  background-color: var(--student-dark);
+  font-weight: var(--font-weight-bold);
+}
+
+
+.Navbar a {
+  text-decoration: none;
+}
+
+.Navbar.educator {
+  background-color: var(--blue-10);
+}
+
+.Navbar.student {
+  background-color: var(--yellow-10);
 }
