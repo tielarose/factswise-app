@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../Context';
 import AssessmentQuestions from './AssessmentQuestions';
-import './Assessment.css';
 
 export default function Assessment() {
   const allContext = useContext(AppContext);
@@ -18,7 +17,7 @@ export default function Assessment() {
   }, []);
 
   return (
-    <div className="Assessment">
+    <div>
       {hasAnsweredAllQuestions
         ? (<p> Congratulations! You&#39;re done!</p>)
         : (

@@ -1,0 +1,65 @@
+.assessment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+    padding: 50px;
+    max-width: 800px;
+    min-width: 800px;
+    /* box-shadow: var(--box-shadow-main); */
+}
+
+.assessment-container form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.assessment-container label {
+    font-size: 3.5em;
+}
+
+.assessment-container input {
+    width: 150px;
+    border-radius: 10px;
+    margin-right: 40px;
+    text-align: center;
+}
+
+.assessment-container .button-yellow {
+  background-color: var(--student-primary);
+  border: none;
+  border-radius: 10px;
+  height: 60px;
+  min-width: 150px;
+  box-shadow: var(--box-shadow-button-light);
+  transition: all 0.1s;
+  font-size: 1.5em;
+}
+
+.assessment-container .button-yellow:hover {
+  background-color: var(--student-dark);
+  font-weight: var(--font-weight-bold);
+}
+
+/* .numbers-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 20px 20px 0px 20px;
+} */
+
+.assessment-container .numbers-container button {
+    width: 60px;
+    height: 90px;
+    border-radius: 10px;
+    margin: 5px;
+    font-size: 2.2em;
+    font-weight: var(--font-weight-bold);
+    background-color: white;
+    border: 3px solid var(--student-dark);
+}
+
+.assessment-container .numbers-container button:hover {
+    background-color: var(--student-dark);
+    box-shadow: var(--box-shadow-button-dark);
+}

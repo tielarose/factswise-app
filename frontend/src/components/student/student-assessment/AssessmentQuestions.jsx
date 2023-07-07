@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../../Context';
+import './AssessmentQuestions.css';
 
 const allStudentResponses = [];
 
@@ -51,24 +52,38 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="student-answer">
-        {problemSetQuestions[currentQuestionNum]?.question_text}
-        { ' ' }
-        {' '}
-        =
-        {' '}
-        { ' ' }
-        <input
-          name="student=answer"
-          id="student-answer"
-          type="text"
-          value={inputAnswer}
-          onChange={(evt) => setInputAnswer(evt.target.value)}
-          required
-        />
-      </label>
-      <button type="submit">Next</button>
-    </form>
+    <div className="assessment-container">
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="student-answer">
+          {problemSetQuestions[currentQuestionNum]?.question_text}
+          { ' ' }
+          {' '}
+          =
+          {' '}
+          { ' ' }
+          <input
+            name="student=answer"
+            id="student-answer"
+            type="text"
+            value={inputAnswer}
+            onChange={(evt) => setInputAnswer(evt.target.value)}
+            required
+          />
+        </label>
+        <button type="submit" className="button-yellow">Next</button>
+      </form>
+      <div className="numbers-container">
+        <button type="button" onClick={() => setInputAnswer(0)} value={0}>0</button>
+        <button type="button" onClick={() => setInputAnswer(1)} value={1}>1</button>
+        <button type="button" onClick={() => setInputAnswer(2)} value={2}>2</button>
+        <button type="button" onClick={() => setInputAnswer(3)} value={3}>3</button>
+        <button type="button" onClick={() => setInputAnswer(4)} value={4}>4</button>
+        <button type="button" onClick={() => setInputAnswer(5)} value={5}>5</button>
+        <button type="button" onClick={() => setInputAnswer(6)} value={6}>6</button>
+        <button type="button" onClick={() => setInputAnswer(7)} value={7}>7</button>
+        <button type="button" onClick={() => setInputAnswer(8)} value={8}>8</button>
+        <button type="button" onClick={() => setInputAnswer(9)} value={9}>9</button>
+      </div>
+    </div>
   );
 }
