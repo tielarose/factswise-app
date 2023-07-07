@@ -51,6 +51,15 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
     }
   }
 
+  function handleNumberButtonClick(evt) {
+    if (inputAnswer !== '') {
+      console.log(inputAnswer, evt.target.value)
+      setInputAnswer(() => inputAnswer + evt.target.value);
+    } else {
+      setInputAnswer(() => evt.target.value);
+    }
+  }
+
   return (
     <div className="assessment-container">
       <form onSubmit={handleSubmit}>
@@ -73,16 +82,16 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
         <button type="submit" className="button-yellow">Next</button>
       </form>
       <div className="numbers-container">
-        <button type="button" onClick={() => setInputAnswer(0)} value={0}>0</button>
-        <button type="button" onClick={() => setInputAnswer(1)} value={1}>1</button>
-        <button type="button" onClick={() => setInputAnswer(2)} value={2}>2</button>
-        <button type="button" onClick={() => setInputAnswer(3)} value={3}>3</button>
-        <button type="button" onClick={() => setInputAnswer(4)} value={4}>4</button>
-        <button type="button" onClick={() => setInputAnswer(5)} value={5}>5</button>
-        <button type="button" onClick={() => setInputAnswer(6)} value={6}>6</button>
-        <button type="button" onClick={() => setInputAnswer(7)} value={7}>7</button>
-        <button type="button" onClick={() => setInputAnswer(8)} value={8}>8</button>
-        <button type="button" onClick={() => setInputAnswer(9)} value={9}>9</button>
+        <button type="button" onClick={handleNumberButtonClick} value={0}>0</button>
+        <button type="button" onClick={handleNumberButtonClick} value={1}>1</button>
+        <button type="button" onClick={handleNumberButtonClick} value={2}>2</button>
+        <button type="button" onClick={handleNumberButtonClick} value={3}>3</button>
+        <button type="button" onClick={handleNumberButtonClick} value={4}>4</button>
+        <button type="button" onClick={handleNumberButtonClick} value={5}>5</button>
+        <button type="button" onClick={handleNumberButtonClick} value={6}>6</button>
+        <button type="button" onClick={handleNumberButtonClick} value={7}>7</button>
+        <button type="button" onClick={handleNumberButtonClick} value={8}>8</button>
+        <button type="button" onClick={handleNumberButtonClick} value={9}>9</button>
       </div>
     </div>
   );

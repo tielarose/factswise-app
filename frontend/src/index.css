@@ -147,3 +147,6 @@ body {
   font-weight: var(--font-weight-bold);
 }
 
+#student-logout-button {
+  margin-top: 30px;
+}
