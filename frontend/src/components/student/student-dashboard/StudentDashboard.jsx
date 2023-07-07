@@ -21,8 +21,8 @@ export default function StudentDashboard() {
   }
 
   return (
-    <>
-      <h2>
+    <div className="form-container">
+      <h2 className="bold">
         Welcome,
         {' '}
         {currentUser.student_first_name}
@@ -31,9 +31,8 @@ export default function StudentDashboard() {
         !
       </h2>
 
-      <p>
-        You are working on
-        {' '}
+      <p> You are working on</p>
+      <p className="bold">
         { problemSetInfo.problem_set_type}
         , Goal
         {' '}
@@ -45,7 +44,7 @@ export default function StudentDashboard() {
 
       <p>Ready to practice?</p>
 
-      <button type="button" onClick={handleLetsBeginClick}>Let&#39;s Begin!</button>
-    </>
+      <button type="button" className="button-yellow" onClick={handleLetsBeginClick}>Let&#39;s Begin!</button>
+    </div>
   );
 }
