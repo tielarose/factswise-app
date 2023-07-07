@@ -8,13 +8,15 @@ export default function StudentLogin() {
   const [currentClassroom, setCurrentClassroom] = useState({});
 
   return (
-    <div className="form-container">
+    <>
       {!isValidClassroomCode ? (
-        <ClassroomCodeEntry
-          setIsValidClassroomCode={setIsValidClassroomCode}
-          setAllStudents={setAllStudents}
-          setCurrentClassroom={setCurrentClassroom}
-        />
+        <div className="form-container">
+          <ClassroomCodeEntry
+            setIsValidClassroomCode={setIsValidClassroomCode}
+            setAllStudents={setAllStudents}
+            setCurrentClassroom={setCurrentClassroom}
+          />
+        </div>
       ) : (
         <StudentNameAndPassword
           allStudents={allStudents}
@@ -22,6 +24,6 @@ export default function StudentLogin() {
           setIsValidClassroomCode={setIsValidClassroomCode}
         />
       )}
-    </div>
+    </>
   );
 }

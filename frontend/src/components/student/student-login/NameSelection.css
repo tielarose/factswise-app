@@ -1,0 +1,41 @@
+.NameSelection {
+    padding-top: 20px;
+}
+
+.NameSelection .link-blue {
+  color: var(--blue-70);
+  text-decoration: none;
+  background-color: var(--background-color);
+  border: none;
+  transition: font-size 0.1s ease-in;
+  transition: font-weight 0.1s ease-in;
+}
+
+.NameSelection .link-blue:hover {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-body-emphasized);
+}
+
+.NameSelection .links-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-top: 20px;
+}
+
+.NameSelection .student-name-button {
+  background-color: white;
+  border: 2px solid var(--student-dark);
+  border-radius: 10px;
+  height: 40px;
+  min-width: 200px;
+  margin: 10px 20px;
+  /* box-shadow: var(--box-shadow-button-dark); */
+  transition: all 0.1s;
+}
+
+.NameSelection .student-name-button:hover {
+  background-color: var(--student-primary);
+  border: none;
+  font-weight: var(--font-weight-bold);
+}

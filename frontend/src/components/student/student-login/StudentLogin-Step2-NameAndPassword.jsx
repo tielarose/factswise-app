@@ -18,10 +18,12 @@ export default function StudentNameAndPassword(
           allStudents={allStudents}
         />
       ) : (
-        <StudentPasswordEntry
-          currentStudent={currentStudent}
-          setCurrentStudent={setCurrentStudent}
-        />
+        <div className="form-container">
+          <StudentPasswordEntry
+            currentStudent={currentStudent}
+            setCurrentStudent={setCurrentStudent}
+          />
+        </div>
       )}
     </>
   );

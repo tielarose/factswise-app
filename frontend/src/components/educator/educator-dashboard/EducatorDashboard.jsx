@@ -56,7 +56,7 @@ export default function EducatorDashboard() {
 
   return (
     <div className="EducatorDashboard">
-      <h2>
+      <h2 className="bold">
         Welcome,
         {' '}
         {currentUser?.educator_first_name}

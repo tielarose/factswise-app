@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import './NameSelection.css';
 
 export default function StudentNameSelection(
   {
@@ -14,20 +15,23 @@ export default function StudentNameSelection(
     setCurrentStudent(student);
   }
 
-  const studentNameLinks = allStudents.map((student) => (
-    <button
-      key={student.student_id}
-      type="button"
-      onClick={() => handleStudentClick(student)}
-    >
-      {student.student_first_name}
-      {' '}
-      {student.student_last_name}
-    </button>
-  ));
+  const studentNameLinks = allStudents
+    .sort((a, b) => a.student_first_name.localeCompare(b.student_first_name))
+    .map((student) => (
+      <button
+        key={student.student_id}
+        className="student-name-button"
+        type="button"
+        onClick={() => handleStudentClick(student)}
+      >
+        {student.student_first_name}
+        {' '}
+        {student.student_last_name}
+      </button>
+    ));
   return (
-    <>
-      <h2>
+    <div className="NameSelection">
+      <h2 className="bold">
         Welcome to
         {' '}
         {currentClassroom.educator_display_name}
@@ -36,10 +40,12 @@ export default function StudentNameSelection(
       <p>
         Not your teacher?
         {' '}
-        <button type="button" onClick={handleGoBackClick}>Go back</button>
+        <button className="link-blue" type="button" onClick={handleGoBackClick}>Go back</button>
       </p>
       <h4>Choose your name:</h4>
-      {studentNameLinks}
-    </>
+      <div className="links-container">
+        {studentNameLinks}
+      </div>
+    </div>
   );
 }
