@@ -56,3 +56,12 @@
 .Navbar.student {
   background-color: var(--yellow-10);
 }
+
+.home-logo {
+  display: flex;
+  align-items: center;
+}
+
+.home-logo-text {
+  margin-left: 10px;
+}

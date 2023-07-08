@@ -5,20 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import './EducatorDashboardDataDisplay.css';
 import { format } from 'date-fns';
 
-export default function EducatorDashboardDataDisplay(props) {
+export default function EducatorDashboardDataDisplay({ currentClassroom}) {
   const navigate = useNavigate();
-  const { classroomId } = props;
   const [allStudents, setAllStudents] = useState([]);
 
   useEffect(() => {
-    if (classroomId) {
-      fetch(`/api/educator/classroom-info/${classroomId}`)
+    if (currentClassroom.classroom_id) {
+      fetch(`/api/educator/classroom-info/${currentClassroom.classroom_id}`)
         .then((response) => response.json())
         .then((data) => {
           setAllStudents(data.students);
         });
     }
-  }, [classroomId]);
+  }, [currentClassroom]);
 
   const problemSetTypeToSymbol = {
     'Addition Subtraction': '+ -',
@@ -28,6 +27,12 @@ export default function EducatorDashboardDataDisplay(props) {
   function handleStudentNameClick(evt) {
     const studentId = evt.target.value;
     navigate('/educator/studentdetails', { state: { studentId } });
+  }
+
+  function handleNewStudentClick() {
+    navigate('/educator/new/student', {
+      state: { classroom: currentClassroom },
+    });
   }
 
   function convertDate(dateStr) {
@@ -104,6 +109,20 @@ export default function EducatorDashboardDataDisplay(props) {
           </tr>
           {studentRows}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="6">
+              <button
+                type="button"
+                onClick={handleNewStudentClick}
+                className="link-blue"
+              >
+                &#43; add a new student
+              </button>
+
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );

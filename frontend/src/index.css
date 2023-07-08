@@ -53,6 +53,74 @@ body {
   text-align: center;
 }
 
+input,
+button,
+select,
+optgroup,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+h6, h5, h4, h3, h2, h1 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--bs-heading-color);
+}
+
+h1 {
+  font-size: calc(1.375rem + 1.5vw);
+}
+@media (min-width: 1200px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
+h2 {
+  font-size: calc(1.325rem + 0.9vw);
+}
+@media (min-width: 1200px) {
+  h2 {
+    font-size: 2rem;
+  }
+}
+
+h3 {
+  font-size: calc(1.3rem + 0.6vw);
+}
+@media (min-width: 1200px) {
+  h3 {
+    font-size: 1.75rem;
+  }
+}
+
+h4 {
+  font-size: calc(1.275rem + 0.3vw);
+}
+@media (min-width: 1200px) {
+  h4 {
+    font-size: 1.5rem;
+  }
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
 .educator-primary {
   color: var(--educator-primary);
 }
@@ -102,7 +170,7 @@ body {
   text-align: center;
 }
 
-.form-container .link-blue {
+.link-blue {
   color: var(--blue-70);
   text-decoration: none;
   background-color: var(--background-color);
@@ -111,12 +179,12 @@ body {
   transition: font-weight 0.1s ease-in;
 }
 
-.form-container .link-blue:hover {
+.link-blue:hover {
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-body-emphasized);
 }
 
-.form-container .button-blue {
+.button-blue {
   background-color: var(--educator-primary);
   border: none;
   border-radius: 10px;
@@ -126,7 +194,7 @@ body {
   transition: all 0.1s;
 }
 
-.form-container .button-blue:hover {
+.button-blue:hover {
   background-color: var(--educator-dark);
   color: white;
   font-weight: var(--font-weight-bold);
@@ -150,3 +218,4 @@ body {
 #student-logout-button {
   margin-top: 30px;
 }
+

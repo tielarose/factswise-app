@@ -34,12 +34,6 @@ export default function EducatorDashboard() {
     setCurrentClassroom(classroom);
   }
 
-  function handleNewStudentClick() {
-    navigate('/educator/new/student', {
-      state: { classroom: currentClassroom },
-    });
-  }
-
   function handleNewClassroomClick() {
     navigate('/educator/new/classroom');
   }
@@ -47,6 +41,7 @@ export default function EducatorDashboard() {
   const classroomLinks = classrooms.map((classroom) => (
     <button
       type="button"
+      className="link-blue"
       onClick={() => handleClassroomClick(classroom)}
       key={classroom.classroom_id}
     >
@@ -63,59 +58,41 @@ export default function EducatorDashboard() {
         {' '}
         {currentUser?.educator_last_name}
       </h2>
-      {' '}
-      { currentClassroom != null ? (
-        <>
-          <p>
-            Current Classroom:
-            {' '}
-            {currentClassroom ? currentClassroom.classroom_name : ''}
-          </p>
-          <p>
-            Classroom Code:
-            {' '}
-            {currentClassroom ? currentClassroom.classroom_code : ''}
-          </p>
-          <p>
+      <div className="current-classroom-container">
+        {' '}
+        { currentClassroom != null ? (
+          <>
+            <h5 className="bold">
+              Classroom
+              {' '}
+              {currentClassroom ? currentClassroom.classroom_name : ''}
+              {' '}
+              {' '}
+              (
+              {currentClassroom ? currentClassroom.classroom_code : ''}
+              )
+            </h5>
+            {classroomLinks}
             <button
               type="button"
-              onClick={handleNewStudentClick}
+              className="link-blue"
+              onClick={handleNewClassroomClick}
             >
-              Create a new student
+              &#43; create new
             </button>
-            {' '}
-          </p>
-        </>
-      ) : ''}
+          </>
+        ) : ''}
+      </div>
 
       {' '}
-      <p>
-        <button
-          type="button"
-          onClick={handleNewClassroomClick}
-        >
-          Create a new class
-        </button>
-        {' '}
-      </p>
-      { currentClassroom != null ? (
-        <>
-          <p>
-            Switch Classrooms:
-            {' '}
-            {classroomLinks}
-          </p>
-          {' '}
-          {currentClassroom ? (
-            <EducatorDashboardDataDisplay
-              classroomId={currentClassroom.classroom_id}
-            />
-          ) : (
-            ''
-          )}
-          {' '}
-        </>
-      ) : ''}
+
+      {currentClassroom != null ? (
+        <EducatorDashboardDataDisplay
+          currentClassroom={currentClassroom}
+        />
+      ) : (
+        ''
+      )}
 
     </div>
   );

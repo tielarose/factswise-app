@@ -21,11 +21,13 @@ export default function Navbar() {
   }
   return (
     <div className={`Navbar ${isEducator ? 'educator' : ''} ${isStudent ? 'student' : ''}`}>
-      <div>
+      <div className="home-logo">
         <Link className="educator-dark bold" to="/">
           <img src={LogoBlue} className="Navbar-logo" alt="MathFacts logo" />
           {' '}
           {' '}
+        </Link>
+        <Link className="educator-dark bold home-logo-text" to="/"> 
           MathFacts Home
         </Link>
       </div>
