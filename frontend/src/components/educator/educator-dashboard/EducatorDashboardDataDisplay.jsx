@@ -90,7 +90,6 @@ export default function EducatorDashboardDataDisplay({ currentClassroom}) {
 
   return (
     <div className="DataDisplay">
-      <p>Click on a student&#39;s name to view more details</p>
       <table>
         <colgroup span="2" />
         <colgroup span="4" />

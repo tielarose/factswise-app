@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../../Context';
 
@@ -49,20 +49,10 @@ export default function NewClassroom() {
             required
           />
 
-          <button className="button-blue" type="button">Add Classroom</button>
+          <button className="button-blue margin-top-10px" type="button">Add Classroom</button>
+          <Link className="link-blue margin-top-10px" to="/educator/home">cancel</Link>
         </form>
       </div>
     </div>
   );
 }
-
-// classroom_id = db.Column(
-//   db.Integer,
-//   (primary_key = True),
-//   (autoincrement = True)
-// );
-// classroom_name = db.Column(db.VARCHAR(15), (nullable = False));
-// classroom_code = db.Column(db.VARCHAR(6), (nullable = False));
-// educator_id;
-
-// classroom_code=f"{educator.educator_last_name[:3]}{choice(range(100,999))}"

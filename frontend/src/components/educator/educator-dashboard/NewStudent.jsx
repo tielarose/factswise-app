@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 
 export default function NewStudent() {
   const location = useLocation();
@@ -105,7 +105,8 @@ export default function NewStudent() {
             id="NewStudent-problem-set"
             required
           />
-          <button className="button-blue" type="submit">Add Student</button>
+          <button className="button-blue margin-top-10px" type="submit">Add Student</button>
+          <Link className="link-blue margin-top-10px" to="/educator/home">cancel</Link>
         </form>
       </div>
     </div>
