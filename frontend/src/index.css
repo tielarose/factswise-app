@@ -10,18 +10,25 @@
     --background-color: var(--gray-1);
     --text-color: var(--gray-5);
     --yellow-10: #fffaeb;
+    --yellow-40: #fee9ae;
     --yellow-50: #fede86;
     --yellow-60: #fdd35d;
     --yellow-70: #FDC835;
     --student-primary: var(--yellow-50);
     --student-dark: var(--yellow-70);
     --blue-10: #ecf7fd;
-    --blue-50: #8ecdf2;
-    --blue-60: #68bced;
-    --blue-70: #42abe9;
+    --blue-20: #d9eefb;
+    --blue-30: #c6e6f8;
+    --blue-40: #b3ddf6;
+    --blue-50: #a1d5f4;
+    --blue-60: #8ecdf2;
+    --blue-70: #7bc4f0;
+    --blue-80: #68bced;
+    --blue-90: #55b3eb;
+    --blue-100: #42abe9;
     --blue-50-rgb: 142, 205, 242;
-    --educator-primary: var(--blue-50);
-    --educator-dark: var(--blue-70);
+    --educator-primary: var(--blue-60);
+    --educator-dark: var(--blue-100);
 
     /* font settings */
     --font-body: "Open Sans", sans-serif;

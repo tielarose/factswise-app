@@ -163,11 +163,11 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
         <colgroup span="3" />
         <colgroup span="4" />
         <tbody>
-          <tr>
+          <tr className="table-header">
             <th colSpan="3" scope="colgroup">Student Info</th>
-            <th colSpan="4" scope="colgroup">Last Assessment</th>
+            <th colSpan="4" scope="colgroup">Most Recent Assessment</th>
           </tr>
-          <tr>
+          <tr className="table-header">
             <th colSpan="2">
               <div className="flex-center">
                 <p>Name</p>

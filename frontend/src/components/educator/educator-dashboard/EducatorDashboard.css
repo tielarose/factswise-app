@@ -7,18 +7,18 @@
 }
 
 .invisible-button {
-  background-color: white;
+  background-color: transparent;
   border: none;
 }
 
 .DataDisplay-icon {
-  background: white;
+  background: transparent;
   width: 25px;
   height: 25px;
 }
 
 .DataDisplay-icon-small {
-  background: white;
+  background: transparent;
   width: 20px;
   height: 20px;
 }
