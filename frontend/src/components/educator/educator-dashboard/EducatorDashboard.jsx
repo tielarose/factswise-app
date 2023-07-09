@@ -53,7 +53,7 @@ export default function EducatorDashboard() {
   ));
 
   return (
-    <div className="EducatorDashboard">
+    <div className="EducatorDashboard margin-top-20px">
       <h2 className="bold">
         Welcome,
         {' '}

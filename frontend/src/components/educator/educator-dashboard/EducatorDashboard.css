@@ -1,14 +1,5 @@
-.EducatorDashboard {
-  padding-top: 20px;
-}
-
 .cancel-link {
   margin-top: 10px;
-}
-
-.invisible-button {
-  background-color: transparent;
-  border: none;
 }
 
 .DataDisplay-icon {
@@ -29,7 +20,6 @@
   align-items: center;
   width: 800px;
   border-radius: 10px;
-  /* background-color: rgba(var(--blue-50-rgb), .1); */
   border: 2px solid var(--blue-50);
   box-shadow: var(--box-shadow-main);
   margin-top: 15px;
@@ -64,8 +54,4 @@ th .invisible-button {
   padding: 0;
   margin: 0;
   height: 21px;
-}
-
-th .invisible-button:last-of-type {
-  /* padding: 1px 0px; */
 }

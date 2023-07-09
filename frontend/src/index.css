@@ -230,3 +230,31 @@ p {
 .margin-top-10px {
   margin-top: 10px;
 }
+
+.margin-top-20px {
+  margin-top: 20px;
+}
+
+.invisible-button {
+  background-color: transparent;
+  border: none;
+}
+
+.invisible-button .with-text {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid var(--educator-dark);
+  border-radius: 3px;
+  background-color: var(--blue-30);
+}
+
+.invisible-button .with-text:hover {
+  background-color: var(--blue-60);
+  font-weight: var(--font-weight-bold);
+
+}
+
+.invisible-button .with-text p {
+  margin: 0 0 0 5px;
+}
