@@ -5,3 +5,54 @@
 .cancel-link {
   margin-top: 10px;
 }
+
+.invisible-button {
+  background-color: white;
+  border: none;
+}
+
+.DataDisplay-icon {
+  background: white;
+  width: 25px;
+  height: 25px;
+}
+
+.DataDisplay-icon-small {
+  background: white;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-key-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 800px;
+  border-radius: 10px;
+  /* background-color: rgba(var(--blue-50-rgb), .1); */
+  border: 2px solid var(--blue-50);
+  box-shadow: var(--box-shadow-main);
+  margin-top: 15px;
+}
+
+.icon-key {
+  display: flex;
+  padding: 10px;
+}
+
+.icon-key-container .icon-key p {
+  margin: 0 0 0 10px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-center p {
+  margin: 0;
+}
+
+th .invisible-button:last-of-type {
+  padding: 1px 0px;
+}

@@ -19,6 +19,7 @@
     --blue-50: #8ecdf2;
     --blue-60: #68bced;
     --blue-70: #42abe9;
+    --blue-50-rgb: 142, 205, 242;
     --educator-primary: var(--blue-50);
     --educator-dark: var(--blue-70);
 

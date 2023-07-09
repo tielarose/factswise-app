@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../Context';
 import './EducatorDashboard.css';
 import EducatorDashboardDataDisplay from './EducatorDashboardDataDisplay';
+import ViewDetailsIcon from '../../../assets/view-details.png';
 
 export default function EducatorDashboard() {
   const navigate = useNavigate();
@@ -82,6 +83,16 @@ export default function EducatorDashboard() {
             </button>
           </>
         ) : ''}
+        <div className="flex-center">
+          <div className="icon-key-container">
+            <div className="icon-key">
+              {' '}
+              <img src={ViewDetailsIcon} alt="view details icon" className="DataDisplay-icon" />
+              {' '}
+              <p>view details</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {' '}

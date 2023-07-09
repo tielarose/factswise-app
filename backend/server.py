@@ -150,7 +150,9 @@ def get_educator_classrooms():
     educator = Educator.get_by_id(educator_id)
 
     if educator.classrooms:
-        classrooms = [classroom.to_dict() for classroom in educator.classrooms]
+        orig_classrooms_list = educator.classrooms
+        orig_classrooms_list.reverse()
+        classrooms = [classroom.to_dict() for classroom in orig_classrooms_list]
         return jsonify({"classrooms_found": True, "classrooms": classrooms})
     else:
         return jsonify({"classrooms_found": False})

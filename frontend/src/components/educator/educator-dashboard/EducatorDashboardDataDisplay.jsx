@@ -1,11 +1,15 @@
+/* eslint-disable react/jsx-tag-spacing */
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EducatorDashboardDataDisplay.css';
 import { format } from 'date-fns';
+import ViewDetailsIcon from '../../../assets/view-details.png';
+import ArrowUp from '../../../assets/arrow-up.png';
+import ArrowDown from '../../../assets/arrow-down.png';
 
-export default function EducatorDashboardDataDisplay({ currentClassroom}) {
+export default function EducatorDashboardDataDisplay({ currentClassroom }) {
   const navigate = useNavigate();
   const [allStudents, setAllStudents] = useState([]);
 
@@ -25,7 +29,7 @@ export default function EducatorDashboardDataDisplay({ currentClassroom}) {
   };
 
   function handleStudentNameClick(evt) {
-    const studentId = evt.target.value;
+    const studentId = evt.target.parentNode.value;
     navigate('/educator/studentdetails', { state: { studentId } });
   }
 
@@ -33,6 +37,18 @@ export default function EducatorDashboardDataDisplay({ currentClassroom}) {
     navigate('/educator/new/student', {
       state: { classroom: currentClassroom },
     });
+  }
+
+  function handleSort(field, sortDirection) {
+    const allStudentsCopy = [...allStudents];
+
+    if (sortDirection === 'ascending') {
+      allStudentsCopy.sort((a, b) => a[field].localeCompare(b[field]));
+      setAllStudents(allStudentsCopy);
+    } else if (sortDirection === 'descending') {
+      allStudentsCopy.sort((a, b) => b[field].localeCompare(a[field]));
+      setAllStudents(allStudentsCopy);
+    }
   }
 
   function convertDate(dateStr) {
@@ -60,13 +76,15 @@ export default function EducatorDashboardDataDisplay({ currentClassroom}) {
 
   const studentRows = allStudents.map((student) => (
     <tr key={student.student_id}>
-      <td>
-        {' '}
-        <button type="button" onClick={handleStudentNameClick} value={student.student_id}>
-          {student.student_first_name}
-          {' '}
-          {student.student_last_name}
+      <td className="icon-column">
+        <button type="button" onClick={handleStudentNameClick} className="invisible-button" value={student.student_id}>
+          <img src={ViewDetailsIcon} className="DataDisplay-icon" alt="view details icon"/>
         </button>
+      </td>
+      <td>
+        {student.student_first_name}
+        {' '}
+        {student.student_last_name}
       </td>
       <td>{student.current_problem_set}</td>
       <td>
@@ -91,16 +109,30 @@ export default function EducatorDashboardDataDisplay({ currentClassroom}) {
   return (
     <div className="DataDisplay">
       <table>
-        <colgroup span="2" />
+        <colgroup span="3" />
         <colgroup span="4" />
         <tbody>
           <tr>
-            <th colSpan="2" scope="colgroup">Student Info</th>
+            <th colSpan="3" scope="colgroup">Student Info</th>
             <th colSpan="4" scope="colgroup">Last Assessment</th>
           </tr>
           <tr>
-            <th>Name</th>
-            <th>Current Goal</th>
+            <th colSpan="2">
+              <div className="flex-center">
+                <p>Name</p>
+                <button type="button" className="invisible-button" onClick={() => handleSort('student_first_name', 'ascending')}>
+                  <img src={ArrowUp} alt="sort ascending" className="DataDisplay-icon-small"/>
+                </button>
+                <button type="button" className="invisible-button" onClick={() => handleSort('student_first_name', 'descending')}>
+                  <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
+                </button>
+              </div>
+            </th>
+            <th className="current-goal-column">
+              Current
+              <br />
+              Goal
+            </th>
             <th>Goal</th>
             <th>Date</th>
             <th>Percent</th>
