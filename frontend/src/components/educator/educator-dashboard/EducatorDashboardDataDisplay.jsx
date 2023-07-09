@@ -30,6 +30,29 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
     'Multiplication Division': 'x &divide;',
   };
 
+  function convertDate(dateStr) {
+    const monthsDict = {
+      Jan: 0,
+      Feb: 1,
+      Mar: 2,
+      Apr: 3,
+      May: 4,
+      Jun: 5,
+      Jul: 6,
+      Aug: 7,
+      Sep: 8,
+      Oct: 9,
+      Nov: 10,
+      Dec: 11,
+    };
+
+    const day = parseInt(dateStr.slice(5, 7), 10);
+    const month = monthsDict[dateStr.slice(8, 11)];
+    const year = parseInt(dateStr.slice(12, 17), 10);
+
+    return new Date(year, month, day);
+  }
+
   function handleStudentNameClick(evt) {
     const studentId = evt.target.parentNode.value;
     navigate('/educator/studentdetails', { state: { studentId } });
@@ -68,30 +91,38 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
         }
         setAllStudents(allStudentsCopy);
       }
+    } else if (sortType === 'date') {
+      if (sortDirection === 'ascending') {
+        allStudentsCopy
+          .sort((a, b) => {
+            let dateA = a[field1][field2];
+            let dateB = b[field1][field2];
+            if (dateA !== null) {
+              dateA = convertDate(dateA);
+            }
+            if (dateB !== null) {
+              dateB = convertDate(dateB);
+            }
+
+            return dateA - dateB;
+          });
+      } else if (sortDirection === 'descending') {
+        allStudentsCopy
+          .sort((a, b) => {
+            let dateA = a[field1][field2];
+            let dateB = b[field1][field2];
+            if (dateA !== null) {
+              dateA = convertDate(dateA);
+            }
+            if (dateB !== null) {
+              dateB = convertDate(dateB);
+            }
+
+            return dateB - dateA;
+          });
+      }
+      setAllStudents(allStudentsCopy);
     }
-  }
-
-  function convertDate(dateStr) {
-    const monthsDict = {
-      Jan: 0,
-      Feb: 1,
-      Mar: 2,
-      Apr: 3,
-      May: 4,
-      Jun: 5,
-      Jul: 6,
-      Aug: 7,
-      Sep: 8,
-      Oct: 9,
-      Nov: 10,
-      Dec: 11,
-    };
-
-    const day = parseInt(dateStr.slice(5, 7), 10);
-    const month = monthsDict[dateStr.slice(8, 11)];
-    const year = parseInt(dateStr.slice(12, 17), 10);
-
-    return new Date(year, month, day);
   }
 
   const studentRows = allStudents.map((student) => (
@@ -171,10 +202,10 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
               <div className="flex-center">
                 <p>Date</p>
                 <div className="flex-column">
-                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'ascending', 'lastest_assessment', 'date')}>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('date', 'ascending', 'latest_assessment', 'date')}>
                     <img src={ArrowUp} alt="sort ascending" className="DataDisplay-icon-small"/>
                   </button>
-                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'descending', 'latest_assessment', 'date')}>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('date', 'descending', 'latest_assessment', 'date')}>
                     <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
                   </button>
                 </div>
@@ -196,15 +227,38 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
               </div>
             </th>
             <th>
-              Percent
-              <br />
-              Correct
+              <div className="flex-center">
+                <p>
+                  Percent
+                  <br />
+                  Correct
+                </p>
+                <div className="flex-column">
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'ascending', 'latest_assessment', 'percent_as_int')}>
+                    <img src={ArrowUp} alt="sort descending" className="DataDisplay-icon-small"/>
+                  </button>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'descending', 'latest_assessment', 'percent_as_int')}>
+                    <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
+                  </button>
+                </div>
+              </div>
             </th>
             <th>
-              Avg Seconds Per
-              <br />
-              Question
-
+              <div className="flex-center">
+                <p>
+                  Avg Seconds Per
+                  <br />
+                  Question
+                </p>
+                <div className="flex-column">
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'ascending', 'latest_assessment', 'avg_time')}>
+                    <img src={ArrowUp} alt="sort descending" className="DataDisplay-icon-small"/>
+                  </button>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'descending', 'latest_assessment', 'avg_time')}>
+                    <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
+                  </button>
+                </div>
+              </div>
             </th>
           </tr>
           {studentRows}
