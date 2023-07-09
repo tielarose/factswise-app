@@ -1,11 +1,11 @@
 const dict = [
-    {"name": "Anna", "level": 6},
-    {"name": "Nora", "level": 5},
-    {"name": "Cory", "level": 1},
-    {"name": "Xander", "level": 7},
-    {"name": "Hilda", "level": 9},
-    {"name": "Betty", "level": 9},
-    {"name": "Zara", "level": 5}
+    { "name": "Anna", "level": null, "nested": {"inner": null} },
+    {"name": "Nora", "level": null, "nested": {"inner": null} },
+    {"name": "Cory", "level": 1, "nested": {"inner": 7} },
+    {"name": "Xander", "level": 7, "nested": {"inner": 5} },
+    {"name": "Hilda", "level": 9, "nested": {"inner": 100} },
+    {"name": "Betty", "level": 9, "nested": {"inner": null} },
+    {"name": "Zara", "level": 5, "nested": {"inner": null} }
 ]
 
 function sortByStrField(field, sortBy) {
@@ -15,9 +15,9 @@ function sortByStrField(field, sortBy) {
 }
 
 
-function sortByNumField(field, sortBy) {
-    dict.sort((a, b) => a[field] - b[field])
+function sortByNumField(field1, field2) {
+    dict.sort((a, b) => b[field1][field2] - a[field1][field2])
 
     console.log(dict)
 }
-sortByNumField('level', 'ascending')
+sortByNumField('nested', 'inner')
