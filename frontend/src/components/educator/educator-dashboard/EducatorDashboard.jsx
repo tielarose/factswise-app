@@ -4,6 +4,8 @@ import { AppContext } from '../../Context';
 import './EducatorDashboard.css';
 import EducatorDashboardDataDisplay from './EducatorDashboardDataDisplay';
 import ViewDetailsIcon from '../../../assets/view-details.png';
+import ArrowUp from '../../../assets/arrow-up.png';
+import ArrowDown from '../../../assets/arrow-down.png';
 
 export default function EducatorDashboard() {
   const navigate = useNavigate();
@@ -90,6 +92,18 @@ export default function EducatorDashboard() {
               <img src={ViewDetailsIcon} alt="view details icon" className="DataDisplay-icon" />
               {' '}
               <p>view details</p>
+            </div>
+            <div className="icon-key">
+              {' '}
+              <img src={ArrowUp} alt="sort ascending icon" className="DataDisplay-icon" />
+              {' '}
+              <p>sort ascending</p>
+            </div>
+            <div className="icon-key">
+              {' '}
+              <img src={ArrowDown} alt="sort descending icon" className="DataDisplay-icon" />
+              {' '}
+              <p>sort descending</p>
             </div>
           </div>
         </div>

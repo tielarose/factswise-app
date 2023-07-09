@@ -8,10 +8,16 @@ const dict = [
     {"name": "Zara", "level": 5}
 ]
 
-function sortByField(field, sortBy) {
+function sortByStrField(field, sortBy) {
     dict.sort((a, b) => a[field].localeCompare(b[field]))
 
     console.log(dict)
 }
 
-sortByField('name', 'ascending')
+
+function sortByNumField(field, sortBy) {
+    dict.sort((a, b) => a[field] - b[field])
+
+    console.log(dict)
+}
+sortByNumField('level', 'ascending')

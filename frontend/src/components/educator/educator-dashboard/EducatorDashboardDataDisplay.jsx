@@ -39,15 +39,25 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
     });
   }
 
-  function handleSort(field, sortDirection) {
+  function handleSort(sortType, field, sortDirection) {
     const allStudentsCopy = [...allStudents];
 
-    if (sortDirection === 'ascending') {
-      allStudentsCopy.sort((a, b) => a[field].localeCompare(b[field]));
-      setAllStudents(allStudentsCopy);
-    } else if (sortDirection === 'descending') {
-      allStudentsCopy.sort((a, b) => b[field].localeCompare(a[field]));
-      setAllStudents(allStudentsCopy);
+    if (sortType === 'string') {
+      if (sortDirection === 'ascending') {
+        allStudentsCopy.sort((a, b) => a[field].localeCompare(b[field]));
+        setAllStudents(allStudentsCopy);
+      } else if (sortDirection === 'descending') {
+        allStudentsCopy.sort((a, b) => b[field].localeCompare(a[field]));
+        setAllStudents(allStudentsCopy);
+      }
+    } else if (sortType === 'number') {
+      if (sortDirection === 'ascending') {
+        allStudentsCopy.sort((a, b) => a[field] - b[field]);
+        setAllStudents(allStudentsCopy);
+      } else if (sortDirection === 'descending') {
+        allStudentsCopy.sort((a, b) => b[field] - a[field]);
+        setAllStudents(allStudentsCopy);
+      }
     }
   }
 
@@ -90,19 +100,19 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
       <td>
         {problemSetTypeToSymbol[student.latest_assessment.problem_set_type] }
         {' '}
-        {student.latest_assessment.level ? student.latest_assessment.level : 'n/a'}
+        {student.latest_assessment.level ? student.latest_assessment.level : ''}
       </td>
       <td>
         {student.latest_assessment.date
           ? format(convertDate(student.latest_assessment.date), 'M/dd/yy')
-          : 'n/a'}
+          : ''}
       </td>
       <td>
         {student.latest_assessment.percent_as_int
           ? `${student.latest_assessment.percent_as_int}%`
-          : 'n/a'}
+          : ''}
       </td>
-      <td>{ student.latest_assessment.avg_time ? student.latest_assessment.avg_time : 'n/a'}</td>
+      <td>{ student.latest_assessment.avg_time ? student.latest_assessment.avg_time : ''}</td>
     </tr>
   ));
 
@@ -120,18 +130,32 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
             <th colSpan="2">
               <div className="flex-center">
                 <p>Name</p>
-                <button type="button" className="invisible-button" onClick={() => handleSort('student_first_name', 'ascending')}>
-                  <img src={ArrowUp} alt="sort ascending" className="DataDisplay-icon-small"/>
-                </button>
-                <button type="button" className="invisible-button" onClick={() => handleSort('student_first_name', 'descending')}>
-                  <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
-                </button>
+                <div className="flex-column">
+                  <button type="button" className="invisible-button" onClick={() => handleSort('string', 'student_first_name', 'ascending')}>
+                    <img src={ArrowUp} alt="sort ascending" className="DataDisplay-icon-small"/>
+                  </button>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('string', 'student_first_name', 'descending')}>
+                    <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
+                  </button>
+                </div>
               </div>
             </th>
             <th className="current-goal-column">
-              Current
-              <br />
-              Goal
+              <div className="flex-center">
+                <p>
+                  Current
+                  <br />
+                  Goal
+                </p>
+                <div className="flex-column">
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'current_problem_set', 'ascending')}>
+                    <img src={ArrowUp} alt="sort ascending" className="DataDisplay-icon-small"/>
+                  </button>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'current_problem_set', 'descending')}>
+                    <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
+                  </button>
+                </div>
+              </div>
             </th>
             <th>Goal</th>
             <th>Date</th>

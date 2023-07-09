@@ -47,12 +47,25 @@
 .flex-center {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .flex-center p {
   margin: 0;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+th .invisible-button {
+  padding: 0;
+  margin: 0;
+  height: 21px;
+}
+
 th .invisible-button:last-of-type {
-  padding: 1px 0px;
+  /* padding: 1px 0px; */
 }
