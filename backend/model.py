@@ -193,6 +193,11 @@ class Student(db.Model):
         student = cls.query.get(student_id)
         student.student_first_name = new_first_name
 
+    @classmethod
+    def update_password(cls, student_id, new_password):
+        student = cls.query.get(student_id)
+        student.student_password = new_password
+
     def to_dict(self):
         return {
             "student_id": self.student_id,

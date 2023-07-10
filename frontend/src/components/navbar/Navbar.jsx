@@ -27,13 +27,13 @@ export default function Navbar() {
           {' '}
           {' '}
         </Link>
-        <Link className="educator-dark bold home-logo-text" to="/"> 
+        <Link className="educator-dark bold home-logo-text" to="/">
           MathFacts Home
         </Link>
       </div>
 
       {isEducator ? <div><Link className="educator-dark bold" to="/educator/home">Dashboard</Link></div> : ''}
-      {isStudent ? <div><Link to="/student/home">Dashboard</Link></div> : ''}
+      {isStudent ? <div><Link className="educator-dark bold" to="/student/home">Dashboard</Link></div> : ''}
       {isEducator ? (
         <div className="educator-dark">
           Logged in as

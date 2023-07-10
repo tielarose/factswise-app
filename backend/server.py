@@ -371,6 +371,20 @@ def verify_student_password():
     return jsonify({"login_successful": False})
 
 
+@app.route("/api/student/reset-student-password", methods=["POST"])
+def reset_student_password():
+    """Update a student's password in the database with educator input"""
+
+    student_id = request.json.get("student_id")
+    new_password = request.json.get("new_password")
+
+    Student.update_password(student_id, new_password)
+
+    db.session.commit()
+
+    return jsonify("")
+
+
 @app.route("/api/problem-set-info/<problem_set_id>")
 def get_problem_set_info(problem_set_id):
     """Given a problem_set_id, return the ____ on that problem set."""
