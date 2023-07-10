@@ -74,7 +74,7 @@ export default function AssessmentInfo({ studentId }) {
   }
 
   return (
-    <table>
+    <table className="StudentDetails-AssessmentInfo">
       <thead>
         <tr>
           <th>Date Assessed</th>
