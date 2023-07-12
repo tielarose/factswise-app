@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../../Context';
+import AssessmentQuestion from './AssessmentQuestion';
 import InputButton from './InputButton';
-import './AssessmentQuestions.css';
+import './AssessmentContainer.css';
 import HandIcon from '../../../assets/hand-icon.png';
 import ThinkingIcon from '../../../assets/thinking-icon.png';
 import BrainIcon from '../../../assets/brain-icon.png';
@@ -81,27 +82,11 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
     }
   }
   return (
-    <div className="assessment-container">
-      <form>
-        <label htmlFor="student-answer">
-          {problemSetQuestions[currentQuestionNum]?.question_text}
-          { ' ' }
-          {' '}
-          =
-          {' '}
-          { ' ' }
-          <input
-            name="student=answer"
-            id="student-answer"
-            type="text"
-            value={inputAnswer}
-            onChange={(evt) => setInputAnswer(evt.target.value)}
-            // required
-            disabled
-          />
-        </label>
-        <button type="submit" className="button-yellow">Enter</button>
-      </form>
+    <div className="AssessmentContainer">
+      <AssessmentQuestion
+        question={problemSetQuestions[currentQuestionNum]}
+        inputAnswer={inputAnswer}
+      />
       <div className="numbers-container">
         { createNumberButtons(0, 10)}
       </div>
