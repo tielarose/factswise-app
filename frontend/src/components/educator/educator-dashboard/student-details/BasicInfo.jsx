@@ -34,7 +34,7 @@ export default function BasicInfo({ studentId }) {
   };
 
   function handleDeleteButton() {
-    // eslint-disable-next-line no-alert
+    // eslint-disable-next-line no-alert, no-restricted-globals
     if (confirm('Are you sure you want to delete this student? This action cannot be undone.')) {
       fetch(`/api/educator/deletestudent/${studentId}`)
         .then((response) => response.json())
@@ -61,6 +61,7 @@ export default function BasicInfo({ studentId }) {
   }
 
   function handleCancelPasswordChange() {
+    setNewPassword('');
     setDisplayResetPasswordForm(false);
   }
 

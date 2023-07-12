@@ -6,6 +6,8 @@ import EducatorDashboardDataDisplay from './EducatorDashboardDataDisplay';
 import ViewDetailsIcon from '../../../assets/view-details.png';
 import ArrowUp from '../../../assets/arrow-up.png';
 import ArrowDown from '../../../assets/arrow-down.png';
+import WarningIcon from '../../../assets/warning-icon.png';
+import StarIcon from '../../../assets/star-icon.png';
 
 export default function EducatorDashboard() {
   const navigate = useNavigate();
@@ -104,6 +106,18 @@ export default function EducatorDashboard() {
               <img src={ArrowDown} alt="sort descending icon" className="DataDisplay-icon" />
               {' '}
               <p>sort descending</p>
+            </div>
+            <div className="icon-key">
+              {' '}
+              <img src={StarIcon} alt="star icon ready to be assessed in person" className="DataDisplay-icon" />
+              {' '}
+              <p>ready to level up</p>
+            </div>
+            <div className="icon-key">
+              {' '}
+              <img src={WarningIcon} alt="warning icon needs further support" className="DataDisplay-icon" />
+              {' '}
+              <p>needs support</p>
             </div>
           </div>
         </div>

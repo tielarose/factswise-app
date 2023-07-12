@@ -8,6 +8,8 @@ import { format } from 'date-fns';
 import ViewDetailsIcon from '../../../assets/view-details.png';
 import ArrowUp from '../../../assets/arrow-up.png';
 import ArrowDown from '../../../assets/arrow-down.png';
+import WarningIcon from '../../../assets/warning-icon.png';
+import StarIcon from '../../../assets/star-icon.png';
 
 export default function EducatorDashboardDataDisplay({ currentClassroom }) {
   const navigate = useNavigate();
@@ -139,6 +141,18 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
       </td>
       <td>{student.current_problem_set}</td>
       <td>
+        { student.latest_assessment.flag > 0 ? (
+          <button type="button" className="invisible-button" >
+            <img src={StarIcon} alt="star icon ready to assess in person" className="DataDisplay-icon-small"/>
+          </button>
+        ) : ''}
+        { student.latest_assessment.flag < 0 ? (
+          <button type="button" className="invisible-button" >
+            <img src={WarningIcon} alt="warning icon student needs extra support" className="DataDisplay-icon-small"/>
+          </button>
+        ) : ''}
+      </td>
+      <td>
         {student.latest_assessment.date
           ? format(convertDate(student.latest_assessment.date), 'M/dd/yy')
           : ''}
@@ -161,11 +175,11 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
     <div className="DataDisplay">
       <table>
         <colgroup span="3" />
-        <colgroup span="4" />
+        <colgroup span="5" />
         <tbody>
           <tr className="table-header">
             <th colSpan="3" scope="colgroup">Student Info</th>
-            <th colSpan="4" scope="colgroup">Most Recent Assessment</th>
+            <th colSpan="5" scope="colgroup">Most Recent Assessment</th>
           </tr>
           <tr className="table-header">
             <th colSpan="2">
@@ -193,6 +207,19 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
                     <img src={ArrowUp} alt="sort ascending" className="DataDisplay-icon-small"/>
                   </button>
                   <button type="button" className="invisible-button" onClick={() => handleSort('number', 'descending', 'current_problem_set')}>
+                    <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
+                  </button>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div className="flex-center">
+                <p>Flag</p>
+                <div className="flex-column">
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'ascending', 'latest_assessment', 'flag')}>
+                    <img src={ArrowUp} alt="sort ascending" className="DataDisplay-icon-small"/>
+                  </button>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'descending', 'latest_assessment', 'flag')}>
                     <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
                   </button>
                 </div>
@@ -265,7 +292,7 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="6">
+            <td colSpan="8">
               <button
                 type="button"
                 onClick={handleNewStudentClick}

@@ -18,7 +18,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 800px;
+  width: 900px;
   border-radius: 10px;
   border: 2px solid var(--blue-50);
   box-shadow: var(--box-shadow-main);
