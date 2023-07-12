@@ -3,6 +3,11 @@ import React, { useState, useContext } from 'react';
 import { AppContext } from '../../Context';
 import InputButton from './InputButton';
 import './AssessmentQuestions.css';
+import HandIcon from '../../../assets/hand-icon.png';
+import ThinkingIcon from '../../../assets/thinking-icon.png';
+import BrainIcon from '../../../assets/brain-icon.png';
+import LightBulbIcon from '../../../assets/lightbulb-icon.png';
+import QuestionMarkIcon from '../../../assets/question-mark-icon.png';
 
 const allStudentResponses = [];
 
@@ -67,7 +72,7 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
             required
           />
         </label>
-        <button type="submit" className="button-yellow">Next</button>
+        <button type="submit" className="button-yellow">Enter</button>
       </form>
       <div className="numbers-container">
         <InputButton setInputAnswer={setInputAnswer} value={0} />
@@ -94,6 +99,32 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
         <InputButton setInputAnswer={setInputAnswer} value={18} />
         <InputButton setInputAnswer={setInputAnswer} value={19} />
         <InputButton setInputAnswer={setInputAnswer} value={20} />
+      </div>
+
+      <div className="strategies-container">
+        <h5>How did you get your answer?</h5>
+        <div className="strategy-buttons-container">
+          <button type="button" value={1}>
+            <p>I counted with my fingers</p>
+            <img src={HandIcon} alt="hand icon" className="strategy-icon"/>
+          </button>
+          <button type="button" value={2}>
+            <p>I counted in my head</p>
+            <img src={ThinkingIcon} alt="thought bubble icon" className="strategy-icon"/>
+          </button>
+          <button type="button" value={3}>
+            <p>I used a special strategy</p>
+            <img src={BrainIcon} alt="strategy brain icon" className="strategy-icon"/>
+          </button>
+          <button type="button" value={4}>
+            <p>I just knew it</p>
+            <img src={LightBulbIcon} alt="light bulb icon" className="strategy-icon"/>
+          </button>
+          <button type="button" value={5}>
+            <p>I guessed</p>
+            <img src={QuestionMarkIcon} alt="question mark icon" className="strategy-icon"/>
+          </button>
+        </div>
       </div>
     </div>
   );
