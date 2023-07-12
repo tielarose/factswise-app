@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../Context';
+import AssessmentCompleteScreen from './AssessmentCompleteScreen';
 import AssessmentQuestions from './AssessmentQuestions';
 
 export default function Assessment() {
-  const navigate = useNavigate();
   const allContext = useContext(AppContext);
-  const { currentUser, setCurrentUser, setIsStudent, setIsEducator } = allContext;
+  const { currentUser } = allContext;
   const [problemSetQuestions, setProblemSetQuestions] = useState([]);
-  const [hasAnsweredAllQuestions, setHasAnsweredAllQuestions] = useState(false);
+  const [assessmentIsComplete, setAssessmentIsComplete] = useState(false);
 
   useEffect(() => {
     fetch(`/api/problem-set-questions/${currentUser.current_problem_set}`)
@@ -18,27 +17,15 @@ export default function Assessment() {
       });
   }, []);
 
-  function handleLogOut() {
-    localStorage.clear();
-    setCurrentUser(null);
-    setIsEducator(false);
-    setIsStudent(false);
-    navigate('/');
-  }
-
   return (
     <div>
-      {hasAnsweredAllQuestions
-        ? (
-          <div className="form-container">
-            <h2 className="bold"> Congratulations! You&#39;re done!</h2>
-            <button type="button" className="button-yellow" id="student-logout-button" onClick={handleLogOut}>Log Out</button>
-          </div>
+      {assessmentIsComplete
+        ? (<AssessmentCompleteScreen />
         )
         : (
           <AssessmentQuestions
             problemSetQuestions={problemSetQuestions}
-            setHasAnsweredAllQuestions={setHasAnsweredAllQuestions}
+            setHasAnsweredAllQuestions={setAssessmentIsComplete}
           />
         )}
     </div>
