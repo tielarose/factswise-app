@@ -42,11 +42,11 @@
   font-weight: var(--font-weight-bold);
 }
 
-/* .numbers-container {
+.numbers-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(11, 1fr);
     padding: 20px 20px 0px 20px;
-} */
+}
 
 .assessment-container .numbers-container button {
     width: 60px;
@@ -62,6 +62,23 @@
 .assessment-container .numbers-container button:hover {
     background-color: var(--student-dark);
     box-shadow: var(--box-shadow-button-dark);
+}
+
+.assessment-container .numbers-container .invisible {
+    width: 60px;
+    height: 90px;
+    border-radius: 10px;
+    margin: 5px;
+    font-size: 2.2em;
+    font-weight: var(--font-weight-bold);
+    background-color: white;
+    border: none;
+}
+
+.assessment-container .numbers-container .invisible:hover {
+    background-color: white;
+    border: white;
+    box-shadow: none;
 }
 
 .assessment-complete-container {

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../../Context';
+import InputButton from './InputButton';
 import './AssessmentQuestions.css';
 
 const allStudentResponses = [];
@@ -51,15 +52,6 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
     }
   }
 
-  function handleNumberButtonClick(evt) {
-    if (inputAnswer !== '') {
-      console.log(inputAnswer, evt.target.value)
-      setInputAnswer(() => inputAnswer + evt.target.value);
-    } else {
-      setInputAnswer(() => evt.target.value);
-    }
-  }
-
   return (
     <div className="assessment-container">
       <form onSubmit={handleSubmit}>
@@ -82,16 +74,30 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
         <button type="submit" className="button-yellow">Next</button>
       </form>
       <div className="numbers-container">
-        <button type="button" onClick={handleNumberButtonClick} value={0}>0</button>
-        <button type="button" onClick={handleNumberButtonClick} value={1}>1</button>
-        <button type="button" onClick={handleNumberButtonClick} value={2}>2</button>
-        <button type="button" onClick={handleNumberButtonClick} value={3}>3</button>
-        <button type="button" onClick={handleNumberButtonClick} value={4}>4</button>
-        <button type="button" onClick={handleNumberButtonClick} value={5}>5</button>
-        <button type="button" onClick={handleNumberButtonClick} value={6}>6</button>
-        <button type="button" onClick={handleNumberButtonClick} value={7}>7</button>
-        <button type="button" onClick={handleNumberButtonClick} value={8}>8</button>
-        <button type="button" onClick={handleNumberButtonClick} value={9}>9</button>
+        <InputButton setInputAnswer={setInputAnswer} value={0} />
+        <InputButton setInputAnswer={setInputAnswer} value={1} />
+        <InputButton setInputAnswer={setInputAnswer} value={2} />
+        <InputButton setInputAnswer={setInputAnswer} value={3} />
+        <InputButton setInputAnswer={setInputAnswer} value={4} />
+        <InputButton setInputAnswer={setInputAnswer} value={5} />
+        <InputButton setInputAnswer={setInputAnswer} value={6} />
+        <InputButton setInputAnswer={setInputAnswer} value={7} />
+        <InputButton setInputAnswer={setInputAnswer} value={8} />
+        <InputButton setInputAnswer={setInputAnswer} value={9} />
+        <InputButton setInputAnswer={setInputAnswer} value={10} />
+      </div>
+      <div className="numbers-container">
+        <button disabled className="invisible" />
+        <InputButton setInputAnswer={setInputAnswer} value={11} />
+        <InputButton setInputAnswer={setInputAnswer} value={12} />
+        <InputButton setInputAnswer={setInputAnswer} value={13} />
+        <InputButton setInputAnswer={setInputAnswer} value={14} />
+        <InputButton setInputAnswer={setInputAnswer} value={15} />
+        <InputButton setInputAnswer={setInputAnswer} value={16} />
+        <InputButton setInputAnswer={setInputAnswer} value={17} />
+        <InputButton setInputAnswer={setInputAnswer} value={18} />
+        <InputButton setInputAnswer={setInputAnswer} value={19} />
+        <InputButton setInputAnswer={setInputAnswer} value={20} />
       </div>
     </div>
   );
