@@ -16,15 +16,29 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
   const { currentUser } = allContext;
   const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
   const [inputAnswer, setInputAnswer] = useState('');
-
+  const [answerTime, setAnswerTime] = useState(0);
   const startTime = Date.now();
+  console.log('startTime is', startTime);
 
-  function handleSubmit(evt) {
+  // runs when students submit their numerical answer; captures the time taken to answer
+  function handleNumberSubmit(evt) {
     evt.preventDefault();
 
     const endTime = Date.now();
+    console.log('endTime is', endTime);
     const totalTime = endTime - startTime;
+    console.log('totalTime is', totalTime);
 
+    setAnswerTime(Math.round(totalTime / 100));
+
+  }
+
+  // runs when students click on the strategy they used
+  // creates a problem_set_question_answer dictionary and moves 
+  // the student to the next question; if all questions have been answered, 
+  // stops and sends the data to the server
+  function handleStrategyButtonClick(evt) {
+    const isFluentStrategy = (evt.target.value) === 'fluent_strategy'
     const question = problemSetQuestions[currentQuestionNum];
     const isCorrect = parseInt(inputAnswer, 10) === question.answer_as_int;
 
@@ -32,12 +46,15 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
       problem_set_question_id: question.question_id,
       student_answer: parseInt(inputAnswer, 10),
       is_correct: isCorrect,
-      time_to_answer: Math.round(totalTime / 100),
+      time_to_answer: answerTime,
+      is_fluent: isFluentStrategy && isCorrect,
     };
+
+    console.log(problemSetQuestionAnswer);
 
     allStudentResponses.push(problemSetQuestionAnswer);
 
-    // if the student reaches the last question, stop and send the data to the server
+  // if the student reaches the last question, stop and send the data to the server
     if (currentQuestionNum === (problemSetQuestions.length - 1)) {
       const formInputs = { student_id: currentUser.student_id, all_answers: allStudentResponses };
 
@@ -51,11 +68,10 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
       setInputAnswer('');
       setCurrentQuestionNum(() => (currentQuestionNum + 1));
     }
-  }
-
+}
   return (
     <div className="assessment-container">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleNumberSubmit}>
         <label htmlFor="student-answer">
           {problemSetQuestions[currentQuestionNum]?.question_text}
           { ' ' }
@@ -104,25 +120,25 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
       <div className="strategies-container">
         <h5>How did you get your answer?</h5>
         <div className="strategy-buttons-container">
-          <button type="button" value={1}>
+          <button type="button" value="not_fluent_strategy" onClick={handleStrategyButtonClick}>
             <p>I counted with my fingers</p>
-            <img src={HandIcon} alt="hand icon" className="strategy-icon"/>
+            <img src={HandIcon} alt="hand icon" className="strategy-icon" />
           </button>
-          <button type="button" value={2}>
+          <button type="button" value="not_fluent_strategy" onClick={handleStrategyButtonClick}>
             <p>I counted in my head</p>
-            <img src={ThinkingIcon} alt="thought bubble icon" className="strategy-icon"/>
+            <img src={ThinkingIcon} alt="thought bubble icon" className="strategy-icon" />
           </button>
-          <button type="button" value={3}>
+          <button type="button" value="fluent_strategy" onClick={handleStrategyButtonClick}>
             <p>I used a special strategy</p>
-            <img src={BrainIcon} alt="strategy brain icon" className="strategy-icon"/>
+            <img src={BrainIcon} alt="strategy brain icon" className="strategy-icon" />
           </button>
-          <button type="button" value={4}>
+          <button type="button" value="fluent_strategy" onClick={handleStrategyButtonClick}>
             <p>I just knew it</p>
-            <img src={LightBulbIcon} alt="light bulb icon" className="strategy-icon"/>
+            <img src={LightBulbIcon} alt="light bulb icon" className="strategy-icon" />
           </button>
-          <button type="button" value={5}>
+          <button type="button" value="not_fluent_strategy" onClick={handleStrategyButtonClick}>
             <p>I guessed</p>
-            <img src={QuestionMarkIcon} alt="question mark icon" className="strategy-icon"/>
+            <img src={QuestionMarkIcon} alt="question mark icon" className="strategy-icon" />
           </button>
         </div>
       </div>
