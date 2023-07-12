@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../Context';
 import AssessmentCompleteScreen from './AssessmentCompleteScreen';
-import AssessmentQuestions from './AssessmentQuestions';
+import AssessmentContainer from './AssessmentContainer';
 
 export default function Assessment() {
   const allContext = useContext(AppContext);
@@ -9,6 +9,7 @@ export default function Assessment() {
   const [problemSetQuestions, setProblemSetQuestions] = useState([]);
   const [assessmentIsComplete, setAssessmentIsComplete] = useState(false);
 
+  // fetch all problem set questions for logged in student's current problem set
   useEffect(() => {
     fetch(`/api/problem-set-questions/${currentUser.current_problem_set}`)
       .then((response) => response.json())
@@ -23,7 +24,7 @@ export default function Assessment() {
         ? (<AssessmentCompleteScreen />
         )
         : (
-          <AssessmentQuestions
+          <AssessmentContainer
             problemSetQuestions={problemSetQuestions}
             setHasAnsweredAllQuestions={setAssessmentIsComplete}
           />
