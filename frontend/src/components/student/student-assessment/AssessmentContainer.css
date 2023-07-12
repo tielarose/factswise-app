@@ -24,7 +24,7 @@
 .AssessmentQuestion .response-div {
     width: 150px;
     border-radius: 10px;
-    margin: 0 40px;
+    margin-left: 30px;
     text-align: center;
     border: 3px solid var(--gray-3);
 }
@@ -45,13 +45,13 @@
   font-weight: var(--font-weight-bold);
 }
 
-.numbers-container {
+.NumberButtonsContainer .number-buttons-row {
     display: grid;
     grid-template-columns: repeat(11, 1fr);
     padding: 20px 20px 0px 20px;
 }
 
-.assessment-container .numbers-container button {
+.NumberButtonsContainer .number-buttons-row button {
     width: 60px;
     height: 90px;
     border-radius: 10px;
@@ -62,12 +62,12 @@
     border: 3px solid var(--student-dark);
 }
 
-.assessment-container .numbers-container button:hover {
+.NumberButtonsContainer .number-buttons-row button:hover {
     background-color: var(--student-dark);
     box-shadow: var(--box-shadow-button-dark);
 }
 
-.assessment-container .numbers-container .invisible {
+.NumberButtonsContainer .number-buttons-row .invisible {
     width: 60px;
     height: 90px;
     border-radius: 10px;
@@ -78,7 +78,7 @@
     border: none;
 }
 
-.assessment-container .numbers-container .invisible:hover {
+.NumberButtonsContainer .number-buttons-row .invisible:hover {
     background-color: white;
     border: white;
     box-shadow: none;

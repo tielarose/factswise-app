@@ -2,7 +2,7 @@
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../../Context';
 import AssessmentQuestion from './AssessmentQuestion';
-import InputButton from './InputButton';
+import NumberButtonsContainer from './NumberButtonsContainer';
 import './AssessmentContainer.css';
 import HandIcon from '../../../assets/hand-icon.png';
 import ThinkingIcon from '../../../assets/thinking-icon.png';
@@ -18,28 +18,8 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
   const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
   const [inputAnswer, setInputAnswer] = useState('?');
   const [answerTime, setAnswerTime] = useState(0);
+  const [displayNumberButtons, setDisplayNumberButtons] = useState(true);
   const startTime = Date.now();
-
-  // create InputButton components for the range of numbers specified, inclusive
-  function createNumberButtons(firstNum, lastNum) {
-    const allButtons = [];
-
-    for (let i = firstNum; i <= lastNum; i += 1) {
-      const button = (
-        <InputButton
-          setInputAnswer={setInputAnswer}
-          setAnswerTime={setAnswerTime}
-          startTime={startTime}
-          value={i}
-          key={`numberButton${i}`}
-        />
-      );
-
-      allButtons.push(button);
-    }
-
-    return allButtons;
-  }
 
   // runs when students click on the strategy they used
   // creates a problem_set_question_answer dictionary and moves
@@ -87,13 +67,14 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
         question={problemSetQuestions[currentQuestionNum]}
         inputAnswer={inputAnswer}
       />
-      <div className="numbers-container">
-        { createNumberButtons(0, 10)}
-      </div>
-      <div className="numbers-container">
-        <button type="button" disabled aria-label="disabled placeholder button" className="invisible" />
-        { createNumberButtons(11, 20) }
-      </div>
+      { displayNumberButtons ? (
+        <NumberButtonsContainer
+          setInputAnswer={setInputAnswer}
+          setAnswerTime={setAnswerTime}
+          startTime={startTime}
+          setDisplayNumberButtons={setDisplayNumberButtons}
+        />
+      ) : ''}
 
       <div className="strategies-container">
         <h5>How did you get your answer?</h5>
