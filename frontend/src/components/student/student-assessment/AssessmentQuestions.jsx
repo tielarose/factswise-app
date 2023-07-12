@@ -40,11 +40,7 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
         method: 'POST',
         body: JSON.stringify(formInputs),
         headers: { 'Content-Type': 'application/json' },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
+      });
       setHasAnsweredAllQuestions(true);
     } else {
       setInputAnswer('');
@@ -87,7 +83,7 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
         <InputButton setInputAnswer={setInputAnswer} value={10} />
       </div>
       <div className="numbers-container">
-        <button disabled className="invisible" />
+        <button type="button" disabled aria-label="disabled placeholder button" className="invisible" />
         <InputButton setInputAnswer={setInputAnswer} value={11} />
         <InputButton setInputAnswer={setInputAnswer} value={12} />
         <InputButton setInputAnswer={setInputAnswer} value={13} />
