@@ -163,11 +163,11 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
         {student.latest_assessment.level ? student.latest_assessment.level : ''}
       </td>
       <td>
-        {student.latest_assessment.percent_as_int
-          ? `${student.latest_assessment.percent_as_int}%`
+        {student.latest_assessment.percent_correct_as_int
+          ? `${student.latest_assessment.percent_correct_as_int}%`
           : ''}
       </td>
-      <td>{ student.latest_assessment.avg_time ? student.latest_assessment.avg_time : ''}</td>
+      <td>{ student.latest_assessment.percent_fluent_as_int ? `${student.latest_assessment.percent_fluent_as_int}%` : ''}</td>
     </tr>
   ));
 
@@ -273,9 +273,9 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
             <th>
               <div className="flex-center">
                 <p>
-                  Avg Seconds Per
+                  Percent
                   <br />
-                  Question
+                  Fluent
                 </p>
                 <div className="flex-column">
                   <button type="button" className="invisible-button" onClick={() => handleSort('number', 'ascending', 'latest_assessment', 'avg_time')}>

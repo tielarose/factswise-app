@@ -174,6 +174,7 @@ def get_classroom_info(classroom_id):
                 ProblemSetType.problem_set_type_name,
                 ProblemSet.problem_set_level,
                 func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
+                func.sum(cast(ProblemSetQuestionAnswer.is_fluent, sqlalchemy.Integer)),
                 func.count(ProblemSetQuestionAnswer.student_answer),
                 func.avg(ProblemSetQuestionAnswer.time_to_answer),
             )
@@ -190,15 +191,24 @@ def get_classroom_info(classroom_id):
         ).first()
 
         if latest_assessment != None:
-            date, problem_set_type, level, num_correct, total, time = latest_assessment
-            percent_as_int = round((num_correct / total) * 100)
+            (
+                date,
+                problem_set_type,
+                level,
+                num_correct,
+                num_fluent,
+                total,
+                time,
+            ) = latest_assessment
+            percent_correct_as_int = round((num_correct / total) * 100)
+            percent_fluent_as_int = round((num_fluent / total) * 100)
 
             # create a flag_value: 1 means a student did 90% or better, and should be assessed in person; -1 means a student did 40% or worse and is struggling/should receive extra support. On the front end, flag values will be translated into icons on the EducatorDashboardDataDisplay
             flag_value = 0
 
-            if percent_as_int >= 90:
+            if percent_fluent_as_int >= 80:
                 flag_value = 1
-            if percent_as_int <= 40:
+            if percent_fluent_as_int <= 40:
                 flag_value = -1
 
             return {
@@ -208,7 +218,8 @@ def get_classroom_info(classroom_id):
                 "num_correct": num_correct,
                 "total": total,
                 "avg_time": round(time),
-                "percent_as_int": percent_as_int,
+                "percent_correct_as_int": percent_correct_as_int,
+                "percent_fluent_as_int": percent_fluent_as_int,
                 "flag": flag_value,
             }
         else:
@@ -219,7 +230,8 @@ def get_classroom_info(classroom_id):
                 "num_correct": None,
                 "total": None,
                 "avg_time": None,
-                "percent_as_int": None,
+                "percent_correct_as_int": None,
+                "percent_fluent_as_int": None,
                 "flag": 0,
             }
 
