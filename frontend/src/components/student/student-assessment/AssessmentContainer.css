@@ -29,22 +29,6 @@
     border: 3px solid var(--gray-3);
 }
 
-.assessment-container .button-yellow {
-  background-color: var(--student-primary);
-  border: none;
-  border-radius: 10px;
-  height: 60px;
-  min-width: 150px;
-  box-shadow: var(--box-shadow-button-light);
-  transition: all 0.1s;
-  font-size: 1.5em;
-}
-
-.assessment-container .button-yellow:hover {
-  background-color: var(--student-dark);
-  font-weight: var(--font-weight-bold);
-}
-
 .NumberButtonsContainer .number-buttons-row {
     display: grid;
     grid-template-columns: repeat(11, 1fr);
@@ -91,17 +75,22 @@
     align-items: center;
 }
 
-.strategies-container h5 {
-    padding: 20px 20px 0 20px;
+.StrategyButtonsContainer h5 {
+    padding-bottom: 20px;
 }
 
-.strategy-buttons-container {
+.StrategyButtonsContainer {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.StrategyButtonsContainer .strategy-buttons {
     display: flex;
     justify-content: space-evenly;
 }
 
-.strategy-buttons-container button {
+.StrategyButtonsContainer button {
     background: white;
     width: 135px;
     margin: 0px 5px;
@@ -112,10 +101,10 @@
     font-weight: var(--font-weight-bold);
 }
 
-.strategy-buttons-container button:hover {
+.StrategyButtonsContainer button:hover {
     background: var(--student-dark);
 }
 
-.strategy-buttons-container .strategy-icon {
+.StrategyButtonsContainer .strategy-icon {
     width: 90px;
 }

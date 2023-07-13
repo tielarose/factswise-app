@@ -2,7 +2,7 @@
 import React from 'react';
 
 export default function InputButton({
-  setInputAnswer, value, setAnswerTime, startTime, setDisplayNumberButtons
+  setInputAnswer, value, setAnswerTime, startTime, setDisplayNumberButtons,
 }) {
   // runs when students submit their numerical answer; captures the time taken to answer
   function handleNumberButtonClick(evt) {
@@ -11,7 +11,7 @@ export default function InputButton({
     const endTime = Date.now();
     const totalTime = endTime - startTime;
 
-    setAnswerTime(Math.round(totalTime / 100));
+    setAnswerTime(Math.round(totalTime / 1000));
     setDisplayNumberButtons(false);
   }
 
