@@ -483,6 +483,7 @@ def submit_student_answers():
             problem_set_question_id=answer["problem_set_question_id"],
             student_answer=answer["student_answer"],
             is_correct=answer["is_correct"],
+            is_fluent=answer["is_fluent"],
             time_to_answer=answer["time_to_answer"],
             date_assessed=date_assessed,
         )
@@ -490,7 +491,7 @@ def submit_student_answers():
         db.session.add(new_answer)
         db.session.commit()
 
-    return jsonify({"it was all": "submitted!"})
+    return jsonify({"successfull_submitted": True})
 
 
 @app.route("/api/checkuser", methods=["POST"])
