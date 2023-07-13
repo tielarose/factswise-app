@@ -23,10 +23,10 @@ os.system("createdb factswise")
 model.connect_to_db(server.app)
 model.db.create_all()
 
-# create 5 educators
+# create an educator
 educators = []
 
-for _ in range(5):
+for _ in range(1):
     fname = fake.first_name()
     lname = fake.last_name()
     prefix = choice(["Ms.", "Mr.", "Teacher"])
@@ -43,14 +43,14 @@ for _ in range(5):
 
 model.db.session.commit()
 
-# create 2 classrooms per educator
+# create 3 classrooms per educator
 classrooms = []
 
 for educator in educators:
     years = ["20-21", "21-22", "22-23"]
-    grade_level = choice(["K", "1st", "2nd", "3rd"])
+    grade_level = choice(["K", "1st"])
 
-    for i in range(2):
+    for i in range(3):
         classroom = model.Classroom.create(
             classroom_name=f"{grade_level} {years[i]}",
             classroom_code=f"{educator.educator_last_name[:3]}{choice(range(100,999))}",
@@ -75,7 +75,7 @@ model.db.session.add(mult_div)
 
 model.db.session.commit()
 
-# create add_sub problem_sets 1-3, mult_div problem_sets 1-3, and all problem_set_questions for each
+# create all 9 add_sub problem_sets, and all problem_set_questions for each
 for data_set in problem_set_seed_data:
     problem_set = model.ProblemSet.create(
         problem_set_type_id=data_set["problem_set_type_id"],
@@ -105,7 +105,7 @@ for data_set in problem_set_seed_data:
         model.db.session.add(problem_set_question)
         model.db.session.commit()
 
-# create 15 students per classroom
+# create 12 students per classroom
 for classroom in classrooms:
     students = []
     grade_level_string = classroom.classroom_name[0]
@@ -133,7 +133,7 @@ for classroom in classrooms:
         "O",
     ]
 
-    for i in range(15):
+    for i in range(12):
         student = model.Student.create(
             classroom_id=classroom.classroom_id,
             student_first_name=fake.first_name(),
@@ -141,7 +141,7 @@ for classroom in classrooms:
             student_grade_level=grade_level,
             student_login_icon=login_icons[i],
             student_password="1234",
-            current_problem_set=choice([1, 2, 3, 4, 5, 6]),
+            current_problem_set=choice([1, 2, 3, 4, 5, 6, 7, 8, 9]),
         )  # hard coded, change if more prob sets added
 
         students.append(student)
@@ -149,18 +149,12 @@ for classroom in classrooms:
         model.db.session.commit()
 
     # create problem_set_question_answers seed data
-    # the first 3 students of each class will:
-    # K/1: get all questions in problem_sets 1 & 2 correct, current_problem_set will be 3
-    # 2/3: get all questions in problem_sets 4 & 5 correct, current_problem_set will be 6
-    for student in students[:3]:
-        if student.student_grade_level < 2:
-            problem_sets = [1, 2]
-            model.Student.update_current_problem_set(student.student_id, 3)
-            model.db.session.commit()
-        elif student.student_grade_level >= 2:
-            problem_sets = [4, 5]
-            model.Student.update_current_problem_set(student.student_id, 6)
-            model.db.session.commit()
+    # the first 4 students of each class will:
+    # all questions in problem_sets 1, 2 & 3 correct, current_problem_set will be 4
+    for student in students[:4]:
+        problem_sets = [1, 2, 3]
+        model.Student.update_current_problem_set(student.student_id, 4)
+        model.db.session.commit()
 
         # fake dates are randomly chosen at the beginning of the school year, between Sept-1 and Nov-30
         # assessments are 1 week apart (to mimic actual student progress)
@@ -169,6 +163,7 @@ for classroom in classrooms:
         date1 = fake.date_between(datetime(year, 9, 1), datetime(year, 11, 30))
         date2 = date1 + timedelta(days=7)
         date3 = date2 + timedelta(days=7)
+        date4 = date3 + timedelta(days=7)
 
         # all questions in the first problem set are correct
         for (
@@ -181,6 +176,7 @@ for classroom in classrooms:
                 problem_set_question_id=problem_set_question.problem_set_question_id,
                 student_answer=problem_set_question.answer_as_int,
                 is_correct=True,
+                is_fluent=True,
                 time_to_answer=choice([1, 2, 3]),
                 date_assessed=date1,
             )
@@ -199,6 +195,7 @@ for classroom in classrooms:
                 problem_set_question_id=problem_set_question.problem_set_question_id,
                 student_answer=problem_set_question.answer_as_int,
                 is_correct=True,
+                is_fluent=True,
                 time_to_answer=choice([1, 2, 3]),
                 date_assessed=date2,
             )
@@ -206,25 +203,18 @@ for classroom in classrooms:
             model.db.session.add(problem_set_question_answer)
             model.db.session.commit()
 
-        # for the third problem set, students get some questions correct, some incorrect
+        # all questions in the third problem set are correct
         for (
             problem_set_question
         ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
-            student.current_problem_set
+            problem_sets[2]
         ):
-            correct_answer = problem_set_question.answer_as_int
-            possible_answers = [
-                correct_answer - 1,
-                correct_answer,
-                correct_answer + 1,
-            ]
-            student_answer = choice(possible_answers)
-
             problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
-                student_answer=student_answer,
-                is_correct=(correct_answer == student_answer),
+                student_answer=problem_set_question.answer_as_int,
+                is_correct=True,
+                is_fluent=True,
                 time_to_answer=choice([1, 2, 3]),
                 date_assessed=date3,
             )
@@ -232,21 +222,170 @@ for classroom in classrooms:
             model.db.session.add(problem_set_question_answer)
             model.db.session.commit()
 
-    # students 5-7 will get questions randomly wrong or right in one grade-appropriate problem set
-    for student in students[5:8]:
-        if student.student_grade_level < 2:
-            problem_set = choice([1, 2, 3])
-            model.Student.update_current_problem_set(student.student_id, problem_set)
+        # for the fourth problem set, students get some questions correct, some incorrect
+        for (
+            problem_set_question
+        ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
+            student.current_problem_set
+        ):
+            correct_answer = problem_set_question.answer_as_int
+            possible_answers = [
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer + 1,
+            ]
+            student_answer = choice(possible_answers)
+
+            if student_answer != correct_answer:
+                is_fluent = False
+            else:
+                is_fluent = choice([True, True, True, True, True, False])
+
+            problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
+                student_id=student.student_id,
+                problem_set_question_id=problem_set_question.problem_set_question_id,
+                student_answer=student_answer,
+                is_correct=(correct_answer == student_answer),
+                is_fluent=is_fluent,
+                time_to_answer=choice([1, 2, 3]),
+                date_assessed=date4,
+            )
+
+            model.db.session.add(problem_set_question_answer)
             model.db.session.commit()
-        elif student.student_grade_level >= 2:
-            problem_set = choice([4, 5, 6])
-            model.Student.update_current_problem_set(student.student_id, problem_set)
+
+    # the next 4 students will have multiple attempts at their current problem set, with increased correctness and fluency over time
+    for student in students[4:8]:
+        problem_set = choice([1, 2, 3, 4, 5, 6])
+        model.Student.update_current_problem_set(student.student_id, problem_set)
+        model.db.session.commit()
+
+        year_string = classroom.classroom_name.split(" ")[1][:2]
+        year = 2000 + int(year_string)
+        date1 = fake.date_between(datetime(year, 9, 1), datetime(year, 11, 30))
+        date2 = date1 + timedelta(days=7)
+        date3 = date2 + timedelta(days=7)
+
+        # first attempt at the problem set
+        for (
+            problem_set_question
+        ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
+            student.current_problem_set
+        ):
+            correct_answer = problem_set_question.answer_as_int
+            possible_answers = [
+                correct_answer - 1,
+                correct_answer,
+                correct_answer,
+                correct_answer + 1,
+            ]
+            student_answer = choice(possible_answers)
+
+            if student_answer != correct_answer:
+                is_fluent = False
+            else:
+                is_fluent = choice([True, False, False])
+
+            problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
+                student_id=student.student_id,
+                problem_set_question_id=problem_set_question.problem_set_question_id,
+                student_answer=student_answer,
+                is_correct=(correct_answer == student_answer),
+                is_fluent=is_fluent,
+                time_to_answer=choice([1, 2, 2, 3, 3, 4]),
+                date_assessed=date1,
+            )
+
+            model.db.session.add(problem_set_question_answer)
             model.db.session.commit()
+
+        # second attempt at the problem set, should be better than attempt #1
+        for (
+            problem_set_question
+        ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
+            student.current_problem_set
+        ):
+            correct_answer = problem_set_question.answer_as_int
+            possible_answers = [
+                correct_answer - 1,
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer + 1,
+            ]
+            student_answer = choice(possible_answers)
+
+            if student_answer != correct_answer:
+                is_fluent = False
+            else:
+                is_fluent = choice([True, True, True, False, False])
+
+            problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
+                student_id=student.student_id,
+                problem_set_question_id=problem_set_question.problem_set_question_id,
+                student_answer=student_answer,
+                is_correct=(correct_answer == student_answer),
+                is_fluent=is_fluent,
+                time_to_answer=choice([1, 2, 2, 3, 3, 4]),
+                date_assessed=date2,
+            )
+
+            model.db.session.add(problem_set_question_answer)
+            model.db.session.commit()
+
+        # third attempt at the problem set, should be better than attempt #2
+        for (
+            problem_set_question
+        ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
+            student.current_problem_set
+        ):
+            correct_answer = problem_set_question.answer_as_int
+            possible_answers = [
+                correct_answer - 1,
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer,
+                correct_answer + 1,
+            ]
+            student_answer = choice(possible_answers)
+
+            if student_answer != correct_answer:
+                is_fluent = False
+            else:
+                is_fluent = choice([True, True, True, False])
+
+            problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
+                student_id=student.student_id,
+                problem_set_question_id=problem_set_question.problem_set_question_id,
+                student_answer=student_answer,
+                is_correct=(correct_answer == student_answer),
+                is_fluent=is_fluent,
+                time_to_answer=choice([1, 2, 2, 3, 3, 4]),
+                date_assessed=date3,
+            )
+
+            model.db.session.add(problem_set_question_answer)
+            model.db.session.commit()
+
+    # the last 4 students will have one not-so-great attempt at their current problem set
+    for student in students[8:]:
+        problem_set = choice([1, 2, 3, 4, 5, 6])
+        model.Student.update_current_problem_set(student.student_id, problem_set)
+        model.db.session.commit()
 
         year_string = classroom.classroom_name.split(" ")[1][:2]
         year = 2000 + int(year_string)
         date = fake.date_between(datetime(year, 9, 1), datetime(year, 11, 30))
 
+        # third attempt at the problem set, should be better than attempt #2
         for (
             problem_set_question
         ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
@@ -260,13 +399,19 @@ for classroom in classrooms:
             ]
             student_answer = choice(possible_answers)
 
+            if student_answer != correct_answer:
+                is_fluent = False
+            else:
+                is_fluent = choice([True, False, False, False])
+
             problem_set_question_answer = model.ProblemSetQuestionAnswer.create(
                 student_id=student.student_id,
                 problem_set_question_id=problem_set_question.problem_set_question_id,
                 student_answer=student_answer,
                 is_correct=(correct_answer == student_answer),
+                is_fluent=is_fluent,
                 time_to_answer=choice([1, 2, 2, 3, 3, 4]),
-                date_assessed=date,
+                date_assessed=date1,
             )
 
             model.db.session.add(problem_set_question_answer)
