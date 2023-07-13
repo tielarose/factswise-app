@@ -319,6 +319,7 @@ class ProblemSetQuestionAnswer(db.Model):
     )
     student_answer = db.Column(db.VARCHAR(10), nullable=False)
     is_correct = db.Column(db.Boolean, nullable=False)
+    is_fluent = db.Column(db.Boolean, nullable=False)
     time_to_answer = db.Column(db.Integer, nullable=False)
     date_assessed = db.Column(db.DateTime, nullable=False)
 
@@ -328,7 +329,7 @@ class ProblemSetQuestionAnswer(db.Model):
     )
 
     def __repr__(self):
-        return f"<ProblemSetQuestionAnswer problem_set_question_answer_id={self.problem_set_question_answer_id} student_id={self.student_id} date_assessed={self.date_assessed} is_correct={self.is_correct}>"
+        return f"<ProblemSetQuestionAnswer problem_set_question_answer_id={self.problem_set_question_answer_id} student_id={self.student_id} date_assessed={self.date_assessed} is_correct={self.is_correct} is_fluent={self.is_fluent}>"
 
     @classmethod
     def create(
@@ -337,6 +338,7 @@ class ProblemSetQuestionAnswer(db.Model):
         problem_set_question_id,
         student_answer,
         is_correct,
+        is_fluent,
         time_to_answer,
         date_assessed,
     ):
@@ -347,6 +349,7 @@ class ProblemSetQuestionAnswer(db.Model):
             problem_set_question_id=problem_set_question_id,
             student_answer=student_answer,
             is_correct=is_correct,
+            is_fluent=is_fluent,
             time_to_answer=time_to_answer,
             date_assessed=date_assessed,
         )
@@ -358,6 +361,7 @@ class ProblemSetQuestionAnswer(db.Model):
             "problem_set_question_id": self.problem_set_question_id,
             "student_answer": self.student_answer,
             "is_correct": self.is_correct,
+            "is_fluent": self.is_fluent,
             "time_to_answer": self.time_to_answer,
             "date_assessed": self.date_assessed,
         }
