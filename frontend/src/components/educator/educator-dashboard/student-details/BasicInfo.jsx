@@ -225,7 +225,9 @@ export default function BasicInfo({ studentId }) {
                 Grade Level
                 {' '}
                 <input
-                  type="text"
+                  type="number"
+                  min={0}
+                  max={12}
                   id="grade-level"
                   value={currentStudent.student_grade_level}
                   placeholder={currentStudent.student_grade_level}
@@ -242,7 +244,9 @@ export default function BasicInfo({ studentId }) {
                 Current Goal
                 {' '}
                 <input
-                  type="text"
+                  type="number"
+                  min={1}
+                  max={9}
                   id="goal"
                   value={currentStudent.current_problem_set}
                   placeholder={currentStudent.current_problem_set}
@@ -259,6 +263,12 @@ export default function BasicInfo({ studentId }) {
                 <div className="with-text">
                   <img src={SaveIcon} className="DataDisplay-icon-small" alt="save student info icon" />
                   <p>save</p>
+                </div>
+              </button>
+              <button type="button" onClick={() => setIsBeingEdited(false)} className="invisible-button">
+                <div className="with-text">
+                  <img src={CancelIcon} className="DataDisplay-icon-small" alt="cancel change password icon" />
+                  <p>cancel</p>
                 </div>
               </button>
             </td>

@@ -16,6 +16,10 @@
     border: none;
 }
 
+.basic-info-container input {
+    width: 185px;
+}
+
 .invisible-button .with-text.delete-button:hover {
   background-color: #e26c6c;
   font-weight: var(--font-weight-bold);
@@ -49,4 +53,9 @@
 
 .StudentDetails-AssessmentInfo tbody tr:nth-child(n+1):hover{
   background-color: var(--yellow-40);
+}
+
+.assessment-info-container {
+  display: flex;
+  justify-content: center;
 }

@@ -254,16 +254,6 @@ def get_student_info(student_id):
     """Given a student_id, return detailed information on that student."""
 
     student = Student.get_by_id(student_id)
-    # assessments_tuples = db.session.execute(
-    #     db.select(
-    #         ProblemSetQuestionAnswer.date_assessed,
-    #         func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
-    #         func.count(ProblemSetQuestionAnswer.student_answer),
-    #     )
-    #     .filter_by(student_id=student_id)
-    #     .group_by(ProblemSetQuestionAnswer.date_assessed)
-    #     .order_by(ProblemSetQuestionAnswer.date_assessed.desc())
-    # ).all()
 
     all_assessments_tuples = db.session.execute(
         db.select(
@@ -271,6 +261,7 @@ def get_student_info(student_id):
             ProblemSetType.problem_set_type_name,
             ProblemSet.problem_set_level,
             func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
+            func.sum(cast(ProblemSetQuestionAnswer.is_fluent, sqlalchemy.Integer)),
             func.count(ProblemSetQuestionAnswer.student_answer),
             func.avg(ProblemSetQuestionAnswer.time_to_answer),
         )
@@ -286,8 +277,17 @@ def get_student_info(student_id):
     ).all()
 
     def assessment_tuples_into_dict(assessment_tuple):
-        date, problem_set_type, level, num_correct, total, time = assessment_tuple
-        percent_as_int = round((num_correct / total) * 100)
+        (
+            date,
+            problem_set_type,
+            level,
+            num_correct,
+            num_fluent,
+            total,
+            time,
+        ) = assessment_tuple
+        percent_correct_as_int = round((num_correct / total) * 100)
+        percent_fluent_as_int = round((num_fluent / total) * 100)
 
         return {
             "date": date,
@@ -296,7 +296,8 @@ def get_student_info(student_id):
             "num_correct": num_correct,
             "total": total,
             "avg_time": round(time),
-            "percent_as_int": percent_as_int,
+            "percent_correct_as_int": percent_correct_as_int,
+            "percent_fluent_as_int": percent_fluent_as_int,
         }
 
     assessments_list = [

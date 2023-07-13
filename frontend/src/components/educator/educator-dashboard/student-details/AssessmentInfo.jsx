@@ -51,7 +51,7 @@ export default function AssessmentInfo({ studentId }) {
         <td>
           {assessment.date
             ? format(convertDate(assessment.date), 'M/dd/yy')
-            : 'n/a'}
+            : ''}
         </td>
         <td>
           { problemSetTypeToSymbol[assessment.problem_set_type]}
@@ -61,30 +61,44 @@ export default function AssessmentInfo({ studentId }) {
         <td>
           {assessment.num_correct
             ? `${assessment.num_correct} / ${assessment.total}`
-            : 'n/a'}
+            : ''}
         </td>
         <td>
-          {assessment.percent_as_int ? `${assessment.percent_as_int}%` : 'n/a'}
+          {assessment.percent_correct_as_int ? `${assessment.percent_correct_as_int}%` : ''}
         </td>
         <td>
-          { assessment.avg_time}
+          {assessment.percent_fluent_as_int ? `${assessment.percent_fluent_as_int}%` : ''}
         </td>
       </tr>
     ));
   }
 
   return (
-    <table className="StudentDetails-AssessmentInfo">
-      <thead>
-        <tr>
-          <th>Date Assessed</th>
-          <th>Goal #</th>
-          <th>Score</th>
-          <th>Percent</th>
-          <th>Avg Time/Question</th>
-        </tr>
-      </thead>
-      <tbody>{assessmentRows}</tbody>
-    </table>
+    <div className="assessment-info-container">
+      <table className="StudentDetails-AssessmentInfo">
+        <thead>
+          <tr>
+            <th>
+              Date
+              <br />
+              Assessed
+            </th>
+            <th>Goal #</th>
+            <th>Score</th>
+            <th>
+              Percent
+              <br />
+              Correct
+            </th>
+            <th>
+              Percent
+              <br />
+              Fluent
+            </th>
+          </tr>
+        </thead>
+        <tbody>{assessmentRows}</tbody>
+      </table>
+    </div>
   );
 }
