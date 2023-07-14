@@ -321,6 +321,7 @@ class ProblemSetQuestionAnswer(db.Model):
     is_correct = db.Column(db.Boolean, nullable=False)
     is_fluent = db.Column(db.Boolean, nullable=False)
     time_to_answer = db.Column(db.Integer, nullable=False)
+    baseline_time = db.Column(db.Integer, nullable=False)
     date_assessed = db.Column(db.DateTime, nullable=False)
 
     student = db.relationship("Student", back_populates="problem_set_question_answers")
@@ -340,6 +341,7 @@ class ProblemSetQuestionAnswer(db.Model):
         is_correct,
         is_fluent,
         time_to_answer,
+        baseline_time,
         date_assessed,
     ):
         """Create and return a student's answer to a problem set question."""
@@ -351,6 +353,7 @@ class ProblemSetQuestionAnswer(db.Model):
             is_correct=is_correct,
             is_fluent=is_fluent,
             time_to_answer=time_to_answer,
+            baseline_time=baseline_time,
             date_assessed=date_assessed,
         )
 
@@ -363,6 +366,7 @@ class ProblemSetQuestionAnswer(db.Model):
             "is_correct": self.is_correct,
             "is_fluent": self.is_fluent,
             "time_to_answer": self.time_to_answer,
+            "baseline_time": self.baseline_time,
             "date_assessed": self.date_assessed,
         }
 

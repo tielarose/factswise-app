@@ -485,6 +485,7 @@ def submit_student_answers():
             is_correct=answer["is_correct"],
             is_fluent=answer["is_fluent"],
             time_to_answer=answer["time_to_answer"],
+            baseline_time=answer["baseline_time"],
             date_assessed=date_assessed,
         )
 

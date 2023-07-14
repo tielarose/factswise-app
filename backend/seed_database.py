@@ -27,9 +27,15 @@ model.db.create_all()
 educators = []
 
 for _ in range(1):
-    fname = fake.first_name()
-    lname = fake.last_name()
-    prefix = choice(["Ms.", "Mr.", "Teacher"])
+    # create fake names if needed
+    # fname = fake.first_name()
+    # lname = fake.last_name()
+    # prefix = choice(["Ms.", "Mr.", "Teacher"])
+
+    # for demo purposes, use my name
+    fname = "Tiela"
+    lname = "Black-Law"
+    prefix = "Ms."
     educator = model.Educator.create(
         educator_first_name=fname,
         educator_last_name=lname,
@@ -165,7 +171,7 @@ for classroom in classrooms:
         date3 = date2 + timedelta(days=7)
         date4 = date3 + timedelta(days=7)
 
-        # all questions in the first problem set are correct
+        # all questions in the first problem set are correct and fluent
         for (
             problem_set_question
         ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
@@ -177,14 +183,15 @@ for classroom in classrooms:
                 student_answer=problem_set_question.answer_as_int,
                 is_correct=True,
                 is_fluent=True,
-                time_to_answer=choice([1, 2, 3]),
+                time_to_answer=choice([5, 6, 7]),
+                baseline_time=4,
                 date_assessed=date1,
             )
 
             model.db.session.add(problem_set_question_answer)
             model.db.session.commit()
 
-        # all questions in the second problem set are correct
+        # all questions in the second problem set are correct and fluent
         for (
             problem_set_question
         ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
@@ -196,14 +203,15 @@ for classroom in classrooms:
                 student_answer=problem_set_question.answer_as_int,
                 is_correct=True,
                 is_fluent=True,
-                time_to_answer=choice([1, 2, 3]),
+                time_to_answer=choice([5, 6, 7]),
+                baseline_time=4,
                 date_assessed=date2,
             )
 
             model.db.session.add(problem_set_question_answer)
             model.db.session.commit()
 
-        # all questions in the third problem set are correct
+        # all questions in the third problem set are correct and fluent
         for (
             problem_set_question
         ) in model.ProblemSet.get_all_problem_set_questions_by_problem_set_id(
@@ -215,7 +223,8 @@ for classroom in classrooms:
                 student_answer=problem_set_question.answer_as_int,
                 is_correct=True,
                 is_fluent=True,
-                time_to_answer=choice([1, 2, 3]),
+                time_to_answer=choice([5, 6, 7]),
+                baseline_time=4,
                 date_assessed=date3,
             )
 
@@ -254,7 +263,8 @@ for classroom in classrooms:
                 student_answer=student_answer,
                 is_correct=(correct_answer == student_answer),
                 is_fluent=is_fluent,
-                time_to_answer=choice([1, 2, 3]),
+                time_to_answer=choice([5, 6, 7]),
+                baseline_time=4,
                 date_assessed=date4,
             )
 
@@ -300,6 +310,7 @@ for classroom in classrooms:
                 is_correct=(correct_answer == student_answer),
                 is_fluent=is_fluent,
                 time_to_answer=choice([1, 2, 2, 3, 3, 4]),
+                baseline_time=2,
                 date_assessed=date1,
             )
 
@@ -334,6 +345,7 @@ for classroom in classrooms:
                 is_correct=(correct_answer == student_answer),
                 is_fluent=is_fluent,
                 time_to_answer=choice([1, 2, 2, 3, 3, 4]),
+                baseline_time=2,
                 date_assessed=date2,
             )
 
@@ -369,6 +381,7 @@ for classroom in classrooms:
                 is_correct=(correct_answer == student_answer),
                 is_fluent=is_fluent,
                 time_to_answer=choice([1, 2, 2, 3, 3, 4]),
+                baseline_time=2,
                 date_assessed=date3,
             )
 
@@ -411,6 +424,7 @@ for classroom in classrooms:
                 is_correct=(correct_answer == student_answer),
                 is_fluent=is_fluent,
                 time_to_answer=choice([1, 2, 2, 3, 3, 4]),
+                baseline_time=2,
                 date_assessed=date1,
             )
 

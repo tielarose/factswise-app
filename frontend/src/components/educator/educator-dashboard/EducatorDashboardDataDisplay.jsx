@@ -163,11 +163,15 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
         {student.latest_assessment.level ? student.latest_assessment.level : ''}
       </td>
       <td>
-        {student.latest_assessment.percent_correct_as_int
-          ? `${student.latest_assessment.percent_correct_as_int}%`
-          : ''}
+        {student.latest_assessment.percent_correct_as_int === null
+          ? ''
+          : `${student.latest_assessment.percent_correct_as_int}%`}
       </td>
-      <td>{ student.latest_assessment.percent_fluent_as_int ? `${student.latest_assessment.percent_fluent_as_int}%` : ''}</td>
+      <td>
+        {student.latest_assessment.percent_fluent_as_int === null
+          ? '' : `${student.latest_assessment.percent_fluent_as_int}%`}
+
+      </td>
     </tr>
   ));
 

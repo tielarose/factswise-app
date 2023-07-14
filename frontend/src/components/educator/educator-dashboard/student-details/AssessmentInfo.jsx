@@ -64,10 +64,11 @@ export default function AssessmentInfo({ studentId }) {
             : ''}
         </td>
         <td>
-          {assessment.percent_correct_as_int ? `${assessment.percent_correct_as_int}%` : ''}
+          {assessment.percent_correct_as_int === null
+            ? '' : `${assessment.percent_correct_as_int}%`}
         </td>
         <td>
-          {assessment.percent_fluent_as_int ? `${assessment.percent_fluent_as_int}%` : ''}
+          {assessment.percent_fluent_as_int === null ? '' : `${assessment.percent_fluent_as_int}%`}
         </td>
       </tr>
     ));
