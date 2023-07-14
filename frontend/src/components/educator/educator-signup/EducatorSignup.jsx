@@ -30,7 +30,7 @@ export default function EducatorSignup() {
       .then((response) => response.json())
       .then((data) => {
         if (data.signup_successful) {
-          localStorage.setItem('userId', data.user_id);
+          localStorage.setItem('userId', data.user_info.educator_id);
           setCurrentUser(data.user_info);
           setIsEducator(data.is_educator);
           navigate('/educator/home');

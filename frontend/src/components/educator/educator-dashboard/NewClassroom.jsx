@@ -49,7 +49,7 @@ export default function NewClassroom() {
             required
           />
 
-          <button className="button-blue margin-top-10px" type="button">Add Classroom</button>
+          <button className="button-blue margin-top-10px" type="button" onClick={handleSubmit}>Add Classroom</button>
           <Link className="link-blue margin-top-10px" to="/educator/home">cancel</Link>
         </form>
       </div>

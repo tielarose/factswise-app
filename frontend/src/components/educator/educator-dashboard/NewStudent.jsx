@@ -82,7 +82,7 @@ export default function NewStudent() {
             required
           />
           {/* Student Password Field */}
-          <label htmlFor="NewStudent-password">Last Name:</label>
+          <label htmlFor="NewStudent-password">Password:</label>
           <input
             type="text"
             placeholder="password"

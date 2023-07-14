@@ -87,6 +87,8 @@ def add_educator_to_db():
     db.session.commit()
 
     educator = Educator.get_by_email(educator_email)
+    print("*" * 40)
+    print(educator)
 
     if not educator:
         return jsonify({"signup_successful": False})
@@ -152,7 +154,7 @@ def create_new_classroom():
     db.session.add(new_classroom)
     db.session.commit()
 
-    return jsonify({"added": "a classroom"})
+    return jsonify({"classroom_added": "successful"})
 
 
 @app.route("/api/educator/get-all-classrooms", methods=["POST"])

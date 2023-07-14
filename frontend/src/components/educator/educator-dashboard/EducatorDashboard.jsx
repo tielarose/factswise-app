@@ -86,7 +86,15 @@ export default function EducatorDashboard() {
               &#43; create new
             </button>
           </>
-        ) : ''}
+        ) : (
+          <button
+            type="button"
+            className="link-blue"
+            onClick={handleNewClassroomClick}
+          >
+            &#43; create new classroom
+          </button>
+        )}
         <div className="flex-center">
           <div className="icon-key-container">
             <div className="icon-key">

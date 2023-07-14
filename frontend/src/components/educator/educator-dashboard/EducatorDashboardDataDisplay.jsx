@@ -310,5 +310,6 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
         </tfoot>
       </table>
     </div>
+    
   );
 }

@@ -8,6 +8,8 @@ td {
 
 .DataDisplay {
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .EducatorDashboard table,tr,th {
