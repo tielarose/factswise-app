@@ -8,6 +8,8 @@ export default function Assessment() {
   const { currentUser } = allContext;
   const [problemSetQuestions, setProblemSetQuestions] = useState([]);
   const [assessmentIsComplete, setAssessmentIsComplete] = useState(false);
+  const [baselineIsComplete, setBaselineIsComplete] = useState(false);
+  const [baselineTime, setBaselineTime] = useState(null);
 
   // fetch all problem set questions for logged in student's current problem set
   useEffect(() => {
@@ -18,17 +20,30 @@ export default function Assessment() {
       });
   }, []);
 
+  function handleClick() { 
+    setBaselineIsComplete(!baselineIsComplete);
+  }
+
+  let componentToDisplay;
+
+  if (baselineIsComplete && assessmentIsComplete) {
+    componentToDisplay = (<AssessmentCompleteScreen />);
+  } else if (baselineIsComplete) {
+    componentToDisplay = (
+      <AssessmentContainer
+        problemSetQuestions={problemSetQuestions}
+        setHasAnsweredAllQuestions={setAssessmentIsComplete}
+        baselineTime={baselineTime}
+      />
+    );
+  } else {
+    componentToDisplay = (<p>this will be the baseline timer component</p>);
+  }
+
   return (
     <div>
-      {assessmentIsComplete
-        ? (<AssessmentCompleteScreen />
-        )
-        : (
-          <AssessmentContainer
-            problemSetQuestions={problemSetQuestions}
-            setHasAnsweredAllQuestions={setAssessmentIsComplete}
-          />
-        )}
+      {componentToDisplay}
+      <button type="button" onClick={handleClick}>Click me</button>
     </div>
 
   );
