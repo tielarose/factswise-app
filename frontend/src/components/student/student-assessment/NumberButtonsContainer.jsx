@@ -4,7 +4,7 @@ import NumberButton from './NumberButton';
 
 export default function NumberButtonsContainer(
   {
-    setInputAnswer, setAnswerTime, startTime, setDisplayNumberButtons,
+    handleNumberButtonClickInAssessment
   },
 ) {
   // create NumberButton components for the range of numbers specified, inclusive
@@ -14,10 +14,7 @@ export default function NumberButtonsContainer(
     for (let i = firstNum; i <= lastNum; i += 1) {
       const button = (
         <NumberButton
-          setInputAnswer={setInputAnswer}
-          setAnswerTime={setAnswerTime}
-          setDisplayNumberButtons={setDisplayNumberButtons}
-          startTime={startTime}
+          handleNumberButtonClickInAssessment={handleNumberButtonClickInAssessment}
           value={i}
           key={`numberButton${i}`}
         />
