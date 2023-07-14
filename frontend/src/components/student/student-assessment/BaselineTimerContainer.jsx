@@ -2,6 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import AssessmentQuestion from './AssessmentQuestion';
 import NumberButtonsContainer from './NumberButtonsContainer';
+import BaselineCompleteScreen from './BaselineCompleteScreen';
 
 const allBaselineResponseTimes = [];
 
@@ -11,6 +12,7 @@ export default function BaselineTimerContainer(
   const [currentQuestionNum, setCurrentQuestionNum] = useState(0);
   const [inputAnswer, setInputAnswer] = useState('?');
   const [answerTime, setAnswerTime] = useState(0);
+  const [displayBaselineCompleteMessage, setDisplayBaselineCompleteMessage] = useState(false);
   const startTime = Date.now();
 
   const handleNumberButtonClickInBaseline = useCallback((evt) => {
@@ -29,8 +31,7 @@ export default function BaselineTimerContainer(
         const sumBaselineTime = allBaselineResponseTimes.reduce((a, b) => a + b, 0);
         const avgBaselineTime = sumBaselineTime / baselineQuestions.length;
         setBaselineTime(avgBaselineTime);
-        console.log('avgBaselineTime is', avgBaselineTime);
-        setBaselineIsComplete(true);
+        setDisplayBaselineCompleteMessage(true);
       } else {
         setInputAnswer('?');
         setCurrentQuestionNum(() => (currentQuestionNum + 1));
@@ -40,14 +41,26 @@ export default function BaselineTimerContainer(
 
   return (
     <div className="AssessmentContainer">
-      <h4>click the number you see</h4>
-      <AssessmentQuestion
-        question={baselineQuestions[currentQuestionNum]}
-        inputAnswer={inputAnswer}
-      />
-      <NumberButtonsContainer
-        handleNumberButtonClick={handleNumberButtonClickInBaseline}
-      />
+      {displayBaselineCompleteMessage
+        ? (
+          <BaselineCompleteScreen
+            setBaselineIsComplete={setBaselineIsComplete}
+            setDisplayBaselineCompleteMessage={setDisplayBaselineCompleteMessage}
+          />
+        )
+        : (
+          <>
+            <h4>click the number you see</h4>
+            <AssessmentQuestion
+              question={baselineQuestions[currentQuestionNum]}
+              inputAnswer={inputAnswer}
+            />
+            <NumberButtonsContainer
+              handleNumberButtonClick={handleNumberButtonClickInBaseline}
+            />
+          </>
+        )}
+
     </div>
   );
 }

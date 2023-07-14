@@ -31,10 +31,6 @@ export default function Assessment() {
       });
   }, []);
 
-  function handleClick() {
-    setBaselineIsComplete(!baselineIsComplete);
-  }
-
   let componentToDisplay;
 
   if (baselineIsComplete && assessmentIsComplete) {
@@ -60,7 +56,6 @@ export default function Assessment() {
   return (
     <div>
       {componentToDisplay}
-      <button type="button" onClick={handleClick}>Click me</button>
     </div>
 
   );
