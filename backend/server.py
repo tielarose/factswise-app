@@ -4,6 +4,7 @@ from functools import reduce
 from flask import Flask, jsonify, request
 from sqlalchemy import func, cast
 import sqlalchemy
+import bcrypt
 from random import choice, shuffle
 from datetime import datetime
 from model import (
@@ -39,11 +40,14 @@ def verify_educator_password():
     """Given an educator_id and entered password, verify the entered password matches the user's password stored in the database."""
 
     educator_id = request.json.get("educator_id")
-    entered_password = request.json.get("entered_password")
+    entered_pw_plaintext = request.json.get("entered_password")
+
+    entered_pw_bytes = entered_pw_plaintext.encode("utf-8")
 
     educator = Educator.get_by_id(educator_id)
+    hashed_pw = educator.educator_password
 
-    if educator.educator_password == entered_password:
+    if bcrypt.checkpw(entered_pw_bytes, hashed_pw):
         return jsonify(
             {
                 "login_successful": True,
@@ -64,14 +68,19 @@ def add_educator_to_db():
     educator_first_name = request.json.get("educator_first_name")
     educator_last_name = request.json.get("educator_last_name")
     educator_display_name = request.json.get("educator_display_name")
-    educator_password = request.json.get("educator_password")
+    plaintext_pw = request.json.get("educator_password")
+
+    bytes_pw = plaintext_pw.encode("utf-8")
+    salt = bcrypt.gensalt()
+
+    hashed_pw = bcrypt.hashpw(bytes_pw, salt)
 
     new_educator = Educator.create(
         educator_email=educator_email,
         educator_first_name=educator_first_name,
         educator_last_name=educator_last_name,
         educator_display_name=educator_display_name,
-        educator_password=educator_password,
+        educator_password=hashed_pw,
     )
 
     db.session.add(new_educator)
@@ -98,16 +107,21 @@ def create_new_student():
     student_first_name = request.json.get("student_first_name")
     student_last_name = request.json.get("student_last_name")
     student_grade_level = request.json.get("student_grade_level")
-    student_password = request.json.get("student_password")
     current_problem_set = request.json.get("current_problem_set")
     classroom_id = request.json.get("classroom_id")
     student_login_icon = request.json.get("student_login_icon")
+    plaintext_pw = request.json.get("student_password")
+
+    bytes_pw = plaintext_pw.encode("utf-8")
+    salt = bcrypt.gensalt()
+
+    hashed_pw = bcrypt.hashpw(bytes_pw, salt)
 
     new_student = Student.create(
         student_first_name=student_first_name,
         student_last_name=student_last_name,
         student_grade_level=student_grade_level,
-        student_password=student_password,
+        student_password=hashed_pw,
         current_problem_set=current_problem_set,
         classroom_id=classroom_id,
         student_login_icon=student_login_icon,
@@ -377,11 +391,13 @@ def verify_student_password():
     """Given a student_id and an entered password, verify the entered password matches the user's password stores in the database."""
 
     student_id = request.json.get("student_id")
-    entered_password = request.json.get("entered_password")
+    entered_pw_plaintext = request.json.get("entered_password")
+    entered_pw_bytes = entered_pw_plaintext.encode("utf-8")
 
     student = Student.get_by_id(student_id)
+    hashed_pw = student.student_password
 
-    if student.student_password == entered_password:
+    if bcrypt.checkpw(entered_pw_bytes, hashed_pw):
         return jsonify(
             {
                 "login_successful": True,
@@ -399,9 +415,14 @@ def reset_student_password():
     """Update a student's password in the database with educator input"""
 
     student_id = request.json.get("student_id")
-    new_password = request.json.get("new_password")
+    new_pw_plaintext = request.json.get("new_password")
 
-    Student.update_password(student_id, new_password)
+    new_pw_bytes = new_pw_plaintext.encode("utf-8")
+    salt = bcrypt.gensalt()
+
+    new_pw_hashed = bcrypt.hashpw(new_pw_bytes, salt)
+
+    Student.update_password(student_id, new_pw_hashed)
 
     db.session.commit()
 

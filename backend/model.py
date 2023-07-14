@@ -17,7 +17,7 @@ class Educator(db.Model):
     educator_last_name = db.Column(db.VARCHAR(50), nullable=False)
     educator_display_name = db.Column(db.VARCHAR(50), nullable=False)
     educator_email = db.Column(db.VARCHAR(50), nullable=False, unique=True)
-    educator_password = db.Column(db.VARCHAR(50), nullable=False)
+    educator_password = db.Column(db.LargeBinary, nullable=False)
 
     classrooms = db.relationship("Classroom", back_populates="educator")
 
@@ -119,7 +119,7 @@ class Student(db.Model):
     student_last_name = db.Column(db.VARCHAR(50), nullable=False)
     student_grade_level = db.Column(db.Integer, nullable=False)
     student_login_icon = db.Column(db.VARCHAR(10), nullable=False)
-    student_password = db.Column(db.VARCHAR(50), nullable=False)
+    student_password = db.Column(db.LargeBinary, nullable=False)
     current_problem_set = db.Column(
         db.Integer, db.ForeignKey("problem_sets.problem_set_id"), nullable=False
     )

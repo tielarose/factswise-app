@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react';
+import React from 'react';
 import HandIcon from '../../../assets/hand-icon.png';
 import ThinkingIcon from '../../../assets/thinking-icon.png';
 import BrainIcon from '../../../assets/brain-icon.png';
@@ -7,9 +7,8 @@ import LightBulbIcon from '../../../assets/lightbulb-icon.png';
 import QuestionMarkIcon from '../../../assets/question-mark-icon.png';
 
 export default function StrategyButtonsContainer({
-  handleStrategyButtonClick
+  handleStrategyButtonClick,
 }) {
-
   const strategyButtonInfo = [
     {
       buttonOrder: 1,

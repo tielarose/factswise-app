@@ -4,6 +4,7 @@ import os
 
 import model
 import server
+import bcrypt
 from problem_set_questions_creator import (
     problem_set_seed_data,
     create_mult_div_problem_set_questions,
@@ -36,12 +37,17 @@ for _ in range(1):
     fname = "Tiela"
     lname = "Black-Law"
     prefix = "Ms."
+    plaintext_pw = "1234"
+    bytes_pw = plaintext_pw.encode("utf-8")
+    salt = bcrypt.gensalt()
+    hashed_pw = bcrypt.hashpw(bytes_pw, salt)
+
     educator = model.Educator.create(
         educator_first_name=fname,
         educator_last_name=lname,
         educator_display_name=f"{prefix} {choice([fname, lname])}",
         educator_email=f"{fname.lower()}.{lname.lower()}@realschool.org",
-        educator_password="1234",
+        educator_password=hashed_pw,
     )
 
     educators.append(educator)
@@ -140,13 +146,18 @@ for classroom in classrooms:
     ]
 
     for i in range(12):
+        plaintext_pw = "1234"
+        bytes_pw = plaintext_pw.encode("utf-8")
+        salt = bcrypt.gensalt()
+        hashed_pw = bcrypt.hashpw(bytes_pw, salt)
+
         student = model.Student.create(
             classroom_id=classroom.classroom_id,
             student_first_name=fake.first_name(),
             student_last_name=fake.last_name(),
             student_grade_level=grade_level,
             student_login_icon=login_icons[i],
-            student_password="1234",
+            student_password=hashed_pw,
             current_problem_set=choice([1, 2, 3, 4, 5, 6, 7, 8, 9]),
         )  # hard coded, change if more prob sets added
 
