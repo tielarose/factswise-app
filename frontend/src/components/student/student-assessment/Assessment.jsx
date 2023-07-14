@@ -2,14 +2,25 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../Context';
 import AssessmentCompleteScreen from './AssessmentCompleteScreen';
 import AssessmentContainer from './AssessmentContainer';
+import BaselineTimerContainer from './BaselineTimerContainer';
 
 export default function Assessment() {
   const allContext = useContext(AppContext);
   const { currentUser } = allContext;
   const [problemSetQuestions, setProblemSetQuestions] = useState([]);
+  const [baselineQuestions, setBaselineQuestions] = useState([]);
   const [assessmentIsComplete, setAssessmentIsComplete] = useState(false);
   const [baselineIsComplete, setBaselineIsComplete] = useState(false);
   const [baselineTime, setBaselineTime] = useState(null);
+
+  // fetch a randomized 5 baseline questions
+  useEffect(() => {
+    fetch('/api/baseline-questions')
+      .then((response) => response.json())
+      .then((data) => {
+        setBaselineQuestions(data.baseline_questions);
+      });
+  }, []);
 
   // fetch all problem set questions for logged in student's current problem set
   useEffect(() => {
@@ -20,7 +31,7 @@ export default function Assessment() {
       });
   }, []);
 
-  function handleClick() { 
+  function handleClick() {
     setBaselineIsComplete(!baselineIsComplete);
   }
 
@@ -37,7 +48,13 @@ export default function Assessment() {
       />
     );
   } else {
-    componentToDisplay = (<p>this will be the baseline timer component</p>);
+    componentToDisplay = (
+      <BaselineTimerContainer
+        baselineQuestions={baselineQuestions}
+        setBaselineTime={setBaselineTime}
+        setBaselineIsComplete={setBaselineIsComplete}
+      />
+    );
   }
 
   return (

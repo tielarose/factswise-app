@@ -2,12 +2,12 @@
 import React from 'react';
 
 export default function InputButton({
-  value, handleNumberButtonClickInAssessment,
+  value, handleNumberButtonClick,
 }) {
   return (
     <button
       type="button"
-      onClick={handleNumberButtonClickInAssessment}
+      onClick={handleNumberButtonClick}
       value={value}
     >
       {value}

@@ -12,7 +12,7 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
   const [displayNumberButtons, setDisplayNumberButtons] = useState(true);
   const startTime = Date.now();
 
-  const handleNumberButtonClickInAssessment = useCallback((evt) => { 
+  const handleNumberButtonClickInAssessment = useCallback((evt) => {
     setInputAnswer(evt.target.value);
 
     const endTime = Date.now();
@@ -20,7 +20,7 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
 
     setAnswerTime(Math.round(totalTime / 1000));
     setDisplayNumberButtons(false);
-  })
+  });
 
   return (
     <div className="AssessmentContainer">
@@ -30,7 +30,7 @@ export default function AssessmentQuestions({ problemSetQuestions, setHasAnswere
       />
       { displayNumberButtons ? (
         <NumberButtonsContainer
-          handleNumberButtonClickInAssessment={handleNumberButtonClickInAssessment}
+          handleNumberButtonClick={handleNumberButtonClickInAssessment}
         />
       ) : (
         <StrategyButtonsContainer

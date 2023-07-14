@@ -4,7 +4,7 @@ import NumberButton from './NumberButton';
 
 export default function NumberButtonsContainer(
   {
-    handleNumberButtonClickInAssessment
+    handleNumberButtonClick,
   },
 ) {
   // create NumberButton components for the range of numbers specified, inclusive
@@ -14,7 +14,7 @@ export default function NumberButtonsContainer(
     for (let i = firstNum; i <= lastNum; i += 1) {
       const button = (
         <NumberButton
-          handleNumberButtonClickInAssessment={handleNumberButtonClickInAssessment}
+          handleNumberButtonClick={handleNumberButtonClick}
           value={i}
           key={`numberButton${i}`}
         />

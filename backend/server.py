@@ -517,23 +517,26 @@ def check_user():
     )
 
 
-@app.route("/api/test/<student_id>")
-def test_route(student_id):
-    assessments = db.session.execute(
-        db.select(
-            ProblemSetQuestionAnswer.date_assessed,
-            func.sum(cast(ProblemSetQuestionAnswer.is_correct, sqlalchemy.Integer)),
-            func.count(ProblemSetQuestionAnswer.student_answer),
-        )
-        .filter_by(student_id=student_id)
-        .group_by(ProblemSetQuestionAnswer.date_assessed)
-        .order_by(ProblemSetQuestionAnswer.date_assessed.desc())
-    ).first()
+@app.route("/api/baseline-questions")
+def get_baseline_questions():
+    """Return a randomized, shuffled list of 5 baseline numbers, ensuring each number is from a different area of the 0-20 input button layout"""
 
-    print("^" * 40)
-    print(assessments)
+    baseline_numbers = [
+        choice([0, 1, 2]),
+        choice([4, 5, 6]),
+        choice([8, 9, 10]),
+        choice([11, 12, 13, 14]),
+        choice([17, 18, 19, 20]),
+    ]
 
-    return jsonify("test route was visited")
+    shuffle(baseline_numbers)
+
+    baseline_questions = [
+        {"question_text": f"{number}", "answer_as_int": number}
+        for number in baseline_numbers
+    ]
+
+    return jsonify({"baseline_questions": baseline_questions})
 
 
 def is_student(user_id):

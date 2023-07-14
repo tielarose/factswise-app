@@ -9,6 +9,10 @@
     /* box-shadow: var(--box-shadow-main); */
 }
 
+.AssessmentContainer h4 {
+    margin-bottom: 30px;
+}
+
 .AssessmentQuestion {
     display: flex;
     align-items: center;
