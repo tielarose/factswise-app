@@ -50,7 +50,7 @@
     border: 3px solid var(--student-dark);
 }
 
-.NumberButtonsContainer .number-buttons-row button:hover, .NumberButtonsContainer .number-buttons-row button:focus {
+.NumberButtonsContainer .number-buttons-row button:hover {
     background-color: var(--student-dark);
     box-shadow: var(--box-shadow-button-dark);
 }
@@ -105,7 +105,7 @@
     font-weight: var(--font-weight-bold);
 }
 
-.StrategyButtonsContainer button:hover, .StrategyButtonsContainer button:focus {
+.StrategyButtonsContainer button:hover {
     background: var(--student-dark);
 }
 
