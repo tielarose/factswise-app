@@ -34,7 +34,7 @@
   transition: all 0.1s;
 }
 
-.NameSelection .student-name-button:hover {
+.NameSelection .student-name-button:hover, .NameSelection .student-name-button:focus {
   background-color: var(--student-primary);
   border: none;
   font-weight: var(--font-weight-bold);

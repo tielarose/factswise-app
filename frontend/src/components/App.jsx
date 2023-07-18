@@ -29,7 +29,6 @@ function App() {
         <Navbar />
         <div className="main-content">
           <Routes>
-            {/* for each route, do what is on the line below */}
             <Route exact path="/" element={<Homepage />} />
             <Route
               exact

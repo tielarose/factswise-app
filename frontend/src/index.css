@@ -259,3 +259,13 @@ p {
 .invisible-button .with-text p {
   margin: 0 0 0 5px;
 }
+
+input:focus {
+  outline: 2px solid var(--educator-dark);
+  border: none;
+}
+
+*:focus {
+  outline: 3px solid var(--educator-dark);
+  border: none;
+}
