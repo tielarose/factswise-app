@@ -19,7 +19,7 @@ from model import (
     ProblemSetQuestionAnswer,
 )
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
 
 
 @app.route("/api/educator/lookup-educator-id", methods=["POST"])
@@ -561,6 +561,17 @@ def get_baseline_questions():
     ]
 
     return jsonify({"baseline_questions": baseline_questions})
+
+
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def index(path):
+    return app.send_static_file("index.html")
+
+
+@app.errorhandler(404)
+def not_found(_error):
+    return app.send_static_file("index.html")
 
 
 def is_student(user_id):
