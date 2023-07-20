@@ -22,7 +22,9 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
       fetch(`/api/educator/classroom-info/${currentClassroom.classroom_id}`)
         .then((response) => response.json())
         .then((data) => {
-          setAllStudents(data.students);
+          const studentData = data.students;
+          studentData.sort((a, b) => a.student_first_name.localeCompare(b.student_first_name));
+          setAllStudents(studentData);
         });
     }
   }, [currentClassroom]);
