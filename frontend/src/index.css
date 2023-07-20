@@ -264,8 +264,3 @@ input:focus {
   outline: 2px solid var(--educator-dark);
   border: none;
 }
-
-*:focus {
-  outline: 3px solid var(--educator-dark);
-  border: none;
-}
