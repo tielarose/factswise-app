@@ -265,10 +265,10 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
                   Correct
                 </p>
                 <div className="flex-column">
-                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'ascending', 'latest_assessment', 'percent_as_int')}>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'ascending', 'latest_assessment', 'percent_correct_as_int')}>
                     <img src={ArrowUp} alt="sort descending" className="DataDisplay-icon-small"/>
                   </button>
-                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'descending', 'latest_assessment', 'percent_as_int')}>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'descending', 'latest_assessment', 'percent_correct_as_int')}>
                     <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
                   </button>
                 </div>
@@ -282,10 +282,10 @@ export default function EducatorDashboardDataDisplay({ currentClassroom }) {
                   Fluent
                 </p>
                 <div className="flex-column">
-                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'ascending', 'latest_assessment', 'avg_time')}>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'ascending', 'latest_assessment', 'percent_fluent_as_int')}>
                     <img src={ArrowUp} alt="sort descending" className="DataDisplay-icon-small"/>
                   </button>
-                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'descending', 'latest_assessment', 'avg_time')}>
+                  <button type="button" className="invisible-button" onClick={() => handleSort('number', 'descending', 'latest_assessment', 'percent_fluent_as_int')}>
                     <img src={ArrowDown} alt="sort descending" className="DataDisplay-icon-small"/>
                   </button>
                 </div>
