@@ -5,6 +5,7 @@ import NumberButtonsContainer from './NumberButtonsContainer';
 import './AssessmentContainer.css';
 import StrategyButtonsContainer from './StrategyButtonsContainer';
 import { AppContext } from '../../Context';
+import ProgressBar from './ProgressBar';
 
 const allStudentResponses = [];
 
@@ -66,6 +67,10 @@ export default function AssessmentQuestions(
 
   return (
     <div className="AssessmentContainer">
+      <ProgressBar
+        currentQuestion={currentQuestionNum}
+        totalQuestions={problemSetQuestions.length}
+      />
       <AssessmentQuestion
         question={problemSetQuestions[currentQuestionNum]}
         inputAnswer={inputAnswer}

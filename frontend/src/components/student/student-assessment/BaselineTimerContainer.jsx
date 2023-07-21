@@ -3,6 +3,7 @@ import React, { useState, useCallback } from 'react';
 import AssessmentQuestion from './AssessmentQuestion';
 import NumberButtonsContainer from './NumberButtonsContainer';
 import BaselineCompleteScreen from './BaselineCompleteScreen';
+import ProgressBar from './ProgressBar';
 
 const allBaselineResponseTimes = [];
 
@@ -50,6 +51,10 @@ export default function BaselineTimerContainer(
         )
         : (
           <>
+            <ProgressBar
+              currentQuestion={currentQuestionNum}
+              totalQuestions={baselineQuestions.length}
+            />
             <h4>click the number you see</h4>
             <AssessmentQuestion
               question={baselineQuestions[currentQuestionNum]}
