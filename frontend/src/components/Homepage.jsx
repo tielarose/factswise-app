@@ -16,7 +16,7 @@ export default function Homepage() {
   return (
     <div className="Homepage">
       <h1>Welcome to MathFacts!</h1>
-      <p>Designed by an eduator, for educators.</p>
+      <p>Designed for educators, by an educator.</p>
       <p>
         Easily assess your students on their FactsWise goals, view detailed
         data about their progress, and more!
