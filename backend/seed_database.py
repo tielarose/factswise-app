@@ -1,4 +1,22 @@
-"""Script to seed database."""
+"""Script to seed database. 
+
+A fake educator will be created:
+name: Tiela Black-Law
+email address: tiela.black-law@realschool.org
+password: 1234
+
+Three classrooms will be created for this educator,
+with 12 students in each classroom. All students will have 
+the password 1234.
+
+The first 4 students of each classroom will get all questions in 
+problem_sets 1, 2 & 3 correct, and be working on problem_set 4.
+
+The next 4 students will have multiple attempts at their current 
+problem set, with increased correctness and fluency over time.
+
+The last 4 students will have one not-so-great attempt at their current problem set.
+"""
 
 import os
 
