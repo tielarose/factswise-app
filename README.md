@@ -1,6 +1,12 @@
 # MathFacts Assessments
 
-MathFacts Assessments is a student-friendly assessment platform that provides educators with detailed math fluency data and easy progress tracking, without the burden of having to assess students one-on-one. Based on the FactsWise curriculum and currently available for classroom use at [mathfactsapp.com](https://mathfactsapp.com/)
+MathFacts Assessments is a student-friendly assessment platform that provides educators with detailed math fluency data and easy progress tracking, without the burden of having to assess students one-on-one. MathFacts is based on the FactsWise curriculum, deployed using AWS, and currently available for classroom use at [mathfactsapp.com](https://mathfactsapp.com/) 
+
+If you would like to log in as a demo educator and view example student data, you can use the login tiela dot black dash law at real school dot e-d-u, password 1234.
+
+# About Me
+
+I have been an elementary educator for nearly a decade, and after teaching kindergarten over zoom--successfully!-- I convinced there is nothing I can’t do. In my teaching career, I specialized in understanding the ways our emotions and nervous system responses affect our abilities to learn and access knowledge. During Hackbright, I was able to leverage this knowledge to support my cohort, through informal discussions and formal lectures. I love the way programming challenges me intellectually and provides opportunities for analytical problem-solving. Post-Hackbright, I look forward to bringing my burgeoning passion for coding and my deep understanding of people and learning to a full stack software engineering position. MathFacts is the assessment platform I wish had existed when I was a classroom teacher, and now it does!
 
 # Tech Stack
 
@@ -50,7 +56,26 @@ Educators can click into a student's account to see all their past assessments, 
 
 ![](https://github.com/tielarose/factswise-app/blob/main/gifs/student_details.gif)
 
-# Set Up
+# Local Development
+
+## Prequesites
+
+The following pieces of software are necessary before installing project dependencies and running the application. If you already have these installed, you can [skip to the set up section.](#set-up)
+
+Homebrew
+
+    /usr/bin/ruby -e "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+Python3
+
+    brew install python3
+
+Node
+
+    brew install node
+
+
+## Set Up
 
 Start a virtual environment
 
@@ -64,7 +89,7 @@ Install requirements
 
 ### Seed the database
 
-If you'd like to be able to log in as an educator and see fake student data, run the following file to seed the database. By default, it will create a fake educator with email address tiela.black-law@realschool.org, password 1234.
+If you'd like to be able to log in as an educator and see fake student data, run the following file to seed the database. By default, it will create a fake educator with email address tiela dot black dash law at real school dot e-d-u, password 1234.
 
     python3 backend/seed_database.py
 
