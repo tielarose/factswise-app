@@ -68,7 +68,7 @@ If you'd like to be able to log in as an educator and see fake student data, run
 
     python3 backend/seed_database.py
 
-To change the default educator information, change the name and plaintext_password on lines 56 - 59, and then rerun the file.
+To change the default educator information, change the name and plaintext_password on lines 56 - 59, and then rerun the file. The file will create a login for fname.lname@realschool.org, with the password you set.
 
     56    fname = "Tiela"
     57    lname = "Black-Law"
@@ -77,11 +77,29 @@ To change the default educator information, change the name and plaintext_passwo
 
 If you'd prefer a database with no educators or students, seed the problem_sets and problem_set_questions only:
 
-  python3 backend/seed_database_problem_sets_only.py
+    python3 backend/seed_database_problem_sets_only.py
 
 # Run Application
 
+Open two terminals.
 
+If you haven't already, start a virtual environment and install project dependencies.
 
+    virtualenv env
+    source env/bin/activate
+    cd backend/
+    pip3 install -r requirements.txt
 
+Go to the web app root folder.
 
+    cd ~/src/factswise-app
+
+In one terminal, start the Flask server.
+
+    python3 backend/server.py
+
+In the other terminal, start vite.
+
+    cd frontend
+    npm run dev
+    
