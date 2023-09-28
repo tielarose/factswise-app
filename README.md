@@ -2,7 +2,7 @@
 
 MathFacts Assessments is a student-friendly assessment platform that provides educators with detailed math fluency data and easy progress tracking, without the burden of having to assess students one-on-one. MathFacts is based on the FactsWise curriculum, deployed using AWS, and currently available for classroom use at [mathfactsapp.com](https://mathfactsapp.com/) 
 
-If you would like to log in as a demo educator and view example student data, you can use the login tiela dot black dash law at real school dot e-d-u, password 1234.
+If you would like to log in as a demo educator and view example student data, you can use the login tiela dot black dash law at real school dot e-d-u, password 1234. To log in as a student, choose classroom code Bla682, choose any name, password 1234.
 
 # About Me
 
